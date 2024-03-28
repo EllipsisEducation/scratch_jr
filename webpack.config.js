@@ -49,12 +49,12 @@ module.exports = function (env, argv) {
         },
         resolve: {
             fallback: {
-                'crypto': require.resolve('crypto-browserify'),
-                'path': require.resolve('path-browserify'),
-                'buffer': require.resolve('buffer/'),
-                'stream': require.resolve('stream-browserify'),
-                'vm': require.resolve('vm-browserify'),
-                'fs': false
+                crypto: require.resolve('crypto-browserify'),
+                path: require.resolve('path-browserify'),
+                buffer: require.resolve('buffer/'),
+                stream: require.resolve('stream-browserify'),
+                vm: require.resolve('vm-browserify'),
+                fs: false
             }
         },
         plugins: [
@@ -72,7 +72,7 @@ module.exports = function (env, argv) {
         ],
         devServer: {
             static: {
-                directory: path.join(__dirname, 'public'),
+                directory: path.join(__dirname, 'public')
             },
             compress: true,
             port: 3000,
