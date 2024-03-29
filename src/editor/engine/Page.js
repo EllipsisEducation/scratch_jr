@@ -17,14 +17,14 @@ import {newHTML, newDiv, gn,
 
 
 window.addEventListener('resize', function (event){
-    preprocessAndLoadCss("css", "css/font.css");
-    preprocessAndLoadCss("css", "css/base.css");
-    preprocessAndLoadCss("css", "css/editor.css");
-    preprocessAndLoadCss("css", "css/editorleftpanel.css");
-    preprocessAndLoadCss("css", "css/editorstage.css");
-    preprocessAndLoadCss("css", "css/editormodal.css");
-    preprocessAndLoadCss("css", "css/librarymodal.css");
-    preprocessAndLoadCss("css", "css/paintlook.css");
+    preprocessAndLoadCss('css', 'css/font.css');
+    preprocessAndLoadCss('css', 'css/base.css');
+    preprocessAndLoadCss('css', 'css/editor.css');
+    preprocessAndLoadCss('css', 'css/editorleftpanel.css');
+    preprocessAndLoadCss('css', 'css/editorstage.css');
+    preprocessAndLoadCss('css', 'css/editormodal.css');
+    preprocessAndLoadCss('css', 'css/librarymodal.css');
+    preprocessAndLoadCss('css', 'css/paintlook.css');
     let scaleMultiplier = window.innerHeight  / 768.0;
     ScratchJr.stage.setStageScaleAndPosition(scaleMultiplier, 46, 74);
     let scriptsElem = gn('scripts');
@@ -272,7 +272,7 @@ export default class Page {
         var pq = newHTML('p', undefined, num);
         pq.textContent = this.num;
         newHTML('div', 'deletethumb', tb);
-        window.setEventHandler("touchstart", function (evt) {
+        window.setEventHandler('touchstart', function (evt) {
             Thumbs.pageMouseDown(evt);
         }, tb);
         tb.onmousedown = function (evt) {

@@ -59,15 +59,15 @@ function onTouchCancel(evt) {
     console.log('touchcancel paint');
     PaintAction.mouseMove(evt);
     PaintAction.mouseUp(evt);
-};
+}
 function onMouseMove (evt) {
     console.log('mousemove paint');
     PaintAction.mouseMove(evt);
-};
+}
 function onMouseUp(evt) {
     console.log('mouseup paint');
     PaintAction.mouseUp(evt);
-};
+}
 
 //Main Events
 /////////////////////////////////

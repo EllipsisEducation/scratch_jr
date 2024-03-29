@@ -221,7 +221,7 @@ export default class Library {
         function drawMe (dataurl) {
             img.src = dataurl;
         }
-        window.setEventHandler("touchstart", function (evt) {
+        window.setEventHandler('touchstart', function (evt) {
             fcn(evt, tb);
         }, tb);
         tb.onmousedown = function (evt) {
@@ -253,7 +253,7 @@ export default class Library {
         var pngPath = absoluteURL(MediaLib.path.replace('svg', 'png'));
         img.src = pngPath + IO.getFilename(md5) + '.png';
 
-        window.setEventHandler("touchstart", function (evt) {
+        window.setEventHandler('touchstart', function (evt) {
             fcn(evt, tb);
         }, tb);
         tb.onmousedown = function (evt) {
@@ -286,7 +286,7 @@ export default class Library {
         ctx.fillStyle = ScratchJr.stagecolor;
         ctx.fillRect(0, 0, w, h);
         parent.appendChild(tb);
-        window.setEventHandler("touchstart", function (evt) {
+        window.setEventHandler('touchstart', function (evt) {
             Library.selectAsset(evt, tb);
         }, tb);
         tb.onmousedown = function (evt) {
@@ -315,7 +315,7 @@ export default class Library {
         if (tb.byme && (tb.id != 'none')) {
             holdit(tb);
         }
-        window.setEventHandler("touchend", function (evt) {
+        window.setEventHandler('touchend', function (evt) {
             clickMe(evt, tb);
         }, tb);
         window.onmouseup = function (evt) {
@@ -326,7 +326,7 @@ export default class Library {
         };
         function holdit () {
             var repeat = function () {
-                window.setEventHandler("touchend", undefined, tb);
+                window.setEventHandler('touchend', undefined, tb);
                 window.onmouseup = undefined;
                 window.onmousemove = undefined;
                 timeoutEvent = undefined;
@@ -351,7 +351,7 @@ export default class Library {
                 Library.unSelect(clickThumb);
             }
             timeoutEvent = undefined;
-            window.setEventHandler("touchend", undefined, tb);
+            window.setEventHandler('touchend', undefined, tb);
             window.onmousemove = undefined;
             window.onmouseup = undefined;
         }
@@ -361,7 +361,7 @@ export default class Library {
             }
             Library.selectThisAsset(e, tb);
             timeoutEvent = undefined;
-            window.setEventHandler("touchend", undefined, tb);
+            window.setEventHandler('touchend', undefined, tb);
             tb.onmouseup = undefined;
             window.onmousemove = undefined;
             window.onmouseup = undefined;

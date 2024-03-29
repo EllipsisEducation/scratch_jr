@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 export var frame;
 // XXX: isTablet is legacy code that can be used to detect if we're running on a desktop browser
 // There are references to it throughout the codebase, should possibly be removed at some point
 // Zach: Testing setting `isTablet` to false always
-export const isTablet = false && "ontouchstart" in document.documentElement;
+export const isTablet = false && 'ontouchstart' in document.documentElement;
 export const DEGTOR = Math.PI / 180;
 export const WINDOW_INNER_HEIGHT = window.innerHeight;
 export const WINDOW_INNER_WIDTH = window.innerWidth;
@@ -10,58 +11,58 @@ export const scaleMultiplier = WINDOW_INNER_HEIGHT / 768.0;
 export const fullscreenScaleMultiplier = 136;
 
 /* eslint-disable no-console */
-console.log("setting OS flags");
+console.log('setting OS flags');
 /* eslint-enable no-console */
-export const isWeb = !("ontouchstart" in document.documentElement);
-export const isiOS = typeof AndroidInterface == "undefined";
-export const isAndroid = typeof AndroidInterface != "undefined";
+export const isWeb = !('ontouchstart' in document.documentElement);
+export const isiOS = typeof AndroidInterface == 'undefined';
+export const isAndroid = typeof AndroidInterface != 'undefined';
 
 export function absoluteURL(url) {
     // if it's already an absolute URL, just return it
     if (
-        url.startsWith("http://") ||
-        url.startsWith("https://") ||
-        url.startsWith("blob:")
+        url.startsWith('http://') ||
+        url.startsWith('https://') ||
+        url.startsWith('blob:')
     ) {
         return url;
     }
     // remove leading dot slash
-    if (url.startsWith("./")) {
+    if (url.startsWith('./')) {
         url = url.substring(2);
     }
     // remove leading slash
-    if (url.startsWith("/")) {
+    if (url.startsWith('/')) {
         url = url.substring(1);
     }
     return ASSET_BASE_URL + url;
 }
 
 export function libInit() {
-    frame = document.getElementById("frame");
+    frame = document.getElementById('frame');
 }
 /**
  * Takes a string and evaluates all ${} as JavaScript and returns the resulting string.
  */
 export function preprocess(s) {
-    var result = "";
+    var result = '';
     var len = s.length;
     var i = 0;
     var j;
-    while (i < len && (j = s.indexOf("$", i)) != -1) {
+    while (i < len && (j = s.indexOf('$', i)) != -1) {
         result += s.substring(i, j);
         i = j + 1;
-        if (i < len - 1 && s[i] === "{") {
+        if (i < len - 1 && s[i] === '{') {
             var start = i + 1;
-            var end = s.indexOf("}", start);
+            var end = s.indexOf('}', start);
             if (end != -1) {
                 var expression = s.substring(start, end);
                 result += eval(expression);
                 i = end + 1;
             } else {
-                result += "$";
+                result += '$';
             }
         } else {
-            result += "$";
+            result += '$';
         }
     }
     if (i < len) {
@@ -76,7 +77,7 @@ export function preprocess(s) {
 export function preprocessAndLoad(url) {
     url = absoluteURL(url);
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", url, false);
+    xmlhttp.open('GET', url, false);
     xmlhttp.send();
     return preprocess(xmlhttp.responseText);
 }
@@ -90,15 +91,15 @@ export function preprocessAndLoadCss(baseUrl, url) {
 
     baseUrl = absoluteURL(baseUrl);
     // search for url("../images") pattern
-    cssData = cssData.replace(/url\("/g, 'url("' + baseUrl + "/");
+    cssData = cssData.replace(/url\("/g, 'url("' + baseUrl + '/');
     // search for url('../images') pattern
-    cssData = cssData.replace(/url\('/g, "url('" + baseUrl + "/");
+    cssData = cssData.replace(/url\('/g, 'url(\'' + baseUrl + '/');
     // search for url(../images) pattern
-    cssData = cssData.replace(/url\(([^'"])/g, "url(" + baseUrl + "/$1");
+    cssData = cssData.replace(/url\(([^'"])/g, 'url(' + baseUrl + '/$1');
 
     const head = document.head;
-    let style = document.createElement("style");
-    style.type = "text/css";
+    let style = document.createElement('style');
+    style.type = 'text/css';
     if (style.styleSheet) {
         style.styleSheet.cssText = cssData;
     } else {
@@ -112,15 +113,15 @@ export function rl() {
 }
 
 export function newDiv(parent, x, y, w, h, styles) {
-    var el = document.createElement("div");
-    el.style.position = "absolute";
-    el.style.top = y + "px";
-    el.style.left = x + "px";
+    var el = document.createElement('div');
+    el.style.position = 'absolute';
+    el.style.top = y + 'px';
+    el.style.left = x + 'px';
     if (w) {
-        el.style.width = w + "px";
+        el.style.width = w + 'px';
     }
     if (h) {
-        el.style.height = h + "px";
+        el.style.height = h + 'px';
     }
     setProps(el.style, styles);
     parent.appendChild(el);
@@ -128,7 +129,7 @@ export function newDiv(parent, x, y, w, h, styles) {
 }
 
 export function newImage(parent, src, styles) {
-    var img = document.createElement("img");
+    var img = document.createElement('img');
     img.src = absoluteURL(src);
     setProps(img.style, styles);
     if (parent) {
@@ -138,10 +139,10 @@ export function newImage(parent, src, styles) {
 }
 
 export function newCanvas(parent, x, y, w, h, styles) {
-    var canvas = document.createElement("canvas");
-    canvas.style.position = "absolute";
-    canvas.style.top = y + "px";
-    canvas.style.left = x + "px";
+    var canvas = document.createElement('canvas');
+    canvas.style.position = 'absolute';
+    canvas.style.top = y + 'px';
+    canvas.style.left = x + 'px';
     setCanvasSize(canvas, w, h);
     setProps(canvas.style, styles);
     parent.appendChild(canvas);
@@ -151,7 +152,7 @@ export function newCanvas(parent, x, y, w, h, styles) {
 export function newHTML(type, c, p) {
     var e = document.createElement(type);
     if (c) {
-        e.setAttribute("class", c);
+        e.setAttribute('class', c);
     }
     if (p) {
         p.appendChild(e);
@@ -160,7 +161,7 @@ export function newHTML(type, c, p) {
 }
 
 export function newP(parent, text, styles) {
-    var p = document.createElement("p");
+    var p = document.createElement('p');
     p.appendChild(document.createTextNode(text));
     setProps(p.style, styles);
     parent.appendChild(p);
@@ -245,7 +246,7 @@ export function hitTest(c, pt) {
     }
     var dx = pt.x - c.offsetLeft,
         dy = pt.y - c.offsetTop;
-    var ctx = c.getContext("2d");
+    var ctx = c.getContext('2d');
     var pixel = ctx.getImageData(dx, dy, 1, 1).data;
     if (pixel[3] == 0) {
         return false;
@@ -256,8 +257,8 @@ export function hitTest(c, pt) {
 export function setCanvasSize(c, w, h) {
     c.width = w;
     c.height = h;
-    c.style.width = w + "px";
-    c.style.height = h + "px";
+    c.style.width = w + 'px';
+    c.style.height = h + 'px';
 }
 
 export function setCanvasSizeScaledToWindowDocumentHeight(c, w, h) {
@@ -267,8 +268,8 @@ export function setCanvasSizeScaledToWindowDocumentHeight(c, w, h) {
     var scaledHeight = Math.floor(h * multiplier);
     c.width = scaledWidth;
     c.height = scaledHeight;
-    c.style.width = scaledWidth + "px";
-    c.style.height = scaledHeight + "px";
+    c.style.width = scaledWidth + 'px';
+    c.style.height = scaledHeight + 'px';
     c.style.zoom = scaleMultiplier / multiplier;
 }
 
@@ -340,10 +341,10 @@ export function setProps(object, props) {
 export function CSSTransition(el, obj) {
     // default
     var duration = 1;
-    var transition = "ease";
+    var transition = 'ease';
     var style = {
-        left: el.offsetLeft + "px",
-        top: el.offsetTop + "px",
+        left: el.offsetLeft + 'px',
+        top: el.offsetTop + 'px'
     };
     if (obj.duration) {
         duration = obj.duration;
@@ -354,16 +355,16 @@ export function CSSTransition(el, obj) {
     if (obj.style) {
         style = obj.style;
     }
-    var items = "";
+    var items = '';
     for (var key in style) {
-        items += key + " " + duration + "s " + transition + ", ";
+        items += key + ' ' + duration + 's ' + transition + ', ';
     }
     items = items.substring(0, items.length - 2);
     el.style.webkitTransition = items;
-    el.addEventListener("webkitTransitionEnd", transitionDene, true);
+    el.addEventListener('webkitTransitionEnd', transitionDene, true);
     setProps(el.style, style);
     function transitionDene() {
-        el.style.webkitTransition = "";
+        el.style.webkitTransition = '';
         if (obj.onComplete) {
             obj.onComplete();
         }
@@ -373,10 +374,10 @@ export function CSSTransition(el, obj) {
 export function CSSTransition3D(el, obj) {
     // default
     var duration = 1;
-    var transition = "ease";
+    var transition = 'ease';
     var style = {
-        left: el.left + "px",
-        top: el.top + "px",
+        left: el.left + 'px',
+        top: el.top + 'px'
     }; // keepit where it is
     if (obj.duration) {
         duration = obj.duration;
@@ -389,13 +390,13 @@ export function CSSTransition3D(el, obj) {
             style[key] = obj.style[key];
         }
     }
-    var items = "-webkit-transform " + duration + "s " + transition;
-    var translate = "translate3d(" + style.left + "," + style.top + ",0px)";
-    el.addEventListener("webkitTransitionEnd", transitionDone, true);
+    var items = '-webkit-transform ' + duration + 's ' + transition;
+    var translate = 'translate3d(' + style.left + ',' + style.top + ',0px)';
+    el.addEventListener('webkitTransitionEnd', transitionDone, true);
     el.style.webkitTransition = items;
     el.style.webkitTransform = translate;
     function transitionDone() {
-        el.style.webkitTransition = "";
+        el.style.webkitTransition = '';
         var mtx = new WebKitCSSMatrix(
             window.getComputedStyle(el).webkitTransform
         );
@@ -418,22 +419,22 @@ export function drawThumbnail(img, c) {
     var wi = w;
     var he = h;
     switch (getFit(dw, dh)) {
-        case "noscale":
-            break;
-        case "scaleh":
-            wi = w * dh;
-            he = h * dh;
-            dx = (c.width - wi) / 2;
-            dy = (c.height - he) / 2;
-            break;
-        case "scalew":
-            wi = w * dw;
-            he = h * dw;
-            dx = (c.width - wi) / 2;
-            dy = (c.height - he) / 2;
-            break;
+    case 'noscale':
+        break;
+    case 'scaleh':
+        wi = w * dh;
+        he = h * dh;
+        dx = (c.width - wi) / 2;
+        dy = (c.height - he) / 2;
+        break;
+    case 'scalew':
+        wi = w * dw;
+        he = h * dw;
+        dx = (c.width - wi) / 2;
+        dy = (c.height - he) / 2;
+        break;
     }
-    var ctx = c.getContext("2d");
+    var ctx = c.getContext('2d');
     ctx.drawImage(img, dx, dy, wi, he);
 }
 
@@ -453,7 +454,7 @@ export function drawScaled(img, c) {
     }
     var x0 = (boxWidth - w) / 2;
     var y0 = (boxHeight - h) / 2;
-    var ctx = c.getContext("2d");
+    var ctx = c.getContext('2d');
     ctx.drawImage(img, x0, y0, w, h);
 }
 
@@ -465,38 +466,38 @@ export function fitInRect(srcw, srch, destw, desth) {
     var wi = srcw;
     var he = srch;
     switch (getFit(dw, dh)) {
-        case "noscale":
-            break;
-        case "scaleh":
-            wi = srcw * dh;
-            he = srch * dh;
-            dx = (destw - wi) / 2;
-            dy = (desth - he) / 2;
-            break;
-        case "scalew":
-            wi = srcw * dw;
-            he = srch * dw;
-            dx = (destw - wi) / 2;
-            dy = (desth - he) / 2;
-            break;
+    case 'noscale':
+        break;
+    case 'scaleh':
+        wi = srcw * dh;
+        he = srch * dh;
+        dx = (destw - wi) / 2;
+        dy = (desth - he) / 2;
+        break;
+    case 'scalew':
+        wi = srcw * dw;
+        he = srch * dw;
+        dx = (destw - wi) / 2;
+        dy = (desth - he) / 2;
+        break;
     }
     return [dx, dy, wi, he];
 }
 
 export function getFit(dw, dh) {
     if (dw >= 1 && dh >= 1) {
-        return "noscale";
+        return 'noscale';
     }
     if (dw >= 1 && dh < 1) {
-        return "scaleh";
+        return 'scaleh';
     }
     if (dw < 1 && dh >= 1) {
-        return "scalew";
+        return 'scalew';
     }
     if (dw < dh) {
-        return "scalew";
+        return 'scalew';
     }
-    return "scaleh";
+    return 'scaleh';
 }
 
 export function getDocumentHeight() {
@@ -522,8 +523,8 @@ export function writeText(ctx, f, c, label, dy, dx) {
     dx = dx == undefined ? 0 : dx;
     ctx.font = f;
     ctx.fillStyle = c;
-    ctx.textAlign = "left";
-    ctx.textBaseline = "bottom";
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'bottom';
     ctx.fillText(label, dx, dy);
 }
 
@@ -532,15 +533,15 @@ export function gn(str) {
 }
 
 export function newForm(parent, str, x, y, w, h, styles) {
-    var el = document.createElement("form");
-    el.style.position = "absolute";
-    el.style.top = y + "px";
-    el.style.left = x + "px";
+    var el = document.createElement('form');
+    el.style.position = 'absolute';
+    el.style.top = y + 'px';
+    el.style.left = x + 'px';
     if (w) {
-        el.style.width = w + "px";
+        el.style.width = w + 'px';
     }
     if (h) {
-        el.style.height = h + "px";
+        el.style.height = h + 'px';
     }
     setProps(el.style, styles);
     parent.appendChild(el);
@@ -549,7 +550,7 @@ export function newForm(parent, str, x, y, w, h, styles) {
 }
 
 export function newTextInput(p, type, str, mstyle) {
-    var input = document.createElement("input");
+    var input = document.createElement('input');
     input.value = str;
     setProps(input.style, mstyle);
     input.type = type;
@@ -558,17 +559,17 @@ export function newTextInput(p, type, str, mstyle) {
 }
 
 export function getUrlVars() {
-    if (window.location.href.indexOf("?") < 0) {
+    if (window.location.href.indexOf('?') < 0) {
         return [];
     }
     var args = window.location.href.slice(
-        window.location.href.indexOf("?") + 1
+        window.location.href.indexOf('?') + 1
     );
     var vars = [],
         hash;
-    var hashes = args.split("&");
+    var hashes = args.split('&');
     for (var i = 0; i < hashes.length; i++) {
-        hash = hashes[i].split("=");
+        hash = hashes[i].split('=');
         vars.push(hash[0]);
         vars[hash[0]] = hash[1];
     }
@@ -577,18 +578,18 @@ export function getUrlVars() {
 
 export function getIdFor(name) {
     var n = 1;
-    while (gn(name + " " + n) != undefined) {
+    while (gn(name + ' ' + n) != undefined) {
         n++;
     }
-    return name + " " + n;
+    return name + ' ' + n;
 }
 
 export function getIdForCamera(name) {
     var n = 1;
-    while (gn(name + "_" + n) != undefined) {
+    while (gn(name + '_' + n) != undefined) {
         n++;
     }
-    return name + "_" + n;
+    return name + '_' + n;
 }
 
 ////////////////////
@@ -600,7 +601,7 @@ export function rgb2hsb(str) {
         return [24, 1, 1];
     }
     var min, val, f, i, hue, sat;
-    str = str.indexOf("rgb") > -1 ? rgbToHex(str) : rgbaToHex(str);
+    str = str.indexOf('rgb') > -1 ? rgbToHex(str) : rgbaToHex(str);
     var num = parseInt(str.substring(1, str.length), 16);
     var rgb = getRGB(num);
     var red = rgb[0];
@@ -623,53 +624,53 @@ export function rgb2hsb(str) {
 }
 
 export function rgbToHex(str) {
-    if (str.indexOf("rgb") < 0) {
+    if (str.indexOf('rgb') < 0) {
         return str;
     }
     var res = str.substring(4, str.length - 1);
-    var a = res.split(",");
+    var a = res.split(',');
     var red = Number(a[0]);
     var grn = Number(a[1]);
     var blu = Number(a[2]);
     return rgbToString({
         r: red,
         g: grn,
-        b: blu,
+        b: blu
     });
 }
 
 export function rgbaToHex(str) {
-    if (str.indexOf("rgba") < 0) {
+    if (str.indexOf('rgba') < 0) {
         return str;
     }
     var res = str.substring(5, str.length - 1);
-    var a = res.split(",");
+    var a = res.split(',');
     var red = Number(a[0]);
     var grn = Number(a[1]);
     var blu = Number(a[2]);
     return rgbToString({
         r: red,
         g: grn,
-        b: blu,
+        b: blu
     });
 }
 
 export function rgbToString(obj) {
-    return "#" + getHex(obj.r) + getHex(obj.g) + getHex(obj.b);
+    return '#' + getHex(obj.r) + getHex(obj.g) + getHex(obj.b);
 }
 
 export function getRGB(color) {
     return [
         Number((color >> 16) & 255),
         Number((color >> 8) & 255),
-        Number(color & 255),
+        Number(color & 255)
     ];
 }
 
 export function getHex(num) {
     var hex = num.toString(16);
     if (hex.length == 1) {
-        return "0" + hex;
+        return '0' + hex;
     }
     return hex;
 }
@@ -695,17 +696,17 @@ export function findKeyframesRule(rule) {
 }
 
 export function colorToRGBA(color, opacity) {
-    var val = parseInt("0x" + color.substr(1, color.length));
+    var val = parseInt('0x' + color.substr(1, color.length));
     return (
-        "rgba(" +
+        'rgba(' +
         ((val >> 16) % 256) +
-        "," +
+        ',' +
         ((val >> 8) % 256) +
-        "," +
+        ',' +
         (val % 256) +
-        "," +
+        ',' +
         opacity +
-        ")"
+        ')'
     );
 }
 
@@ -715,11 +716,11 @@ export function colorToRGBA(color, opacity) {
  * turning them into pixel values.
  */
 export function css_vh(y) {
-    return (y * window.innerHeight) / 100.0 + "px";
+    return (y * window.innerHeight) / 100.0 + 'px';
 }
 
 export function css_vw(x) {
-    return (x * window.innerWidth) / 100.0 + "px";
+    return (x * window.innerWidth) / 100.0 + 'px';
 }
 
 Number.prototype.mod = function (n) {

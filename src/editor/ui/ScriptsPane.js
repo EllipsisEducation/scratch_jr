@@ -1,12 +1,12 @@
-import ScratchJr from "../ScratchJr";
-import Project from "./Project";
-import Thumbs from "./Thumbs";
-import Palette from "./Palette";
-import Undo from "./Undo";
-import Events from "../../utils/Events";
-import Scroll from "./Scroll";
-import Menu from "../blocks/Menu";
-import ScratchAudio from "../../utils/ScratchAudio";
+import ScratchJr from '../ScratchJr';
+import Project from './Project';
+import Thumbs from './Thumbs';
+import Palette from './Palette';
+import Undo from './Undo';
+import Events from '../../utils/Events';
+import Scroll from './Scroll';
+import Menu from '../blocks/Menu';
+import ScratchAudio from '../../utils/ScratchAudio';
 import {
     gn,
     localx,
@@ -18,7 +18,7 @@ import {
     setCanvasSize,
     getDocumentHeight,
     frame,
-} from "../../utils/lib";
+} from '../../utils/lib';
 
 let scroll = undefined;
 let watermark;
@@ -33,14 +33,14 @@ export default class ScriptsPane {
     }
 
     static createScripts(parent) {
-        var div = newHTML("div", "scripts", parent);
-        div.setAttribute("id", "scripts");
-        watermark = newHTML("div", "watermark", div);
+        var div = newHTML('div', 'scripts', parent);
+        div.setAttribute('id', 'scripts');
+        watermark = newHTML('div', 'watermark', div);
         var h = Math.max(getDocumentHeight(), frame.offsetHeight);
         setCanvasSize(div, div.offsetWidth, h - div.offsetTop);
         scroll = new Scroll(
             div,
-            "scriptscontainer",
+            'scriptscontainer',
             div.offsetWidth,
             h - div.offsetTop,
             ScratchJr.getActiveScript,
@@ -49,19 +49,19 @@ export default class ScriptsPane {
     }
 
     static setActiveScript(sprname) {
-        var currentsc = gn(sprname + "_scripts");
+        var currentsc = gn(sprname + '_scripts');
         if (!currentsc) {
             // Sprite not found
             return;
         }
         ScratchJr.stage.currentPage.setCurrentSprite(gn(sprname).owner);
         currentsc.owner.activate();
-        window.setEventHandler("touchstart", function (evt) {
-            console.log("touchstart script block");
+        window.setEventHandler('touchstart', function (evt) {
+            console.log('touchstart script block');
             currentsc.owner.scriptsMouseDown(evt);
         }, currentsc.parentNode);
         currentsc.parentNode.onmousedown = function (evt) {
-            console.log("mousedown script block");
+            console.log('mousedown script block');
             currentsc.owner.scriptsMouseDown(evt);
         };
         scroll.update();
@@ -76,7 +76,7 @@ export default class ScriptsPane {
             return;
         }
         ScratchJr.runtime.addRunScript(ScratchJr.getSprite(), b);
-        ScratchJr.startCurrentPageStrips(["ontouch"]);
+        ScratchJr.startCurrentPageStrips(['ontouch']);
         ScratchJr.userStart = true;
     }
 
@@ -119,7 +119,7 @@ export default class ScriptsPane {
         my -= sy;
         mx -= sx;
         Events.dragcanvas = Events.dragthumbnail;
-        Events.dragcanvas.origin = "scripts";
+        Events.dragcanvas.origin = 'scripts';
         Events.dragcanvas.startx = mtx.m41;
         Events.dragcanvas.starty = mtx.m42;
         if (!Events.dragcanvas.isReporter && Events.dragcanvas.parentNode) {
@@ -153,7 +153,7 @@ export default class ScriptsPane {
     ////////////////////////////////////////////////
 
     static draggingBlock(e) {
-        console.log("dragging script block");
+        console.log('dragging script block');
         e.preventDefault();
         var pt = Events.getTargetPoint(e);
         var dx = pt.x - Events.dragmousex;
@@ -169,8 +169,8 @@ export default class ScriptsPane {
     static blockFeedback(dx, dy, e) {
         var script = ScratchJr.getActiveScript().owner;
         var limit =
-            gn("palette").parentNode.offsetTop +
-            gn("palette").parentNode.offsetHeight;
+            gn('palette').parentNode.offsetTop +
+            gn('palette').parentNode.offsetHeight;
         var ycor = dy + Events.dragcanvas.offsetHeight;
         if (ycor < limit) {
             script.removeCaret();
@@ -180,12 +180,12 @@ export default class ScriptsPane {
         }
         var thumb;
         switch (Palette.getLandingPlace(script.dragList[0].div, e)) {
-            case "library":
-                thumb = Palette.getHittedThumb(
+        case 'library':
+            thumb = Palette.getHittedThumb(
                     script.dragList[0].div,
-                    gn("spritecc")
+                    gn('spritecc')
                 );
-                if (
+            if (
                     thumb &&
                     gn(thumb.owner).owner.type == ScratchJr.getSprite().type
                 ) {
@@ -193,19 +193,19 @@ export default class ScriptsPane {
                 } else {
                     thumb = undefined;
                 }
-                for (var i = 0; i < gn("spritecc").childElementCount; i++) {
-                    var spr = gn("spritecc").childNodes[i];
-                    if (spr.nodeName == "FORM") {
+            for (var i = 0; i < gn('spritecc').childElementCount; i++) {
+                    var spr = gn('spritecc').childNodes[i];
+                    if (spr.nodeName == 'FORM') {
                         continue;
                     }
                     if (thumb && thumb.id != spr.id) {
                         Thumbs.quickRestore(spr);
                     }
                 }
-                break;
-            default:
-                ScriptsPane.removeLibCaret();
-                break;
+            break;
+        default:
+            ScriptsPane.removeLibCaret();
+            break;
         }
     }
 
@@ -215,37 +215,37 @@ export default class ScriptsPane {
 
     static dropBlock(e, el) {
         e.preventDefault();
-        console.log("dropping script block");
+        console.log('dropping script block');
         var sc = ScratchJr.getActiveScript();
         var spr = sc.owner.spr.id;
         var page = ScratchJr.stage.currentPage;
         switch (Palette.getLandingPlace(el, e)) {
-            case "scripts":
-                var dx = localx(sc, el.left);
-                var dy = localy(sc, el.top);
-                ScriptsPane.blockDropped(sc, dx, dy);
+        case 'scripts':
+            var dx = localx(sc, el.left);
+            var dy = localy(sc, el.top);
+            ScriptsPane.blockDropped(sc, dx, dy);
                 // Start the story if scripts is changed.
-                ScratchJr.storyStart("ScriptsPane.changed");
-                break;
-            case "library":
-                var thumb = Palette.getHittedThumb(el, gn("spritecc"));
-                ScriptsPane.blockDropped(
+            ScratchJr.storyStart('ScriptsPane.changed');
+            break;
+        case 'library':
+            var thumb = Palette.getHittedThumb(el, gn('spritecc'));
+            ScriptsPane.blockDropped(
                     ScratchJr.getActiveScript(),
                     el.startx,
                     el.starty
                 );
-                if (
+            if (
                     thumb &&
                     gn(thumb.owner).owner.type ==
                         gn(page.currentSpriteName).owner.type
                 ) {
-                    ScratchJr.storyStart("ScriptsPane.dropBlock:library");
-                    ScratchAudio.sndFX("copy.wav");
+                    ScratchJr.storyStart('ScriptsPane.dropBlock:library');
+                    ScratchAudio.sndFX('copy.wav');
                     Thumbs.quickHighlight(thumb);
                     setTimeout(function () {
                         Thumbs.quickRestore(thumb);
                     }, 300);
-                    sc = gn(thumb.owner + "_scripts").owner;
+                    sc = gn(thumb.owner + '_scripts').owner;
                     var strip = Project.encodeStrip(el.owner);
                     var firstblock = strip[0];
                     var delta = sc.gettopblocks().length * 3;
@@ -254,16 +254,16 @@ export default class ScriptsPane {
                     sc.recreateStrip(strip);
                     spr = thumb.owner;
                 }
-                break;
-            default:
-                ScratchJr.getActiveScript().owner.deleteBlocks();
-                scroll.adjustCanvas();
-                scroll.refresh();
-                scroll.fitToScreen();
-                break;
+            break;
+        default:
+            ScratchJr.getActiveScript().owner.deleteBlocks();
+            scroll.adjustCanvas();
+            scroll.refresh();
+            scroll.fitToScreen();
+            break;
         }
         Undo.record({
-            action: "scripts",
+            action: 'scripts',
             where: page.id,
             who: spr,
         });
@@ -271,7 +271,7 @@ export default class ScriptsPane {
     }
 
     static blockDropped(sc, dx, dy) {
-        Events.dragcanvas.style.zIndex = "";
+        Events.dragcanvas.style.zIndex = '';
         var script = ScratchJr.getActiveScript().owner;
         ScriptsPane.cleanCarets();
         script.addBlockToScripts(Events.dragcanvas, dx, dy);
@@ -289,9 +289,9 @@ export default class ScriptsPane {
     }
 
     static removeLibCaret() {
-        for (var i = 0; i < gn("spritecc").childElementCount; i++) {
-            var spr = gn("spritecc").childNodes[i];
-            if (spr.nodeName == "FORM") {
+        for (var i = 0; i < gn('spritecc').childElementCount; i++) {
+            var spr = gn('spritecc').childNodes[i];
+            if (spr.nodeName == 'FORM') {
                 continue;
             }
             Thumbs.quickRestore(spr);
@@ -341,20 +341,20 @@ export default class ScriptsPane {
         //     };
         // }
         // Now, set both touch and mouse events
-        window.setEventHandler("touchmove", function (evt) {
-            console.log("touchmove scripts bg");
+        window.setEventHandler('touchmove', function (evt) {
+            console.log('touchmove scripts bg');
             fcnmove(evt);
         });
-        window.setEventHandler("touchend", function (evt) {
-            console.log("touchend scripts bg");
+        window.setEventHandler('touchend', function (evt) {
+            console.log('touchend scripts bg');
             fcnup(evt);
         });
         window.onmousemove = function (evt) {
-            console.log("mousemove scripts bg");
+            console.log('mousemove scripts bg');
             fcnmove(evt);
         };
         window.onmouseup = function (evt) {
-            console.log("mouseup scripts bg");
+            console.log('mouseup scripts bg');
             fcnup(evt);
         };
     }
@@ -393,10 +393,10 @@ export default class ScriptsPane {
 
     static updateScriptsPageBlocks(list) {
         for (var j = 0; j < list.length; j++) {
-            if (!gn(list[j] + "_scripts")) {
+            if (!gn(list[j] + '_scripts')) {
                 continue;
             }
-            var sc = gn(list[j] + "_scripts").owner;
+            var sc = gn(list[j] + '_scripts').owner;
             if (!sc) {
                 continue;
             }

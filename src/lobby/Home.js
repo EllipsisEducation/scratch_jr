@@ -2,14 +2,14 @@
 // Home Screen
 //////////////////////////////////////////////////
 
-import Lobby from "./Lobby";
-import OS from "../tablet/OS";
-import IO from "../tablet/IO";
-import Project from "../editor/ui/Project";
-import Localization from "../utils/Localization";
-import ScratchAudio from "../utils/ScratchAudio";
-import Vector from "../geom/Vector";
-import { gn, newHTML, isTablet, mTime } from "../utils/lib";
+import Lobby from './Lobby';
+import OS from '../tablet/OS';
+import IO from '../tablet/IO';
+import Project from '../editor/ui/Project';
+import Localization from '../utils/Localization';
+import ScratchAudio from '../utils/ScratchAudio';
+import Vector from '../geom/Vector';
+import { gn, newHTML, isTablet, mTime } from '../utils/lib';
 
 let frame;
 let scrollvalue;
@@ -76,9 +76,9 @@ export default class Home {
     ////////////////////////////
 
     static emptyProjectThumbnail(parent) {
-        var tb = newHTML("div", "projectthumb", parent);
-        newHTML("div", "aproject empty", tb);
-        tb.id = "newproject";
+        var tb = newHTML('div', 'projectthumb', parent);
+        newHTML('div', 'aproject empty', tb);
+        tb.id = 'newproject';
     }
 
     //////////////////////////
@@ -108,7 +108,7 @@ export default class Home {
         ) {
             Home.actionTarget.childNodes[
                 Home.actionTarget.childElementCount - 1
-            ].style.visibility = "hidden";
+            ].style.visibility = 'hidden';
         }
         Home.actionTarget = mytarget;
         Home.initialPt = Events.getTargetPoint(e);
@@ -116,7 +116,7 @@ export default class Home {
             holdit(Home.actionTarget);
         }
         function holdit() {
-            window.setEventHandler("touchmove", Home.handleMove, frame);
+            window.setEventHandler('touchmove', Home.handleMove, frame);
             frame.onmousemove = Home.handleMove;
             var repeat = function () {
                 if (
@@ -125,7 +125,7 @@ export default class Home {
                 ) {
                     Home.actionTarget.childNodes[
                         Home.actionTarget.childElementCount - 1
-                    ].style.visibility = "visible";
+                    ].style.visibility = 'visible';
 
                     Home.holding = true;
                 }
@@ -161,7 +161,7 @@ export default class Home {
         while (
             t.parentNode &&
             t.parentNode != frame &&
-            t.parentNode.getAttribute("class") != "scrollarea"
+            t.parentNode.getAttribute('class') != 'scrollarea'
         ) {
             t = t.parentNode;
         }
@@ -174,7 +174,7 @@ export default class Home {
         if (e.touches && e.touches.length > 1) {
             return;
         }
-        window.setEventHandler("touchmove", undefined, frame);
+        window.setEventHandler('touchmove', undefined, frame);
         frame.onmousemove = undefined;
         if (timeoutEvent) {
             clearTimeout(timeoutEvent);
@@ -197,23 +197,23 @@ export default class Home {
         }
         var md5 = Home.actionTarget.id;
         switch (Home.getAction(e)) {
-            case "project":
-                ScratchAudio.sndFX("keydown.wav");
-                if (md5 && md5 == "newproject") {
-                    Home.createNewProject();
-                } else if (md5) {
-                    OS.setfile(
-                        "homescroll.sjr",
-                        gn("wrapc").scrollTop,
+        case 'project':
+            ScratchAudio.sndFX('keydown.wav');
+            if (md5 && md5 == 'newproject') {
+                Home.createNewProject();
+            } else if (md5) {
+                OS.setfile(
+                        'homescroll.sjr',
+                        gn('wrapc').scrollTop,
                         function () {
                             doNext(md5);
                         }
                     );
-                }
-                break;
-            case "delete":
-                ScratchAudio.sndFX("cut.wav");
-                Project.thumbnailUnique(
+            }
+            break;
+        case 'delete':
+            ScratchAudio.sndFX('cut.wav');
+            Project.thumbnailUnique(
                     Home.actionTarget.thumb,
                     Home.actionTarget.id,
                     function (isUnique) {
@@ -222,50 +222,50 @@ export default class Home {
                         }
                     }
                 );
-                OS.setfield(
+            OS.setfield(
                     OS.database,
                     Home.actionTarget.id,
-                    "deleted",
-                    "YES",
+                    'deleted',
+                    'YES',
                     Home.removeProjThumb
                 );
-                break;
-            default:
-                if (
+            break;
+        default:
+            if (
                     Home.actionTarget &&
                     Home.actionTarget.childElementCount > 2
                 ) {
-                    Home.actionTarget.childNodes[
+                Home.actionTarget.childNodes[
                         Home.actionTarget.childElementCount - 1
-                    ].style.visibility = "hidden";
-                }
-                break;
+                    ].style.visibility = 'hidden';
+            }
+            break;
         }
         function doNext() {
-            OS.analyticsEvent("lobby", "existing_project_edited");
+            OS.analyticsEvent('lobby', 'existing_project_edited');
             const params = new URLSearchParams();
             if (window.studentAssignmentID) {
                 params.append(
-                    "student_assignment_id",
+                    'student_assignment_id',
                     window.studentAssignmentID
                 );
             }
             if (window.itemID) {
-                params.append("item_id", window.itemID);
+                params.append('item_id', window.itemID);
             }
 
             const url =
-                "editor.html?pmd5=" + md5 + "&mode=edit&" + params.toString();
+                'editor.html?pmd5=' + md5 + '&mode=edit&' + params.toString();
             window.location.href = url;
         }
     }
 
     static createNewProject() {
-        OS.analyticsEvent("lobby", "project_created");
+        OS.analyticsEvent('lobby', 'project_created');
         var obj = {};
         // XXX: for localization, the new project name should likely be refactored
         obj.name = Home.getNextName(
-            Localization.localize("NEW_PROJECT_PREFIX")
+            Localization.localize('NEW_PROJECT_PREFIX')
         );
         obj.version = version;
         obj.mtime = mTime().toString();
@@ -274,44 +274,43 @@ export default class Home {
 
     static gotoEditor(md5) {
         console.log(md5);
-        OS.setfile("homescroll.sjr", gn("wrapc").scrollTop, function () {
+        OS.setfile('homescroll.sjr', gn('wrapc').scrollTop, function () {
             doNext(md5);
         });
         function doNext(md5) {
             const params = new URLSearchParams();
             if (window.studentAssignmentID) {
                 params.append(
-                    "student_assignment_id",
+                    'student_assignment_id',
                     window.studentAssignmentID
                 );
             }
             if (window.itemID) {
-                params.append("item_id", window.itemID);
+                params.append('item_id', window.itemID);
             }
 
             const url =
-                "editor.html?pmd5=" + md5 + "&mode=edit&" + params.toString();
+                'editor.html?pmd5=' + md5 + '&mode=edit&' + params.toString();
             window.location.href = url;
         }
     }
 
     // Project names are given by reading the DOM elements of existing projects...
     static getNextName(name) {
-        return name + " " + 1;
         // Just use 1, we are not using multiple projects right now
         var pn = [];
-        var div = gn("scrollarea");
+        var div = gn('scrollarea');
         for (var i = 0; i < div.childElementCount; i++) {
-            if (div.childNodes[i].id == "newproject") {
+            if (div.childNodes[i].id == 'newproject') {
                 continue;
             }
             pn.push(div.childNodes[i].childNodes[1].childNodes[0].textContent);
         }
         var n = 1;
-        while (pn.indexOf(name + " " + n) > -1) {
+        while (pn.indexOf(name + ' ' + n) > -1) {
             n++;
         }
-        return name + " " + n;
+        return name + ' ' + n;
     }
 
     static removeProjThumb() {
@@ -323,13 +322,13 @@ export default class Home {
 
     static getAction(e) {
         if (!Home.actionTarget) {
-            return "none";
+            return 'none';
         }
         var shown =
             Home.actionTarget.childElementCount > 2
                 ? Home.actionTarget.childNodes[
                       Home.actionTarget.childElementCount - 1
-                  ].style.visibility == "visible"
+                  ].style.visibility == 'visible'
                 : false;
         if (e && shown) {
             var t;
@@ -338,11 +337,11 @@ export default class Home {
             } else {
                 t = e.target;
             }
-            if (t.getAttribute("class") == "closex") {
-                return "delete";
+            if (t.getAttribute('class') == 'closex') {
+                return 'delete';
             }
         }
-        return "project";
+        return 'project';
     }
 
     //////////////////////////
@@ -350,22 +349,22 @@ export default class Home {
     //////////////////////////
 
     static displayYourProjects() {
-        OS.getfile("homescroll.sjr", gotScrollsState);
+        OS.getfile('homescroll.sjr', gotScrollsState);
         function gotScrollsState(str) {
             var num = Number(atob(str));
-            scrollvalue = num.toString() == "NaN" ? 0 : num;
+            scrollvalue = num.toString() == 'NaN' ? 0 : num;
             var json = {};
-            json.cond = "deleted = ? AND version = ? AND gallery IS NULL";
-            json.items = ["name", "thumbnail", "id", "isgift"];
-            json.values = ["NO", version];
-            json.order = "ctime desc";
+            json.cond = 'deleted = ? AND version = ? AND gallery IS NULL';
+            json.items = ['name', 'thumbnail', 'id', 'isgift'];
+            json.values = ['NO', version];
+            json.order = 'ctime desc';
             IO.query(OS.database, json, Home.displayProjects);
         }
     }
 
     static displayProjects(str) {
         var data = JSON.parse(str);
-        var div = gn("scrollarea");
+        var div = gn('scrollarea');
         while (div.childElementCount > 0) {
             div.removeChild(div.childNodes[0]);
         }
@@ -376,8 +375,8 @@ export default class Home {
         setTimeout(function () {
             Lobby.busy = false;
         }, 1000);
-        if (gn("wrapc")) {
-            gn("wrapc").scrollTop = scrollvalue;
+        if (gn('wrapc')) {
+            gn('wrapc').scrollTop = scrollvalue;
         }
     }
 
@@ -388,35 +387,35 @@ export default class Home {
         if (!th) {
             return;
         }
-        var thumb = typeof th === "string" ? JSON.parse(th) : th;
+        var thumb = typeof th === 'string' ? JSON.parse(th) : th;
         var pc = thumb.pagecount ? thumb.pagecount : 1;
-        var tb = newHTML("div", "projectthumb", parent);
-        tb.setAttribute("id", id);
-        tb.type = "projectthumb";
+        var tb = newHTML('div', 'projectthumb', parent);
+        tb.setAttribute('id', id);
+        tb.type = 'projectthumb';
         tb.thumb = thumb.md5;
-        var mt = newHTML("div", "aproject p" + pc, tb);
+        var mt = newHTML('div', 'aproject p' + pc, tb);
         Home.insertThumbnail(mt, 192, 144, thumb);
-        var label = newHTML("div", "projecttitle", tb);
-        var txt = newHTML("h4", undefined, label);
+        var label = newHTML('div', 'projecttitle', tb);
+        var txt = newHTML('h4', undefined, label);
         txt.textContent = data.name;
 
-        var bow = newHTML("div", "share", tb);
-        var ribbonHorizontal = newHTML("div", "ribbonHorizontal", tb);
-        var ribbonVertical = newHTML("div", "ribbonVertical", tb);
+        var bow = newHTML('div', 'share', tb);
+        var ribbonHorizontal = newHTML('div', 'ribbonHorizontal', tb);
+        var ribbonVertical = newHTML('div', 'ribbonVertical', tb);
 
-        if (data.isgift != "0") {
+        if (data.isgift != '0') {
             // If it's a gift, show the bow and ribbon
-            bow.style.visibility = "visible";
-            ribbonHorizontal.style.visibility = "visible";
-            ribbonVertical.style.visibility = "visible";
+            bow.style.visibility = 'visible';
+            ribbonHorizontal.style.visibility = 'visible';
+            ribbonVertical.style.visibility = 'visible';
         }
 
-        newHTML("div", "closex", tb);
+        newHTML('div', 'closex', tb);
     }
 
     static insertThumbnail(p, w, h, data) {
         var md5 = data.md5;
-        var img = newHTML("img", undefined, p);
+        var img = newHTML('img', undefined, p);
         if (md5) {
             IO.getAsset(md5, drawMe);
         }
@@ -434,17 +433,17 @@ class Events {
         if (e.touches && e.touches.length > 0) {
             return {
                 x: e.touches[0].pageX,
-                y: e.touches[0].pageY,
+                y: e.touches[0].pageY
             };
         } else if (e.changedTouches) {
             return {
                 x: e.changedTouches[0].pageX,
-                y: e.changedTouches[0].pageY,
+                y: e.changedTouches[0].pageY
             };
         }
         return {
             x: e.clientX,
-            y: e.clientY,
+            y: e.clientY
         };
     }
 }

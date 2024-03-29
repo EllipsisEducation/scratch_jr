@@ -48,7 +48,7 @@ export default class PaintUndo {
         button.setAttribute('type', 'toggleclicky');
         button.setAttribute('id', prefix + key);
         if (fcn) {
-            window.setEventHandler("touchstart", function (evt) {
+            window.setEventHandler('touchstart', function (evt) {
                 fcn(evt);
             }, button);
             button.onmousedown = function (evt) {

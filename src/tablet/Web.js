@@ -2,10 +2,10 @@
 //  Web interface functions
 //////////////////////////////////////////////////
 
-import * as db from "./WebDB.js";
-import { WebVideo } from "./WebVideo.js";
-import Record from "../editor/ui/Record";
-import { absoluteURL } from "../utils/lib.js";
+import * as db from './WebDB.js';
+import { WebVideo } from './WebVideo.js';
+import Record from '../editor/ui/Record';
+import { absoluteURL } from '../utils/lib.js';
 
 // MediaRecorder node which records audio
 let audioRecorder = null;
@@ -40,7 +40,7 @@ function calculateVolumeLevel(audioData) {
 
 export async function setupMediaRecording() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        console.log("Media recording unsupported!");
+        console.log('Media recording unsupported!');
         return;
     }
 
@@ -54,12 +54,12 @@ export async function setupMediaRecording() {
         audioAnalyser = recorderAudioContext.createAnalyser();
         audioStreamSource.connect(audioAnalyser);
         audioRecorder = new MediaRecorder(audioStream);
-        audioRecorder.addEventListener("dataavailable", (e) =>
+        audioRecorder.addEventListener('dataavailable', (e) =>
             latestAudioChunks.push(e.data)
         );
-        audioRecorder.addEventListener("stop", async () => {
+        audioRecorder.addEventListener('stop', async () => {
             const audioBlob = new Blob(latestAudioChunks, {
-                type: "audio/webm",
+                type: 'audio/webm',
             });
 
             Record.setButtonsEnabled(false);
@@ -71,7 +71,7 @@ export async function setupMediaRecording() {
                     latestAudioURL = URL.createObjectURL(audioBlob);
                 }
             } catch (err) {
-                console.log("Audio upload error!", err);
+                console.log('Audio upload error!', err);
                 return;
             } finally {
                 Record.setButtonsEnabled(true);
@@ -84,11 +84,11 @@ export async function setupMediaRecording() {
             // as a buffer in our sound management system.
             const reader = new FileReader();
 
-            reader.addEventListener("loadend", async () => {
+            reader.addEventListener('loadend', async () => {
                 const audioBuffer = await audioContext.decodeAudioData(
                     reader.result
                 );
-                audioBuffers["__recording__"] = audioBuffer;
+                audioBuffers['__recording__'] = audioBuffer;
             });
 
             reader.readAsArrayBuffer(audioBlob);
@@ -97,7 +97,7 @@ export async function setupMediaRecording() {
         const bufferLength = audioAnalyser.frequencyBinCount;
         audioVolumeBuffer = new Uint8Array(bufferLength);
     } catch (err) {
-        console.log("Audio recording error!", err);
+        console.log('Audio recording error!', err);
     }
 }
 
@@ -110,7 +110,7 @@ export function videoRecorderAvailable() {
 }
 
 function stopRecording() {
-    if (audioRecorder.state !== "inactive") {
+    if (audioRecorder.state !== 'inactive') {
         audioRecorder.stop();
     }
     if (latestAudioURL !== null) {
@@ -128,7 +128,7 @@ export default class Web {
         // }
         (async () => {
             const result = await db.executeStatementFromJSON(json);
-            console.log("stmt", json, result);
+            console.log('stmt', json, result);
             if (fcn) fcn(result);
             db.saveDB();
         })();
@@ -148,19 +148,19 @@ export default class Web {
     }
 
     static setfield(db, id, fieldname, val, fcn) {
-        console.log("setfield");
+        console.log('setfield');
         if (fcn) fcn();
     }
 
     // IO functions
 
     static cleanassets(ft, fcn) {
-        console.log("cleanassets");
+        console.log('cleanassets');
         if (fcn) fcn();
     }
 
     static getmedia(file, fcn) {
-        console.log("getmedia");
+        console.log('getmedia');
         (async () => {
             var content = await db.readProjectFile(file);
             if (fcn) fcn(content);
@@ -168,46 +168,46 @@ export default class Web {
     }
 
     static getmediadata(key, offset, len, fcn) {
-        console.log("getmediadata");
+        console.log('getmediadata');
         if (fcn) fcn();
     }
 
     static processdata(key, off, len, oldstr, fcn) {
-        console.log("processdata");
+        console.log('processdata');
         if (fcn) fcn();
     }
 
     static getsettings(fcn) {
-        console.log("getsettings");
-        fcn("path,0,NO,NO");
+        console.log('getsettings');
+        fcn('path,0,NO,NO');
     }
 
     static getmediadone(file, fcn) {
-        console.log("getmediadone");
+        console.log('getmediadone');
         if (fcn) fcn();
     }
 
     static setmedia(content, ext, fcn) {
-        console.log("setmedia");
+        console.log('setmedia');
         (async () => {
             var name = await db.getMD5(content);
             const filename = `${name}.${ext}`;
             await db.saveToProjectFiles(filename, content, {
-                encoding: "base64",
+                encoding: 'base64',
             });
             if (fcn) fcn(filename);
         })();
     }
 
     static setmedianame(str, name, ext, fcn) {
-        console.log("setmedianame");
+        console.log('setmedianame');
         const filename = `${name}.${ext}`;
-        db.saveToProjectFiles(filename, str, { encoding: "base64" });
+        db.saveToProjectFiles(filename, str, { encoding: 'base64' });
         if (fcn) fcn(filename);
     }
 
     static getmd5(str, fcn) {
-        console.log("getmd5");
+        console.log('getmd5');
         (async () => {
             var name = await db.getMD5(str);
             if (fcn) fcn(name);
@@ -215,17 +215,17 @@ export default class Web {
     }
 
     static remove(str, fcn) {
-        console.log("remove");
+        console.log('remove');
         if (fcn) fcn();
     }
 
     static getfile(str, fcn) {
-        console.log("getfile");
-        if (fcn) fcn("");
+        console.log('getfile');
+        if (fcn) fcn('');
     }
 
     static setfile(name, str, fcn) {
-        console.log("setfile");
+        console.log('setfile');
         if (fcn) fcn();
     }
 
@@ -235,12 +235,12 @@ export default class Web {
         (async () => {
             // In this case, the user can not save the project, so we don't upload
             // the audio to the server and instead just use a blob URL
-            if (name.startsWith("blob:")) {
-                dir = "";
+            if (name.startsWith('blob:')) {
+                dir = '';
             }
 
             const url = absoluteURL(dir + name);
-            console.log("registerSound", dir, name);
+            console.log('registerSound', dir, name);
             const response = await fetch(url);
             const arrayBuffer = await response.arrayBuffer();
             const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
@@ -250,7 +250,7 @@ export default class Web {
     }
 
     static playSound(name, onSoundEnd) {
-        console.log("playSound");
+        console.log('playSound');
         if (audioSources[name]) {
             audioSources[name].stop();
         }
@@ -258,7 +258,7 @@ export default class Web {
         audioSources[name] = audioContext.createBufferSource();
         audioSources[name].buffer = audioBuffers[name];
         audioSources[name].connect(audioContext.destination);
-        audioSources[name].addEventListener("ended", function () {
+        audioSources[name].addEventListener('ended', function () {
             this.stop();
             audioSources[name] = null;
             if (onSoundEnd) onSoundEnd();
@@ -267,7 +267,7 @@ export default class Web {
     }
 
     static stopSound(name, fcn) {
-        console.log("stopSound");
+        console.log('stopSound');
         if (audioSources[name]) {
             audioSources[name].stop();
         }
@@ -277,9 +277,9 @@ export default class Web {
     // Web Wiew delegate call backs
 
     static sndrecord(fcn) {
-        console.log("sndrecord");
+        console.log('sndrecord');
         if (audioRecorder === null) {
-            console.log("Audio recorder not available");
+            console.log('Audio recorder not available');
             if (fcn) fcn(false);
             return;
         }
@@ -293,9 +293,9 @@ export default class Web {
     }
 
     static recordstop(fcn) {
-        console.log("recordstop");
+        console.log('recordstop');
         if (audioRecorder === null) {
-            console.log("Audio recorder not available");
+            console.log('Audio recorder not available');
             if (fcn) fcn(false);
             return;
         }
@@ -306,9 +306,9 @@ export default class Web {
     }
 
     static volume(fcn) {
-        console.log("volume");
+        console.log('volume');
         if (audioVolumeBuffer === null) {
-            console.log("Audio volume not available");
+            console.log('Audio volume not available');
             if (fcn) fcn(0);
             return;
         }
@@ -320,36 +320,36 @@ export default class Web {
     }
 
     static startplay(fcn) {
-        console.log("startplay");
-        Web.playSound("__recording__");
-        if (fcn) fcn(audioBuffers["__recording__"].duration);
+        console.log('startplay');
+        Web.playSound('__recording__');
+        if (fcn) fcn(audioBuffers['__recording__'].duration);
     }
 
     static stopplay(fcn) {
-        console.log("stopplay");
-        Web.stopSound("__recording__");
+        console.log('stopplay');
+        Web.stopSound('__recording__');
         if (fcn) fcn();
     }
 
     static recorddisappear(b, fcn) {
-        console.log("recorddisappear");
+        console.log('recorddisappear');
         if (fcn) fcn();
     }
 
     // Record state
     static askpermission() {
-        console.log("askpermission");
+        console.log('askpermission');
     }
 
     // camera functions
 
     static hascamera() {
-        console.log("hascamera");
+        console.log('hascamera');
         return videoRecorderAvailable();
     }
 
     static startfeed(data, fcn) {
-        console.log("startfeed");
+        console.log('startfeed');
 
         if (webVideo === null) {
             webVideo = new WebVideo(data);
@@ -360,7 +360,7 @@ export default class Web {
     }
 
     static stopfeed(fcn) {
-        console.log("stopfeed");
+        console.log('stopfeed');
 
         if (webVideo !== null) {
             webVideo.hide();
@@ -372,19 +372,19 @@ export default class Web {
 
     static choosecamera(mode, fcn) {
         // This is not needed for the web version
-        console.log("choosecamera");
+        console.log('choosecamera');
         if (fcn) fcn();
     }
 
     static captureimage(fcn) {
-        console.log("captureimage");
+        console.log('captureimage');
 
         if (webVideo !== null) {
             // The image is returned as a data URL
             const imgDataURL = webVideo.snapshot();
             if (imgDataURL) {
                 // we just want the base64 encoded image data without the header
-                let rawImgData = imgDataURL.split(",")[1];
+                let rawImgData = imgDataURL.split(',')[1];
                 Camera.processimage(rawImgData);
             }
         }
@@ -393,20 +393,20 @@ export default class Web {
     }
 
     static hidesplash(fcn) {
-        console.log("hidesplash");
+        console.log('hidesplash');
         if (fcn) fcn();
     }
 
     static trace(str) {
-        console.log("trace");
+        console.log('trace');
     }
 
     static parse(str) {
-        console.log("parse");
+        console.log('parse');
     }
 
     static tracemedia(str) {
-        console.log("tracemedia");
+        console.log('tracemedia');
     }
 
     ignore() {}
@@ -416,7 +416,7 @@ export default class Web {
     ///////////////
 
     static createZipForProject(projectData, metadata, name, fcn) {
-        console.log("createZipForProject");
+        console.log('createZipForProject');
         if (fcn) fcn();
     }
 
@@ -428,35 +428,35 @@ export default class Web {
     // b64data: base-64 encoded .SJR file to share
 
     static sendSjrToShareDialog(fileName, emailSubject, emailBody, shareType) {
-        console.log("sendSjrToShareDialog");
+        console.log('sendSjrToShareDialog');
     }
 
     static registerLibraryAssets(version, assets, fcn) {
-        console.log("registerLibraryAssets");
+        console.log('registerLibraryAssets');
         if (fcn) fcn();
     }
 
     static duplicateAsset(path, name, fcn) {
-        console.log("duplicateAsset");
+        console.log('duplicateAsset');
         if (fcn) fcn();
     }
 
     // Name of the device/iPad to display on the sharing dialog page
     // fcn is called with the device name as an arg
     static deviceName(fcn) {
-        console.log("deviceName");
-        if (fcn) fcn("Web");
+        console.log('deviceName');
+        if (fcn) fcn('Web');
     }
 
     static analyticsEvent(category, action, label) {
-        console.log("analyticsEvent");
+        console.log('analyticsEvent');
     }
 
     static setAnalyticsPlacePref(preferredPlace) {
-        console.log("setAnalyticsPlacePref");
+        console.log('setAnalyticsPlacePref');
     }
 
     static setAnalyticsPref(key, value) {
-        console.log("setAnalyticsPref");
+        console.log('setAnalyticsPref');
     }
 }

@@ -2,13 +2,13 @@
 // Samples Screen
 //////////////////////////////////////////////////
 
-import Lobby from "./Lobby";
-import OS from "../tablet/OS";
-import IO from "../tablet/IO";
-import MediaLib from "../tablet/MediaLib";
-import ScratchAudio from "../utils/ScratchAudio";
-import Localization from "../utils/Localization";
-import { absoluteURL, gn, newHTML } from "../utils/lib";
+import Lobby from './Lobby';
+import OS from '../tablet/OS';
+import IO from '../tablet/IO';
+import MediaLib from '../tablet/MediaLib';
+import ScratchAudio from '../utils/ScratchAudio';
+import Localization from '../utils/Localization';
+import { absoluteURL, gn, newHTML } from '../utils/lib';
 
 let frame;
 // Should ScratchJr projects be saved when the sample project is changed?
@@ -17,12 +17,12 @@ let frame;
 
 export default class Samples {
     static init() {
-        frame = gn("htmlcontents");
-        window.setEventHandler("touchstart", Samples.playHowTo, gn("tabicon"));
-        gn("tabicon").onclick = Samples.playHowTo;
-        var div = newHTML("div", "samples off", frame);
-        div.setAttribute("id", "samples");
-        Samples.display("samples");
+        frame = gn('htmlcontents');
+        window.setEventHandler('touchstart', Samples.playHowTo, gn('tabicon'));
+        gn('tabicon').onclick = Samples.playHowTo;
+        var div = newHTML('div', 'samples off', frame);
+        div.setAttribute('id', 'samples');
+        Samples.display('samples');
     }
 
     ////////////////////////////
@@ -32,19 +32,19 @@ export default class Samples {
     static playHowTo(e) {
         e.preventDefault();
         e.stopPropagation();
-        ScratchAudio.sndFX("tap.wav");
+        ScratchAudio.sndFX('tap.wav');
         const params = new URLSearchParams();
         if (window.studentAssignmentID) {
             params.append(
-                "student_assignment_id",
+                'student_assignment_id',
                 window.studentAssignmentID
             );
         }
         if (window.itemID) {
-            params.append("item_id", window.itemID);
+            params.append('item_id', window.itemID);
         }
 
-        const url = "gettingstarted.html?place=help&" + params.toString();
+        const url = 'gettingstarted.html?place=help&' + params.toString();
         window.location.href = url;
     }
 
@@ -60,7 +60,7 @@ export default class Samples {
             Samples.requestFromServer(i, files[i], displayThumb);
         }
         function displayThumb(pos, str) {
-            var mt = gn("sample-" + pos);
+            var mt = gn('sample-' + pos);
             var data = IO.parseProjectData(JSON.parse(str)[0]);
             var name = mt.childNodes[1];
 
@@ -78,32 +78,32 @@ export default class Samples {
     static show() {
         Lobby.busy = false;
         frame.parentNode.scrollTop = 0;
-        gn("samples").className = "samples on";
+        gn('samples').className = 'samples on';
     }
 
     static loadMe(e, mt) {
         e.preventDefault();
         e.stopPropagation();
-        ScratchAudio.sndFX("tap.wav");
-        OS.analyticsEvent("samples", "sample_opened", mt.textContent);
+        ScratchAudio.sndFX('tap.wav');
+        OS.analyticsEvent('samples', 'sample_opened', mt.textContent);
         var md5 = mt.md5;
         const params = new URLSearchParams();
         if (window.studentAssignmentID) {
             params.append(
-                "student_assignment_id",
+                'student_assignment_id',
                 window.studentAssignmentID
             );
         }
         if (window.itemID) {
-            params.append("item_id", window.itemID);
+            params.append('item_id', window.itemID);
         }
 
         const url =
-            "editor.html?pmd5=" +
+            'editor.html?pmd5=' +
             md5 +
-            "&mode=" +
-            (window.Settings.useStoryStarters ? "storyStarter" : "look") +
-            "&" +
+            '&mode=' +
+            (window.Settings.useStoryStarters ? 'storyStarter' : 'look') +
+            '&' +
             params.toString();
         window.location.href = url;
     }
@@ -111,32 +111,32 @@ export default class Samples {
     static insertThumbnail(img, data) {
         var md5 = data.md5;
         if (md5) {
-            img.style.backgroundImage = "url('" + md5 + "')";
+            img.style.backgroundImage = 'url(\'' + md5 + '\')';
         }
     }
 
     static addLink(parent, pos, md5) {
-        var tb = newHTML("div", "samplethumb", parent);
-        tb.setAttribute("id", "sample-" + pos);
+        var tb = newHTML('div', 'samplethumb', parent);
+        tb.setAttribute('id', 'sample-' + pos);
         tb.md5 = md5;
-        tb.type = "samplethumb";
-        var mt = newHTML("div", "thumb pos" + pos, tb);
-        newHTML("div", "woodframe", mt);
-        newHTML("div", "sampleicon", mt);
-        var name = newHTML("p", undefined, tb);
-        name.textContent = "Sample " + pos;
+        tb.type = 'samplethumb';
+        var mt = newHTML('div', 'thumb pos' + pos, tb);
+        newHTML('div', 'woodframe', mt);
+        newHTML('div', 'sampleicon', mt);
+        var name = newHTML('p', undefined, tb);
+        name.textContent = 'Sample ' + pos;
     }
 
     static requestFromServer(pos, url, whenDone) {
         url = absoluteURL(url);
         var xmlrequest = new XMLHttpRequest();
-        xmlrequest.addEventListener("error", transferFailed, false);
+        xmlrequest.addEventListener('error', transferFailed, false);
         xmlrequest.onreadystatechange = function () {
             if (xmlrequest.readyState == 4) {
                 whenDone(pos, xmlrequest.responseText);
             }
         };
-        xmlrequest.open("GET", url, true);
+        xmlrequest.open('GET', url, true);
         xmlrequest.send(null);
         function transferFailed(e) {
             e.preventDefault();
