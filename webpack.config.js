@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
+const { hostname } = require('os');
 
 module.exports = function (env, argv) {
     const isProduction = argv.mode === 'production';

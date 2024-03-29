@@ -6,7 +6,7 @@
     "watch": "webpack --mode=development --progress --watch",
     "dev": "webpack --mode=development --progress",
     "build": "webpack --mode=production --progress",
-    "start": "npm run dev && webpack-dev-server --host localhost"
+    "start": "npm run dev && webpack-dev-server --host 127.0.0.1"
   },
   "author": "Massachusetts Institute of Technology",
   "license": "BSD-3-Clause",
