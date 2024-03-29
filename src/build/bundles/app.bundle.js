@@ -96205,7 +96205,7 @@ window.setEventHandler = function (event, handler, target) {
   if (target === undefined) {
     target = window;
   }
-  if (!Object.hasOwn(target, "_scratchJrEventHandlers")) {
+  if (!Object.hasOwn(target, '_scratchJrEventHandlers')) {
     target._scratchJrEventHandlers = {};
   }
   var existingHandler = target._scratchJrEventHandlers[event];
@@ -96218,7 +96218,7 @@ window.setEventHandler = function (event, handler, target) {
   }
 };
 function loadSettings(settingsRoot, whenDone) {
-  _tablet_IO__WEBPACK_IMPORTED_MODULE_4__["default"].requestFromServer(settingsRoot + "settings.json", function (result) {
+  _tablet_IO__WEBPACK_IMPORTED_MODULE_4__["default"].requestFromServer(settingsRoot + 'settings.json', function (result) {
     window.Settings = JSON.parse(result);
     whenDone();
   });
@@ -96234,14 +96234,14 @@ window.onload = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime
         // are asynchronously loaded. This is overwritten per HTML page below.
         entryFunction = function entryFunction() {}; // Root directory for includes. Needed in case we are in the inapp-help
         // directory (and root becomes '../')
-        root = "./"; // scratchJrPage is defined in the HTML pages
+        root = './'; // scratchJrPage is defined in the HTML pages
         page = window.scratchJrPage;
         params = new URLSearchParams(window.location.search);
         if (!window.studentAssignmentID) {
-          window.studentAssignmentID = params.get("student_assignment_id", null);
+          window.studentAssignmentID = params.get('student_assignment_id', null);
         }
         if (!window.itemID) {
-          window.itemID = params.get("item_id", null);
+          window.itemID = params.get('item_id', null);
         }
         if (window.setupTimeTracking && window.setActive) {
           window.setupTimeTracking();
@@ -96249,57 +96249,57 @@ window.onload = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime
           window.addEventListener('touchstart', window.setActive);
           window.addEventListener('keydown', window.setActive);
         }
-        console.log("waitin for db");
+        console.log('waitin for db');
         _context.next = 10;
         return _tablet_WebDB_js__WEBPACK_IMPORTED_MODULE_6__.initDB();
       case 10:
         shouldCreateNewProject = _context.sent;
-        console.log("done waitin for db");
+        console.log('done waitin for db');
 
         // Load CSS and set root/entryFunction for all pages
         _context.t0 = page;
-        _context.next = _context.t0 === "index" ? 15 : _context.t0 === "home" ? 22 : _context.t0 === "editor" ? 28 : _context.t0 === "gettingStarted" ? 38 : _context.t0 === "inappAbout" ? 43 : _context.t0 === "inappInterfaceGuide" ? 47 : _context.t0 === "inappPaintEditorGuide" ? 52 : _context.t0 === "inappBlocksGuide" ? 57 : _context.t0 === "inappPrivacyPolicy" ? 62 : 67;
+        _context.next = _context.t0 === 'index' ? 15 : _context.t0 === 'home' ? 22 : _context.t0 === 'editor' ? 28 : _context.t0 === 'gettingStarted' ? 38 : _context.t0 === 'inappAbout' ? 43 : _context.t0 === 'inappInterfaceGuide' ? 47 : _context.t0 === 'inappPaintEditorGuide' ? 52 : _context.t0 === 'inappBlocksGuide' ? 57 : _context.t0 === 'inappPrivacyPolicy' ? 62 : 67;
         break;
       case 15:
         // Index page (splash screen)
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/font.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/base.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/start.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/thumbs.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/font.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/base.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/start.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/thumbs.css');
         /* For parental gate. These CSS properties should be refactored */
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editor.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editor.css');
         entryFunction = function entryFunction() {
           return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(function () {
-            var assets = Object.keys(_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_5__["default"].keys).join(",");
+            var assets = Object.keys(_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_5__["default"].keys).join(',');
             _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].registerLibraryAssets(_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_5__["default"].version, assets, _index__WEBPACK_IMPORTED_MODULE_7__.indexMain);
           });
         };
         return _context.abrupt("break", 67);
       case 22:
         // Lobby pages
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/font.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/base.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/lobby.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/thumbs.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/font.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/base.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/lobby.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/thumbs.css');
         entryFunction = function entryFunction() {
           return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(_home__WEBPACK_IMPORTED_MODULE_8__.homeMain);
         };
         return _context.abrupt("break", 67);
       case 28:
         // Editor pages
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/font.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/base.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editor.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editorleftpanel.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editorstage.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editormodal.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/librarymodal.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/paintlook.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/font.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/base.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editor.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editorleftpanel.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editorstage.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editormodal.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/librarymodal.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/paintlook.css');
         entryFunction = function entryFunction() {
           return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(function () {
             if (shouldCreateNewProject) {
               var obj = {};
-              obj.name = _utils_Localization__WEBPACK_IMPORTED_MODULE_1__["default"].localize("NEW_PROJECT_PREFIX") + " " + 1;
+              obj.name = _utils_Localization__WEBPACK_IMPORTED_MODULE_1__["default"].localize('NEW_PROJECT_PREFIX') + ' ' + 1;
               obj.version = window.Settings.scratchJrVersion;
               obj.mtime = new Date().getTime().toString();
               _tablet_IO__WEBPACK_IMPORTED_MODULE_4__["default"].createProject(obj, _editor__WEBPACK_IMPORTED_MODULE_9__.editorMain);
@@ -96309,56 +96309,56 @@ window.onload = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime
         return _context.abrupt("break", 67);
       case 38:
         // Getting started video page
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/font.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/base.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/gs.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/font.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/base.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/gs.css');
         entryFunction = function entryFunction() {
           return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(_gettingstarted__WEBPACK_IMPORTED_MODULE_10__.gettingStartedMain);
         };
         return _context.abrupt("break", 67);
       case 43:
         // About ScratchJr in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/about.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/about.css');
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappAbout)();
         };
-        root = "../";
+        root = '../';
         return _context.abrupt("break", 67);
       case 47:
         // Interface guide in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/style.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/interface.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/style.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/interface.css');
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappInterfaceGuide)();
         };
-        root = "../";
+        root = '../';
         return _context.abrupt("break", 67);
       case 52:
         // Paint editor guide in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/style.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/paint.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/style.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/paint.css');
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappPaintEditorGuide)();
         };
-        root = "../";
+        root = '../';
         return _context.abrupt("break", 67);
       case 57:
         // Blocks guide in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/style.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/blocks.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/style.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/blocks.css');
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappBlocksGuide)();
         };
-        root = "../";
+        root = '../';
         return _context.abrupt("break", 67);
       case 62:
         // Blocks guide in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/style.css");
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/privacy.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/style.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/privacy.css');
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappPrivacyPolicy)();
         };
-        root = "../";
+        root = '../';
         return _context.abrupt("break", 67);
       case 67:
         // Start up sequence

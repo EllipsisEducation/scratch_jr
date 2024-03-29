@@ -1,22 +1,22 @@
-import { preprocessAndLoadCss } from "../utils/lib";
-import Localization from "../utils/Localization";
-import InitialOptions from "../utils/InitialOptions";
-import OS from "../tablet/OS";
-import IO from "../tablet/IO";
-import MediaLib from "../tablet/MediaLib";
-import * as db from "../tablet/WebDB.js";
+import { preprocessAndLoadCss } from '../utils/lib';
+import Localization from '../utils/Localization';
+import InitialOptions from '../utils/InitialOptions';
+import OS from '../tablet/OS';
+import IO from '../tablet/IO';
+import MediaLib from '../tablet/MediaLib';
+import * as db from '../tablet/WebDB.js';
 
-import { indexMain } from "./index";
-import { homeMain } from "./home";
-import { editorMain } from "./editor";
-import { gettingStartedMain } from "./gettingstarted";
+import { indexMain } from './index';
+import { homeMain } from './home';
+import { editorMain } from './editor';
+import { gettingStartedMain } from './gettingstarted';
 import {
     inappInterfaceGuide,
     inappAbout,
     inappBlocksGuide,
     inappPaintEditorGuide,
-    inappPrivacyPolicy,
-} from "./inapp";
+    inappPrivacyPolicy
+} from './inapp';
 
 /* This function replicates the behavior of the `.on<event>` properties but is
  * implemented using `addEventListener` and `removeEventListener`. This allows
@@ -45,7 +45,7 @@ window.setEventHandler = function (event, handler, target) {
     if (target === undefined) {
         target = window;
     }
-    if (!Object.hasOwn(target, "_scratchJrEventHandlers")) {
+    if (!Object.hasOwn(target, '_scratchJrEventHandlers')) {
         target._scratchJrEventHandlers = {};
     }
     const existingHandler = target._scratchJrEventHandlers[event];
@@ -59,7 +59,7 @@ window.setEventHandler = function (event, handler, target) {
 };
 
 function loadSettings(settingsRoot, whenDone) {
-    IO.requestFromServer(settingsRoot + "settings.json", (result) => {
+    IO.requestFromServer(settingsRoot + 'settings.json', (result) => {
         window.Settings = JSON.parse(result);
         whenDone();
     });
@@ -73,17 +73,17 @@ window.onload = async () => {
 
     // Root directory for includes. Needed in case we are in the inapp-help
     // directory (and root becomes '../')
-    let root = "./";
+    let root = './';
 
     // scratchJrPage is defined in the HTML pages
     let page = window.scratchJrPage;
 
     const params = new URLSearchParams(window.location.search);
     if (!window.studentAssignmentID) {
-        window.studentAssignmentID = params.get("student_assignment_id", null);
+        window.studentAssignmentID = params.get('student_assignment_id', null);
     }
     if (!window.itemID) {
-        window.itemID = params.get("item_id", null);
+        window.itemID = params.get('item_id', null);
     }
 
     if (window.setupTimeTracking && window.setActive) {
@@ -93,103 +93,103 @@ window.onload = async () => {
         window.addEventListener('keydown', window.setActive);
     }
 
-    console.log("waitin for db");
+    console.log('waitin for db');
     const shouldCreateNewProject = await db.initDB();
-    console.log("done waitin for db");
+    console.log('done waitin for db');
 
     // Load CSS and set root/entryFunction for all pages
     switch (page) {
-        case "index":
+    case 'index':
             // Index page (splash screen)
-            preprocessAndLoadCss("css", "css/font.css");
-            preprocessAndLoadCss("css", "css/base.css");
-            preprocessAndLoadCss("css", "css/start.css");
-            preprocessAndLoadCss("css", "css/thumbs.css");
+        preprocessAndLoadCss('css', 'css/font.css');
+        preprocessAndLoadCss('css', 'css/base.css');
+        preprocessAndLoadCss('css', 'css/start.css');
+        preprocessAndLoadCss('css', 'css/thumbs.css');
             /* For parental gate. These CSS properties should be refactored */
-            preprocessAndLoadCss("css", "css/editor.css");
-            entryFunction = () =>
+        preprocessAndLoadCss('css', 'css/editor.css');
+        entryFunction = () =>
                 OS.waitForInterface(function () {
-                    var assets = Object.keys(MediaLib.keys).join(",");
+                    var assets = Object.keys(MediaLib.keys).join(',');
                     OS.registerLibraryAssets(
                         MediaLib.version,
                         assets,
                         indexMain
                     );
                 });
-            break;
-        case "home":
+        break;
+    case 'home':
             // Lobby pages
-            preprocessAndLoadCss("css", "css/font.css");
-            preprocessAndLoadCss("css", "css/base.css");
-            preprocessAndLoadCss("css", "css/lobby.css");
-            preprocessAndLoadCss("css", "css/thumbs.css");
-            entryFunction = () => OS.waitForInterface(homeMain);
-            break;
-        case "editor":
+        preprocessAndLoadCss('css', 'css/font.css');
+        preprocessAndLoadCss('css', 'css/base.css');
+        preprocessAndLoadCss('css', 'css/lobby.css');
+        preprocessAndLoadCss('css', 'css/thumbs.css');
+        entryFunction = () => OS.waitForInterface(homeMain);
+        break;
+    case 'editor':
             // Editor pages
-            preprocessAndLoadCss("css", "css/font.css");
-            preprocessAndLoadCss("css", "css/base.css");
-            preprocessAndLoadCss("css", "css/editor.css");
-            preprocessAndLoadCss("css", "css/editorleftpanel.css");
-            preprocessAndLoadCss("css", "css/editorstage.css");
-            preprocessAndLoadCss("css", "css/editormodal.css");
-            preprocessAndLoadCss("css", "css/librarymodal.css");
-            preprocessAndLoadCss("css", "css/paintlook.css");
-            entryFunction = () =>
+        preprocessAndLoadCss('css', 'css/font.css');
+        preprocessAndLoadCss('css', 'css/base.css');
+        preprocessAndLoadCss('css', 'css/editor.css');
+        preprocessAndLoadCss('css', 'css/editorleftpanel.css');
+        preprocessAndLoadCss('css', 'css/editorstage.css');
+        preprocessAndLoadCss('css', 'css/editormodal.css');
+        preprocessAndLoadCss('css', 'css/librarymodal.css');
+        preprocessAndLoadCss('css', 'css/paintlook.css');
+        entryFunction = () =>
                 OS.waitForInterface(() => {
                     if (shouldCreateNewProject) {
                         var obj = {};
                         obj.name =
-                            Localization.localize("NEW_PROJECT_PREFIX") +
-                            " " +
+                            Localization.localize('NEW_PROJECT_PREFIX') +
+                            ' ' +
                             1;
                         obj.version = window.Settings.scratchJrVersion;
                         obj.mtime = new Date().getTime().toString();
                         IO.createProject(obj, editorMain);
                     } else editorMain();
                 });
-            break;
-        case "gettingStarted":
+        break;
+    case 'gettingStarted':
             // Getting started video page
-            preprocessAndLoadCss("css", "css/font.css");
-            preprocessAndLoadCss("css", "css/base.css");
-            preprocessAndLoadCss("css", "css/gs.css");
-            entryFunction = () => OS.waitForInterface(gettingStartedMain);
-            break;
-        case "inappAbout":
+        preprocessAndLoadCss('css', 'css/font.css');
+        preprocessAndLoadCss('css', 'css/base.css');
+        preprocessAndLoadCss('css', 'css/gs.css');
+        entryFunction = () => OS.waitForInterface(gettingStartedMain);
+        break;
+    case 'inappAbout':
             // About ScratchJr in-app help frame
-            preprocessAndLoadCss("style", "style/about.css");
-            entryFunction = () => inappAbout();
-            root = "../";
-            break;
-        case "inappInterfaceGuide":
+        preprocessAndLoadCss('style', 'style/about.css');
+        entryFunction = () => inappAbout();
+        root = '../';
+        break;
+    case 'inappInterfaceGuide':
             // Interface guide in-app help frame
-            preprocessAndLoadCss("style", "style/style.css");
-            preprocessAndLoadCss("style", "style/interface.css");
-            entryFunction = () => inappInterfaceGuide();
-            root = "../";
-            break;
-        case "inappPaintEditorGuide":
+        preprocessAndLoadCss('style', 'style/style.css');
+        preprocessAndLoadCss('style', 'style/interface.css');
+        entryFunction = () => inappInterfaceGuide();
+        root = '../';
+        break;
+    case 'inappPaintEditorGuide':
             // Paint editor guide in-app help frame
-            preprocessAndLoadCss("style", "style/style.css");
-            preprocessAndLoadCss("style", "style/paint.css");
-            entryFunction = () => inappPaintEditorGuide();
-            root = "../";
-            break;
-        case "inappBlocksGuide":
+        preprocessAndLoadCss('style', 'style/style.css');
+        preprocessAndLoadCss('style', 'style/paint.css');
+        entryFunction = () => inappPaintEditorGuide();
+        root = '../';
+        break;
+    case 'inappBlocksGuide':
             // Blocks guide in-app help frame
-            preprocessAndLoadCss("style", "style/style.css");
-            preprocessAndLoadCss("style", "style/blocks.css");
-            entryFunction = () => inappBlocksGuide();
-            root = "../";
-            break;
-        case "inappPrivacyPolicy":
+        preprocessAndLoadCss('style', 'style/style.css');
+        preprocessAndLoadCss('style', 'style/blocks.css');
+        entryFunction = () => inappBlocksGuide();
+        root = '../';
+        break;
+    case 'inappPrivacyPolicy':
             // Blocks guide in-app help frame
-            preprocessAndLoadCss("style", "style/style.css");
-            preprocessAndLoadCss("style", "style/privacy.css");
-            entryFunction = () => inappPrivacyPolicy();
-            root = "../";
-            break;
+        preprocessAndLoadCss('style', 'style/style.css');
+        preprocessAndLoadCss('style', 'style/privacy.css');
+        entryFunction = () => inappPrivacyPolicy();
+        root = '../';
+        break;
     }
 
     // Start up sequence
