@@ -81,6 +81,7 @@ export default class ScratchAudio {
         if (!md5) {
             return;
         }
+        // TODO: What's this?
         var dir = 'https://codehs.com/uploads/';
         ScratchAudio.loadFromLocal(dir, md5, fcn);
     }

@@ -1,51 +1,52 @@
 {
-  "name": "scratchjr",
-  "version": "1.2.0",
-  "description": "ScratchJr",
-  "scripts": {
-    "watch": "webpack --mode=development --progress --watch",
-    "dev": "webpack --mode=development --progress",
-    "build": "webpack --mode=production --progress",
-    "start": "npm run dev && webpack-dev-server --host 0.0.0.0"
-  },
-  "author": "Massachusetts Institute of Technology",
-  "license": "BSD-3-Clause",
-  "bugs": {
-    "url": "https://github.com/llk/scratchjr/issues"
-  },
-  "homepage": "https://github.com/llk/scratchjr",
-  "devDependencies": {
-    "@babel/polyfill": "^7.10.4",
-    "@babel/preset-env": "^7.24.3",
-    "babel-core": "^6.4.0",
-    "babel-eslint": "^4.1.6",
-    "babel-loader": "^9.1.3",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-stage-3": "^6.24.1",
-    "buffer": "^6.0.3",
-    "crypto-browserify": "^3.12.0",
-    "esformatter": "^0.8.1",
-    "esformatter-braces": "^1.2.1",
-    "esformatter-dot-notation": "^1.3.1",
-    "esformatter-quotes": "^1.0.3",
-    "esformatter-semicolons": "^1.1.2",
-    "eslint": "^1.10.3",
-    "expose-loader": "^5.0.0",
-    "file-loader": "^6.2.0",
-    "path-browserify": "^1.0.1",
-    "stream-browserify": "^3.0.0",
-    "strip-sourcemap-loader": "0.0.1",
-    "vm-browserify": "^1.1.2",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4",
-    "webpack-notifier": "^1.6.0"
-  },
-  "dependencies": {
-    "firebase": "^9.19.1",
-    "intl": "^1.0.1",
-    "intl-messageformat": "^1.2.0",
-    "snapsvg": "^0.3.0",
-    "sql.js": "^1.8.0"
-  }
+    "name": "scratchjr",
+    "version": "1.2.0",
+    "description": "ScratchJr",
+    "scripts": {
+        "watch": "webpack --mode=development --progress --hide-modules --watch",
+        "dev": "npm run build && webpack serve --open --mode=development --progress",
+        "build": "webpack --mode=production --progress",
+        "start": "webpack-dev-server --open"
+    },
+    "author": "Massachusetts Institute of Technology",
+    "license": "BSD-3-Clause",
+    "bugs": {
+        "url": "https://github.com/llk/scratchjr/issues"
+    },
+    "homepage": "https://github.com/llk/scratchjr",
+    "devDependencies": {
+        "@babel/core": "^7.24.3",
+        "@babel/polyfill": "^7.10.4",
+        "@babel/preset-env": "^7.24.3",
+        "babel-core": "^6.4.0",
+        "babel-eslint": "^4.1.6",
+        "babel-loader": "^9.1.3",
+        "babel-preset-es2015": "^6.3.13",
+        "babel-preset-stage-3": "^6.24.1",
+        "buffer": "^6.0.3",
+        "crypto-browserify": "^3.12.0",
+        "esformatter": "^0.8.1",
+        "esformatter-braces": "^1.2.1",
+        "esformatter-dot-notation": "^1.3.1",
+        "esformatter-quotes": "^1.0.3",
+        "esformatter-semicolons": "^1.1.2",
+        "eslint": "^1.10.3",
+        "expose-loader": "^5.0.0",
+        "file-loader": "^6.2.0",
+        "path-browserify": "^1.0.1",
+        "stream-browserify": "^3.0.0",
+        "strip-sourcemap-loader": "0.0.1",
+        "vm-browserify": "^1.1.2",
+        "webpack": "^5.91.0",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.0.4",
+        "webpack-notifier": "^1.6.0"
+    },
+    "dependencies": {
+        "firebase": "^9.19.1",
+        "intl": "^1.0.1",
+        "intl-messageformat": "^1.2.0",
+        "snapsvg": "^0.3.0",
+        "sql.js": "^1.8.0"
+    }
 }

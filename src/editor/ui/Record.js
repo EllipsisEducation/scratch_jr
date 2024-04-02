@@ -340,22 +340,27 @@ export default class Record {
 
     static registerProjectSound() {
         function whenDone(snd) {
-            if (snd != "error") {
+            if (snd != 'error') {
                 var spr = ScratchJr.getSprite();
                 var page = spr.div.parentNode.owner;
                 spr.sounds.push(Record.soundname);
                 Undo.record({
-                    action: "recordsound",
+                    action: 'recordsound',
                     who: spr.id,
                     where: page.id,
-                    sound: Record.soundname,
+                    sound: Record.soundname
                 });
-                ScratchJr.storyStart("Record.registerProjectSound");
+                ScratchJr.storyStart('Record.registerProjectSound');
             }
             Record.tearDownRecorder();
             Palette.selectCategory(3);
         }
-        ScratchAudio.loadFromLocal('https://codehs.com/uploads/', Record.soundname, whenDone);
+        // TODO: What is this?
+        ScratchAudio.loadFromLocal(
+            'https://codehs.com/uploads/',
+            Record.soundname,
+            whenDone
+        );
     }
 
     // Called on error - remove everything and hide the recorder

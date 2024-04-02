@@ -3,26 +3,30 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
 
 module.exports = function (env, argv) {
-    const isProduction = argv.mode === 'production';
-    const assetBaseURL = isProduction
-        ? 'https://codehs.com/scratchjr_assets/'
-        : 'http://localhost:8000/scratchjr_assets/';
+    // const isProduction = argv.mode === 'production';
+    // const assetBaseURL = isProduction
+    //     ? 'https://codehs.com/scratchjr_assets/'
+    //     : 'http://localhost:8000/scratchjr_assets/';
+    const assetBaseURL = 'http://localhost:8080/scratchjr_assets/';
 
     return {
         devtool: 'source-map',
         entry: {
             app: './src/entry/app.js'
+            // app: './src/index.html'
         },
         output: {
             publicPath: assetBaseURL,
-            path: path.resolve(__dirname, 'src/build/bundles'),
-            filename: '[name].bundle.js'
+            // path: path.resolve(__dirname, 'src/build/bundles'),
+            path: path.resolve(__dirname, 'dist'),
+            // filename: '[name].bundle.js'
+            filename: 'main.js'
         },
         performance: {
             hints: false
         },
         watchOptions: {
-            ignored: ['node_modules', 'src/build/**/*']
+            ignored: ['node_modules', 'dist/**/*']
         },
         module: {
             rules: [
@@ -71,11 +75,12 @@ module.exports = function (env, argv) {
             })
         ],
         devServer: {
+            // contentBase: './dist'
             static: {
-                directory: path.join(__dirname, 'public')
+                directory: path.join(__dirname, './dist')
             },
-            compress: true,
-            port: 3000,
+            // compress: true,
+            // port: 3000,
             // https://stackoverflow.com/questions/31602697/webpack-dev-server-cors-issue
             headers: {
                 'Access-Control-Allow-Origin': '*',

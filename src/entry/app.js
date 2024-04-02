@@ -59,6 +59,9 @@ window.setEventHandler = function (event, handler, target) {
 };
 
 function loadSettings(settingsRoot, whenDone) {
+    console.log('loading settings');
+    console.log('settingsRoot', settingsRoot);
+
     IO.requestFromServer(settingsRoot + "settings.json", (result) => {
         window.Settings = JSON.parse(result);
         whenDone();

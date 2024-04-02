@@ -298,7 +298,7 @@ async function getInitialDBString() {
 }
 
 export async function initDB() {
-    console.log("init");
+    console.log('init DB');
 
     // return existing promise if it exists
     if (initPromise) {

@@ -108,7 +108,8 @@ export default class UI {
         var flip = newHTML("div", "flipme", sl);
         flip.setAttribute("id", "flip");
         flip.onclick = function (evt) {
-            window.location.href = "https://codehs.com/";
+            // window.location.href = "https://codehs.com/";
+            window.location.href = 'https://ellipsiseducation.com';
         }; // move to project
         UI.layoutLibrary(sl);
     }
