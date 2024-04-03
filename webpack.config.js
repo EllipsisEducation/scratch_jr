@@ -10,7 +10,9 @@ module.exports = function (env, argv) {
     // const assetBaseURL = isProduction
     //     ? 'https://codehs.com/scratchjr_assets/'
     //     : 'http://localhost:8000/scratchjr_assets/';
-    const assetBaseURL = 'http://localhost:8000/scratchjr_assets/';
+    // const assetBaseURL = 'http://localhost:8000/scratchjr_assets/';
+    // const assetBaseURL = 'http://localhost:3000/scratchjr_assets/';
+    const assetBaseURL = 'http://localhost:3000/';
     return {
         devtool: 'source-map',
         entry: {
