@@ -65,10 +65,10 @@ module.exports = function (env, argv) {
                 stream: require.resolve('stream-browserify'),
                 vm: require.resolve('vm-browserify'),
                 fs: false
-            },
-            alias: {
-                process: 'process/browser'
             }
+            // alias: {
+            //     process: 'process/browser'
+            // }
         },
         plugins: [
             new WebpackNotifierPlugin({
@@ -77,12 +77,12 @@ module.exports = function (env, argv) {
             }),
             // Define a global constant for asset URLs that can be used anywhere in the code
             new webpack.DefinePlugin({
-                ASSET_BASE_URL: JSON.stringify(assetBaseURL),
-                process: 'process/browser'
+                ASSET_BASE_URL: JSON.stringify(assetBaseURL)
+                // process: 'process/browser'
             }),
             new webpack.ProvidePlugin({
-                IntlMessageFormat: ['intl-messageformat', 'default'],
-                process: 'process'
+                IntlMessageFormat: ['intl-messageformat', 'default']
+                // process: 'process'
             }),
             new webpack.HotModuleReplacementPlugin() // Enable hot reload
         ],
