@@ -24,7 +24,7 @@
     "babel-preset-stage-3": "^6.24.1",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
-    "esformatter": "^0.8.1",
+    "esformatter": "^0.11.3",
     "esformatter-braces": "^1.2.1",
     "esformatter-dot-notation": "^1.3.1",
     "esformatter-quotes": "^1.0.3",
