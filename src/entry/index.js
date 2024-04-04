@@ -16,6 +16,7 @@ When this code starts up, there are several scenarios:
 let alreadyStartedQuestions = false;
 
 export function indexMain() {
+    console.log('IS IT RUNNING?');
     gn('gettings').onclick = indexGettingstarted;
     gn('startcode').onclick = indexGohome;
     ScratchAudio.init();

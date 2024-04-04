@@ -307,14 +307,11 @@ export async function initDB() {
 
         // return existing promise if it exists
         if (initPromise) {
-            console.log('returning existing promise');
             return initPromise;
         }
-        console.log('gonna have to create a new promise...');
         // create a new promise that resolves with whether we should
         // create a new project once it's initialized
         initPromise = new Promise(async (resolve) => {
-            console.log('creating that new promise, as promised...');
             let shouldCreateNewProject = false;
             const SQL = await Promise.race([
                 initSqlJs({
@@ -326,66 +323,44 @@ export async function initDB() {
                     }, 5000); // Adjust the timeout value as needed
                 })
             ]);
-            console.log('SQL is: ', SQL);
+
+            // console.log('SQL is: ', SQL);
+
             window.SQL = SQL;
-            console.log('Before baseKey initialization');
             if (window.sharedProgramID) {
-                console.log('sharedProgramID: ', window.sharedProgramID);
                 const id = window.sharedProgramID;
                 baseKey = 'sp-' + id;
             } else if (window.studentAssignmentID) {
-                console.log(
-                    'studentAssignmentID: ',
-                    window.studentAssignmentID
-                );
                 const id = window.studentAssignmentID;
                 baseKey = 'sa-' + id;
             } else if (window.itemID) {
-                console.log('itemID: ', window.itemID);
                 const id = window.itemID;
                 baseKey = 'item-' + id;
             } else if (window.scratchJrPage === 'editor') {
-                console.log('editor page');
                 alert('No IDs found. DB will not be loaded or saved.');
             }
-            console.log('baseKey: ', baseKey);
             // get saved data from codehs, then initialize the database with it if it
             // exists. otherwise, create a new database and initialize the tables and run migrations.
-            console.log('Before getInitialDBString');
             const dbDataString = await getInitialDBString();
-            console.log(
-                'After getInitialDBString, dbDataString: ',
-                dbDataString
-            );
-
             if (dbDataString) {
-                console.log('loading existing database');
                 const binaryData = UTF16StringToBinaryData(dbDataString);
-                console.log('binaryData:', binaryData);
                 db = new SQL.Database(binaryData);
             } else {
-                console.log('creating new database');
                 db = new SQL.Database();
                 initTables();
                 runMigrations();
                 shouldCreateNewProject = true;
             }
-            console.log('db is: ', db);
             window.db = db;
-            console.log('shouldCreateNewProject: ', shouldCreateNewProject);
             if (
-                (console.log('checking if we should display project files'),
                 new URLSearchParams(window.location.search).get(
                     'show-project-files'
-                ) === 'true')
+                ) === 'true'
             ) {
-                console.log('displaying project files');
                 await displayProjectFiles();
             }
-            console.log('resolving that promise');
             resolve(shouldCreateNewProject);
         });
-        console.log('returning that promise');
     } catch (error) {
         console.error('Error in initDB:', error);
         throw error;

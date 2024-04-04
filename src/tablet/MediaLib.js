@@ -40,7 +40,7 @@ export default class MediaLib {
     }
 
     static loadMediaLib (root, whenDone) {
-        console.log('loadMediaLib');
+        // console.log('loadMediaLib');
         IO.requestFromServer(root + 'media.json', (result) => {
             let parsedResult = JSON.parse(result);
             path = parsedResult.path;

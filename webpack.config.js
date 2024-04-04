@@ -3,7 +3,6 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
 const cors = require('cors');
 
-
 module.exports = function (env, argv) {
     // TODO: fix this crap
     // const isProduction = argv.mode === 'production';
@@ -32,6 +31,19 @@ module.exports = function (env, argv) {
         },
         module: {
             rules: [
+                // fix some ReferenceError: IntlMessageFormat is not defined, but not all?
+                // load first to expose IntlMessageFormat to window?
+                {
+                    test: require.resolve('intl-messageformat'),
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: {
+                                exposes: ['IntlMessageFormat']
+                            }
+                        }
+                    ]
+                },
                 {
                     test: /\.js$/,
                     include: /node_modules/,
@@ -64,11 +76,9 @@ module.exports = function (env, argv) {
                 buffer: require.resolve('buffer/'),
                 stream: require.resolve('stream-browserify'),
                 vm: require.resolve('vm-browserify'),
+                url: require.resolve('url/'),
                 fs: false
             }
-            // alias: {
-            //     process: 'process/browser'
-            // }
         },
         plugins: [
             new WebpackNotifierPlugin({
@@ -78,17 +88,18 @@ module.exports = function (env, argv) {
             // Define a global constant for asset URLs that can be used anywhere in the code
             new webpack.DefinePlugin({
                 ASSET_BASE_URL: JSON.stringify(assetBaseURL)
-                // process: 'process/browser'
             }),
             new webpack.ProvidePlugin({
-                IntlMessageFormat: ['intl-messageformat', 'default']
-                // process: 'process'
-            }),
-            new webpack.HotModuleReplacementPlugin() // Enable hot reload
+                URLSearchParams: ['url', 'URLSearchParams'],
+                fetch: 'node-fetch',
+              }),
         ],
         devServer: {
             static: {
                 directory: path.join(__dirname, 'editions/free/src')
+            },
+            client: {
+                overlay: false
             },
             compress: true,
             port: 3000,

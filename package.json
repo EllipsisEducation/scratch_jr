@@ -3,10 +3,11 @@
   "version": "1.2.0",
   "description": "ScratchJr",
   "scripts": {
-    "watch": "webpack --mode=development --progress --watch",
+    "watch": "webpack --mode=development --progress",
     "dev": "webpack --mode=development --progress",
     "build": "webpack --mode=production --progress",
     "start": "npm run dev && webpack-dev-server --host 127.0.0.1",
+    "start-prod": "npm run build && webpack-dev-server --host 127.0.0.1",
     "lint": "eslint src",
     "lint-fix": "eslint --fix src"
   },
@@ -50,6 +51,7 @@
     "intl": "^1.0.1",
     "intl-messageformat": "^1.2.0",
     "snapsvg": "^0.3.0",
-    "sql.js": "^1.8.0"
+    "sql.js": "^1.8.0",
+    "url": "^0.11.3"
   }
 }

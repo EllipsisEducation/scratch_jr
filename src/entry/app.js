@@ -17,6 +17,7 @@ import {
     inappPaintEditorGuide,
     inappPrivacyPolicy
 } from './inapp';
+import URLSearchParams from 'url';
 
 /* This function replicates the behavior of the `.on<event>` properties but is
  * implemented using `addEventListener` and `removeEventListener`. This allows
@@ -41,6 +42,7 @@ import {
  *   provided.
  *
  */
+console.log('I\'M RUNNING');
 window.setEventHandler = function (event, handler, target) {
     if (target === undefined) {
         target = window;
@@ -93,10 +95,10 @@ window.onload = async () => {
         window.addEventListener('keydown', window.setActive);
     }
 
-    console.log('waitin for db');
+    console.log('waiting for db');
     const shouldCreateNewProject = await db.initDB();
-    console.log('done waitin for db');
-
+    console.log('done waiting for db');
+    console.log('PAGE IS: ', page);
     // Load CSS and set root/entryFunction for all pages
     switch (page) {
     case 'index':
