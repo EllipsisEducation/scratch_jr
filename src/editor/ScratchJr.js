@@ -29,7 +29,6 @@ import {
     mTime,
     absoluteURL,
 } from '../utils/lib';
-import URLSearchParams from 'url';
 
 let workingCanvas = document.createElement('canvas');
 let workingCanvas2 = document.createElement('canvas');

@@ -4,14 +4,14 @@ const path = require('path');
 const cors = require('cors');
 
 module.exports = function (env, argv) {
-    // TODO: fix this crap
     // const isProduction = argv.mode === 'production';
+
     // const assetBaseURL = isProduction
     //     ? 'https://codehs.com/scratchjr_assets/'
     //     : 'http://localhost:8000/scratchjr_assets/';
-    // const assetBaseURL = 'http://localhost:8000/scratchjr_assets/';
-    // const assetBaseURL = 'http://localhost:3000/scratchjr_assets/';
+
     const assetBaseURL = 'http://localhost:3000/';
+    let __dirname = path.resolve();
     return {
         devtool: 'source-map',
         entry: {
@@ -31,19 +31,6 @@ module.exports = function (env, argv) {
         },
         module: {
             rules: [
-                // fix some ReferenceError: IntlMessageFormat is not defined, but not all?
-                // load first to expose IntlMessageFormat to window?
-                {
-                    test: require.resolve('intl-messageformat'),
-                    use: [
-                        {
-                            loader: 'expose-loader',
-                            options: {
-                                exposes: ['IntlMessageFormat']
-                            }
-                        }
-                    ]
-                },
                 {
                     test: /\.js$/,
                     include: /node_modules/,
@@ -76,7 +63,6 @@ module.exports = function (env, argv) {
                 buffer: require.resolve('buffer/'),
                 stream: require.resolve('stream-browserify'),
                 vm: require.resolve('vm-browserify'),
-                url: require.resolve('url/'),
                 fs: false
             }
         },
@@ -88,11 +74,7 @@ module.exports = function (env, argv) {
             // Define a global constant for asset URLs that can be used anywhere in the code
             new webpack.DefinePlugin({
                 ASSET_BASE_URL: JSON.stringify(assetBaseURL)
-            }),
-            new webpack.ProvidePlugin({
-                URLSearchParams: ['url', 'URLSearchParams'],
-                fetch: 'node-fetch',
-              }),
+            })
         ],
         devServer: {
             static: {
@@ -102,6 +84,7 @@ module.exports = function (env, argv) {
                 overlay: false
             },
             compress: true,
+            host: 'localhost',
             port: 3000,
             hot: true, // Enable hot reload
             setupMiddlewares: (middlewares, devServer) => {

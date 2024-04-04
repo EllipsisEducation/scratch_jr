@@ -17,7 +17,6 @@ import {
     inappPaintEditorGuide,
     inappPrivacyPolicy
 } from './inapp';
-import URLSearchParams from 'url';
 
 /* This function replicates the behavior of the `.on<event>` properties but is
  * implemented using `addEventListener` and `removeEventListener`. This allows
@@ -42,7 +41,6 @@ import URLSearchParams from 'url';
  *   provided.
  *
  */
-console.log('I\'M RUNNING');
 window.setEventHandler = function (event, handler, target) {
     if (target === undefined) {
         target = window;
@@ -81,6 +79,7 @@ window.onload = async () => {
     let page = window.scratchJrPage;
 
     const params = new URLSearchParams(window.location.search);
+    console.log('PARAMS: ', params);
     if (!window.studentAssignmentID) {
         window.studentAssignmentID = params.get('student_assignment_id', null);
     }

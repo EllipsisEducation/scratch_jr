@@ -6,8 +6,7 @@
     "watch": "webpack --mode=development --progress",
     "dev": "webpack --mode=development --progress",
     "build": "webpack --mode=production --progress",
-    "start": "npm run dev && webpack-dev-server --host 127.0.0.1",
-    "start-prod": "npm run build && webpack-dev-server --host 127.0.0.1",
+    "start": "npm run dev && webpack-dev-server",
     "lint": "eslint src",
     "lint-fix": "eslint --fix src"
   },
