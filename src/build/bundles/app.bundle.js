@@ -492,6 +492,7 @@ var ScratchJr = /*#__PURE__*/function () {
     key: "getGotoLink",
     value: function getGotoLink() {
       var params = new URLSearchParams();
+      var wat;
       if (window.studentAssignmentID) {
         params.append('student_assignment_id', window.studentAssignmentID);
       }
@@ -500,20 +501,29 @@ var ScratchJr = /*#__PURE__*/function () {
       }
       if (editmode == 'storyStarter') {
         if (!storyStarted) {
-          return 'home.html?place=help&' + params.toString();
+          // return 'home.html?place=help&' + params.toString();
+          wat = 'home.html?place=help&' + params.toString();
         } else {
-          return 'home.html?place=home&' + params.toString();
+          // return 'home.html?place=home&' + params.toString();
+          wat = 'home.html?place=home&' + params.toString();
         }
       }
       if (!currentProject) {
-        return 'home.html?place=home&' + params.toString();
+        wat = 'home.html?place=home&' + params.toString();
+        // return 'home.html?place=home&' + params.toString();
       }
       if (_ui_Project__WEBPACK_IMPORTED_MODULE_0__["default"].metadata.gallery == 'samples') {
-        return 'home.html?place=help&' + params.toString();
+        wat = 'home.html?place=help&' + params.toString();
+        // return 'home.html?place=help&' + params.toString();
       } else {
         params.append('timestamp', new Date().getTime());
-        return 'home.html?place=home&' + params.toString();
+        wat = 'home.html?place=home&' + params.toString();
+        // return 'home.html?place=home&' + params.toString();
       }
+      console.log('#### wat:', wat);
+
+      // return wat;
+      return 'home.html';
     }
   }, {
     key: "updateRunStopButtons",
@@ -11805,8 +11815,10 @@ var UI = /*#__PURE__*/function () {
       var flip = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'flipme', sl);
       flip.setAttribute('id', 'flip');
       flip.onclick = function (evt) {
-        window.location.href = 'https://codehs.com/';
+        // window.location.href = 'https://codehs.com/';
+        _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].saveAndFlip(evt);
       }; // move to project
+
       UI.layoutLibrary(sl);
     }
   }, {
@@ -13730,6 +13742,7 @@ function gettingStartedMain() {
   }, document);
 }
 function gettingStartedCloseMe() {
+  console.log('@!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@');
   var params = new URLSearchParams();
   if (window.studentAssignmentID) {
     params.append('student_assignment_id', window.studentAssignmentID);
@@ -13780,8 +13793,11 @@ function homeGoBack() {
   if (window.itemID) {
     params.append('item_id', window.itemID);
   }
-  var url = 'index.html?back=yes&' + params.toString();
-  window.location.href = url;
+
+  // const url = 'index.html?back=yes&' + params.toString();
+  // const url = 'index.html' + params.toString();
+  // console.log('####### url:', url);
+  // window.location.href = url;
 }
 function homeStrings() {
   (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.gn)('abouttab-text').textContent = _utils_Localization__WEBPACK_IMPORTED_MODULE_1__["default"].localize('ABOUT_SCRATCHJR');
@@ -14773,55 +14789,57 @@ var Home = /*#__PURE__*/function () {
     key: "init",
     value: function init() {
       version = _Lobby__WEBPACK_IMPORTED_MODULE_0__["default"].version;
-      Home.gotoEditor(1);
-      // frame = gn("htmlcontents");
-      // var inner = newHTML("div", "inner", frame);
-      // var div = newHTML("div", "scrollarea", inner);
-      // div.setAttribute("id", "scrollarea");
-      // frame.ontouchstart = Home.handleTouchStart;
-      // frame.ontouchend = Home.handleTouchEnd;
-      // frame.onmousedown = Home.handleTouchStart;
-      // frame.onmouseup = Home.handleTouchEnd;
-      // if (localStorage.getItem("loadFromFirebase")) {
+      // Home.gotoEditor(1);
+
+      frame = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('htmlcontents');
+      var inner = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'inner', frame);
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'scrollarea', inner);
+      div.setAttribute('id', 'scrollarea');
+      frame.ontouchstart = Home.handleTouchStart;
+      frame.ontouchend = Home.handleTouchEnd;
+      frame.onmousedown = Home.handleTouchStart;
+      frame.onmouseup = Home.handleTouchEnd;
+      // if (localStorage.getItem('loadFromFirebase')) {
       //     Home.gotoEditor(1);
+      // if (false) {
       // } else {
       //     if (window.studentAssignmentID) {
       //         if (
       //             !localStorage.getItem(
-      //                 "sa-" + window.studentAssignmentID + "-initialized"
+      //                 'sa-' + window.studentAssignmentID + '-initialized'
       //             )
       //         ) {
       //             localStorage.setItem(
-      //                 "sa-" + window.studentAssignmentID + "-initialized",
-      //                 "true"
+      //                 'sa-' + window.studentAssignmentID + '-initialized',
+      //                 'true'
       //             );
-      //             console.log("creating new project (SA)");
+      //             console.log('creating new project (SA)');
       //             Home.createNewProject();
       //         } else {
       //             //get the only project
-      //             console.log("project found (SA)");
+      //             console.log('project found (SA)');
       //             Home.gotoEditor(1);
       //         }
       //     } else {
       //         if (
       //             !localStorage.getItem(
-      //                 "item-" + window.itemID + "-initialized"
+      //                 'item-' + window.itemID + '-initialized'
       //             )
       //         ) {
       //             localStorage.setItem(
-      //                 "item-" + window.itemID + "-initialized",
-      //                 "true"
+      //                 'item-' + window.itemID + '-initialized',
+      //                 'true'
       //             );
-      //             console.log("creating new project (item)");
+      //             console.log('creating new project (item)');
       //             Home.createNewProject();
       //         } else {
-      //             console.log("project found (item)");
+      //             console.log('project found (item)');
       //             //get the only project
       //             Home.gotoEditor(1);
       //         }
       //     }
       // }
-      // Home.displayYourProjects();
+      Home.displayYourProjects();
     }
 
     ////////////////////////////
@@ -14975,7 +14993,7 @@ var Home = /*#__PURE__*/function () {
           params.append('item_id', window.itemID);
         }
         var url = 'editor.html?pmd5=' + md5 + '&mode=edit&' + params.toString();
-        window.location.href = url;
+        // window.location.href = url;
       }
     }
   }, {
@@ -15005,6 +15023,7 @@ var Home = /*#__PURE__*/function () {
           params.append('item_id', window.itemID);
         }
         var url = 'editor.html?pmd5=' + md5 + '&mode=edit&' + params.toString();
+        console.log('### gotoEditor url:', url);
         window.location.href = url;
       }
     }
@@ -15078,7 +15097,9 @@ var Home = /*#__PURE__*/function () {
   }, {
     key: "displayProjects",
     value: function displayProjects(str) {
+      console.log('######### displayProjects str', str);
       var data = JSON.parse(str);
+      console.log('data', data);
       var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('scrollarea');
       while (div.childElementCount > 0) {
         div.removeChild(div.childNodes[0]);
@@ -15707,7 +15728,7 @@ var Samples = /*#__PURE__*/function () {
         params.append('item_id', window.itemID);
       }
       var url = 'editor.html?pmd5=' + md5 + '&mode=' + (window.Settings.useStoryStarters ? 'storyStarter' : 'look') + '&' + params.toString();
-      window.location.href = url;
+      // window.location.href = url;
     }
   }, {
     key: "insertThumbnail",
@@ -25640,6 +25661,7 @@ var OS = /*#__PURE__*/function () {
   }, {
     key: "query",
     value: function query(json, fcn) {
+      console.log('### OS.query', json);
       tabletInterface.query(json, fcn);
     }
 
@@ -26935,17 +26957,18 @@ function _initDB() {
       while (1) switch (_context7.prev = _context7.next) {
         case 0:
           _context7.prev = 0;
-          console.log('init');
+          console.info('try to initialize db');
 
-          // return existing promise if it exists
+          // if db is already initializing, return init promise
           if (!initPromise) {
             _context7.next = 5;
             break;
           }
-          console.log('returning existing promise');
+          console.info('db already initializing, return promise');
           return _context7.abrupt("return", initPromise);
         case 5:
-          console.log('gonna have to create a new promise...');
+          console.info('db not initializing,  creating new init promise');
+
           // create a new promise that resolves with whether we should
           // create a new project once it's initialized
           initPromise = new Promise( /*#__PURE__*/function () {
@@ -26954,9 +26977,8 @@ function _initDB() {
               return _regeneratorRuntime().wrap(function _callee6$(_context6) {
                 while (1) switch (_context6.prev = _context6.next) {
                   case 0:
-                    console.log('creating that new promise, as promised...');
                     shouldCreateNewProject = false;
-                    _context6.next = 4;
+                    _context6.next = 3;
                     return Promise.race([sql_js__WEBPACK_IMPORTED_MODULE_1___default()({
                       locateFile: function locateFile() {
                         return _file_loader_name_sql_wasm_contenthash_wasm_node_modules_sql_js_dist_sql_wasm_wasm__WEBPACK_IMPORTED_MODULE_0__["default"];
@@ -26966,11 +26988,9 @@ function _initDB() {
                         reject(new Error('initSqlJs timed out'));
                       }, 5000); // Adjust the timeout value as needed
                     })]);
-                  case 4:
+                  case 3:
                     SQL = _context6.sent;
-                    console.log('SQL is: ', SQL);
                     window.SQL = SQL;
-                    console.log('Before baseKey initialization');
                     if (window.sharedProgramID) {
                       console.log('sharedProgramID: ', window.sharedProgramID);
                       id = window.sharedProgramID;
@@ -26984,16 +27004,18 @@ function _initDB() {
                       _id2 = window.itemID;
                       baseKey = 'item-' + _id2;
                     } else if (window.scratchJrPage === 'editor') {
-                      console.log('editor page');
-                      alert('No IDs found. DB will not be loaded or saved.');
+                      // console.log('editor page');
+                      // alert('No IDs found. DB will not be loaded or saved.');
                     }
                     console.log('baseKey: ', baseKey);
+
                     // get saved data from codehs, then initialize the database with it if it
                     // exists. otherwise, create a new database and initialize the tables and run migrations.
+
                     console.log('Before getInitialDBString');
-                    _context6.next = 13;
+                    _context6.next = 10;
                     return getInitialDBString();
-                  case 13:
+                  case 10:
                     dbDataString = _context6.sent;
                     console.log('After getInitialDBString, dbDataString: ', dbDataString);
                     if (dbDataString) {
@@ -27012,16 +27034,16 @@ function _initDB() {
                     window.db = db;
                     console.log('shouldCreateNewProject: ', shouldCreateNewProject);
                     if (!(console.log('checking if we should display project files'), new URLSearchParams(window.location.search).get('show-project-files') === 'true')) {
-                      _context6.next = 23;
+                      _context6.next = 20;
                       break;
                     }
                     console.log('displaying project files');
-                    _context6.next = 23;
+                    _context6.next = 20;
                     return displayProjectFiles();
-                  case 23:
+                  case 20:
                     console.log('resolving that promise');
                     resolve(shouldCreateNewProject);
-                  case 25:
+                  case 22:
                   case "end":
                     return _context6.stop();
                 }
@@ -29201,6 +29223,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! intl */ "./node_modules/intl/index.js");
 /* harmony import */ var intl__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(intl__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _tablet_IO__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../tablet/IO */ "./src/tablet/IO.js");
+/* provided dependency */ var __webpack_provided_window_dot_IntlMessageFormat = __webpack_require__(/*! intl-messageformat */ "./node_modules/intl-messageformat/index.js")["default"];
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
@@ -29321,7 +29344,7 @@ var Localization = /*#__PURE__*/function () {
     value: function localize(key, formatting) {
       var message;
       if (key in localizationMessages) {
-        message = new window.IntlMessageFormat(localizationMessages[key], currentLocale);
+        message = new __webpack_provided_window_dot_IntlMessageFormat(localizationMessages[key], currentLocale);
         return message.format(formatting);
       }
       return 'String missing: ' + key;
@@ -29346,7 +29369,7 @@ var Localization = /*#__PURE__*/function () {
     value: function localizeOptional(keyOrRawText, formatting) {
       var message;
       if (keyOrRawText in localizationMessages) {
-        message = new window.IntlMessageFormat(localizationMessages[keyOrRawText], currentLocale);
+        message = new __webpack_provided_window_dot_IntlMessageFormat(localizationMessages[keyOrRawText], currentLocale);
         return message.format(formatting);
       }
       return keyOrRawText;
@@ -30747,7 +30770,7 @@ function absoluteURL(url) {
   if (url.startsWith('/')) {
     url = url.substring(1);
   }
-  return "http://localhost:8000/scratchjr_assets/" + url;
+  return "http://localhost:3000/" + url;
 }
 function libInit() {
   frame = document.getElementById('frame');
@@ -83216,7 +83239,7 @@ var posix = {
         path = arguments[i];
       else {
         if (cwd === undefined)
-          cwd = process/browser.cwd();
+          cwd = process.cwd();
         path = cwd;
       }
 
@@ -83777,7 +83800,7 @@ var defaultEncoding
 if (__webpack_require__.g.process && __webpack_require__.g.process.browser) {
   defaultEncoding = 'utf-8'
 } else if (__webpack_require__.g.process && __webpack_require__.g.process.version) {
-  var pVersionMajor = parseInt(process/browser.version.split('.')[0].slice(1), 10)
+  var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10)
 
   defaultEncoding = pVersionMajor >= 6 ? 'utf-8' : 'binary'
 } else {
@@ -83964,13 +83987,13 @@ module.exports = function (thing, encoding, name) {
 "use strict";
 
 
-if (typeof process/browser === 'undefined' ||
-    !process/browser.version ||
-    process/browser.version.indexOf('v0.') === 0 ||
-    process/browser.version.indexOf('v1.') === 0 && process/browser.version.indexOf('v1.8.') !== 0) {
+if (typeof process === 'undefined' ||
+    !process.version ||
+    process.version.indexOf('v0.') === 0 ||
+    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
   module.exports = { nextTick: nextTick };
 } else {
-  module.exports = process/browser
+  module.exports = process
 }
 
 function nextTick(fn, arg1, arg2, arg3) {
@@ -83982,17 +84005,17 @@ function nextTick(fn, arg1, arg2, arg3) {
   switch (len) {
   case 0:
   case 1:
-    return process/browser.nextTick(fn);
+    return process.nextTick(fn);
   case 2:
-    return process/browser.nextTick(function afterTickOne() {
+    return process.nextTick(function afterTickOne() {
       fn.call(null, arg1);
     });
   case 3:
-    return process/browser.nextTick(function afterTickTwo() {
+    return process.nextTick(function afterTickTwo() {
       fn.call(null, arg1, arg2);
     });
   case 4:
-    return process/browser.nextTick(function afterTickThree() {
+    return process.nextTick(function afterTickThree() {
       fn.call(null, arg1, arg2, arg3);
     });
   default:
@@ -84001,7 +84024,7 @@ function nextTick(fn, arg1, arg2, arg3) {
     while (i < args.length) {
       args[i++] = arguments[i];
     }
-    return process/browser.nextTick(function afterTick() {
+    return process.nextTick(function afterTick() {
       fn.apply(null, args);
     });
   }
@@ -87820,7 +87843,7 @@ function randomBytes (size, cb) {
   }
 
   if (typeof cb === 'function') {
-    return process/browser.nextTick(function () {
+    return process.nextTick(function () {
       cb(null, bytes)
     })
   }
@@ -87876,7 +87899,7 @@ function assertSize (size, offset, length) {
     throw new RangeError('buffer too small')
   }
 }
-if ((crypto && crypto.getRandomValues) || !process/browser.browser) {
+if ((crypto && crypto.getRandomValues) || !process.browser) {
   exports.randomFill = randomFill
   exports.randomFillSync = randomFillSync
 } else {
@@ -87904,12 +87927,12 @@ function randomFill (buf, offset, size, cb) {
 }
 
 function actualFill (buf, offset, size, cb) {
-  if (process/browser.browser) {
+  if (process.browser) {
     var ourBuf = buf.buffer
     var uint = new Uint8Array(ourBuf, offset, size)
     crypto.getRandomValues(uint)
     if (cb) {
-      process/browser.nextTick(function () {
+      process.nextTick(function () {
         cb(null, buf)
       })
       return
@@ -88713,7 +88736,7 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
   state.pipesCount += 1;
   debug('pipe count=%d opts=%j', state.pipesCount, pipeOpts);
 
-  var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process/browser.stdout && dest !== process/browser.stderr;
+  var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process.stdout && dest !== process.stderr;
 
   var endFn = doEnd ? onend : unpipe;
   if (state.endEmitted) pna.nextTick(endFn);else src.once('end', endFn);
@@ -89464,7 +89487,7 @@ function CorkedRequest(state) {
 /* </replacement> */
 
 /*<replacement>*/
-var asyncWrite = !process/browser.browser && ['v0.10', 'v0.9.'].indexOf(process/browser.version.slice(0, 5)) > -1 ? setImmediate : pna.nextTick;
+var asyncWrite = !process.browser && ['v0.10', 'v0.9.'].indexOf(process.version.slice(0, 5)) > -1 ? setImmediate : pna.nextTick;
 /*</replacement>*/
 
 /*<replacement>*/
@@ -92380,8 +92403,8 @@ this.handleError(H(this.db,g,-1,h,0));g=m(h,"i32");if(0===g)throw"Nothing to pre
 this.db&&(Object.values(this.Za).forEach(function(g){g.free()}),Object.values(this.Na).forEach(ua),this.Na={},this.handleError(y(this.db)),wa("/"+this.filename),this.db=null)};e.prototype.handleError=function(g){if(0===g)return null;g=Bc(this.db);throw Error(g);};e.prototype.getRowsModified=function(){return F(this.db)};e.prototype.create_function=function(g,l){Object.prototype.hasOwnProperty.call(this.Na,g)&&(ua(this.Na[g]),delete this.Na[g]);var n=xa(function(t,w,z){w=b(w,z);try{var N=l.apply(null,
 w)}catch(L){Aa(t,L,-1);return}a(t,N)},"viii");this.Na[g]=n;this.handleError(tb(this.db,g,l.length,1,0,n,0,0,0));return this};e.prototype.create_aggregate=function(g,l){var n=l.init||function(){return null},t=l.finalize||function(K){return K},w=l.step;if(!w)throw"An aggregate function must have a step function in "+g;var z={};Object.hasOwnProperty.call(this.Na,g)&&(ua(this.Na[g]),delete this.Na[g]);l=g+"__finalize";Object.hasOwnProperty.call(this.Na,l)&&(ua(this.Na[l]),delete this.Na[l]);var N=xa(function(K,
 O,Ua){var X=ub(K,1);Object.hasOwnProperty.call(z,X)||(z[X]=n());O=b(O,Ua);O=[z[X]].concat(O);try{z[X]=w.apply(null,O)}catch(Nc){delete z[X],Aa(K,Nc,-1)}},"viii"),L=xa(function(K){var O=ub(K,1);try{var Ua=t(z[O])}catch(X){delete z[O];Aa(K,X,-1);return}a(K,Ua);delete z[O]},"vi");this.Na[g]=N;this.Na[l]=L;this.handleError(tb(this.db,g,w.length-1,1,0,0,N,L,0));return this};f.Database=e};
-var ya=Object.assign({},f),za="./this.program",Ba="object"==typeof window,Ca="function"==typeof importScripts,Da="object"==typeof process/browser&&"object"==typeof process/browser.versions&&"string"==typeof process/browser.versions.node,A="",Ea,Fa,Ga;
-if(Da){var fs=__webpack_require__(/*! fs */ "?5041"),Ha=__webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");A=Ca?Ha.dirname(A)+"/":__dirname+"/";Ea=(a,b)=>{a=Ia(a)?new URL(a):Ha.normalize(a);return fs.readFileSync(a,b?void 0:"utf8")};Ga=a=>{a=Ea(a,!0);a.buffer||(a=new Uint8Array(a));return a};Fa=(a,b,c,d=!0)=>{a=Ia(a)?new URL(a):Ha.normalize(a);fs.readFile(a,d?void 0:"utf8",(e,h)=>{e?c(e):b(d?h.buffer:h)})};!f.thisProgram&&1<process/browser.argv.length&&(za=process/browser.argv[1].replace(/\\/g,"/"));process/browser.argv.slice(2); true&&(module.exports=f);f.inspect=
+var ya=Object.assign({},f),za="./this.program",Ba="object"==typeof window,Ca="function"==typeof importScripts,Da="object"==typeof process&&"object"==typeof process.versions&&"string"==typeof process.versions.node,A="",Ea,Fa,Ga;
+if(Da){var fs=__webpack_require__(/*! fs */ "?5041"),Ha=__webpack_require__(/*! path */ "./node_modules/path-browserify/index.js");A=Ca?Ha.dirname(A)+"/":__dirname+"/";Ea=(a,b)=>{a=Ia(a)?new URL(a):Ha.normalize(a);return fs.readFileSync(a,b?void 0:"utf8")};Ga=a=>{a=Ea(a,!0);a.buffer||(a=new Uint8Array(a));return a};Fa=(a,b,c,d=!0)=>{a=Ia(a)?new URL(a):Ha.normalize(a);fs.readFile(a,d?void 0:"utf8",(e,h)=>{e?c(e):b(d?h.buffer:h)})};!f.thisProgram&&1<process.argv.length&&(za=process.argv[1].replace(/\\/g,"/"));process.argv.slice(2); true&&(module.exports=f);f.inspect=
 ()=>"[Emscripten Module object]"}else if(Ba||Ca)Ca?A=self.location.href:"undefined"!=typeof document&&document.currentScript&&(A=document.currentScript.src),A=0!==A.indexOf("blob:")?A.substr(0,A.replace(/[?#].*/,"").lastIndexOf("/")+1):"",Ea=a=>{var b=new XMLHttpRequest;b.open("GET",a,!1);b.send(null);return b.responseText},Ca&&(Ga=a=>{var b=new XMLHttpRequest;b.open("GET",a,!1);b.responseType="arraybuffer";b.send(null);return new Uint8Array(b.response)}),Fa=(a,b,c)=>{var d=new XMLHttpRequest;d.open("GET",
 a,!0);d.responseType="arraybuffer";d.onload=()=>{200==d.status||0==d.status&&d.response?b(d.response):c()};d.onerror=c;d.send(null)};var Ja=f.print||console.log.bind(console),B=f.printErr||console.error.bind(console);Object.assign(f,ya);ya=null;f.thisProgram&&(za=f.thisProgram);var Ka;f.wasmBinary&&(Ka=f.wasmBinary);"object"!=typeof WebAssembly&&C("no native wasm support detected");var La,Ma=!1,p,q,Na,D,E,Oa,Pa;
 function Qa(){var a=La.buffer;f.HEAP8=p=new Int8Array(a);f.HEAP16=Na=new Int16Array(a);f.HEAPU8=q=new Uint8Array(a);f.HEAPU16=new Uint16Array(a);f.HEAP32=D=new Int32Array(a);f.HEAPU32=E=new Uint32Array(a);f.HEAPF32=Oa=new Float32Array(a);f.HEAPF64=Pa=new Float64Array(a)}var Ra=[],Sa=[],Ta=[];function Va(){var a=f.preRun.shift();Ra.unshift(a)}var G=0,Wa=null,Xa=null;
@@ -92397,7 +92420,7 @@ function mb(){for(var a="",b=!1,c=arguments.length-1;-1<=c&&!b;c--){b=0<=c?argum
 var nb=[],da=a=>{for(var b=0,c=0;c<a.length;++c){var d=a.charCodeAt(c);127>=d?b++:2047>=d?b+=2:55296<=d&&57343>=d?(b+=4,++c):b+=3}return b},fa=(a,b,c,d)=>{if(!(0<d))return 0;var e=c;d=c+d-1;for(var h=0;h<a.length;++h){var k=a.charCodeAt(h);if(55296<=k&&57343>=k){var r=a.charCodeAt(++h);k=65536+((k&1023)<<10)|r&1023}if(127>=k){if(c>=d)break;b[c++]=k}else{if(2047>=k){if(c+1>=d)break;b[c++]=192|k>>6}else{if(65535>=k){if(c+2>=d)break;b[c++]=224|k>>12}else{if(c+3>=d)break;b[c++]=240|k>>18;b[c++]=128|k>>
 12&63}b[c++]=128|k>>6&63}b[c++]=128|k&63}}b[c]=0;return c-e};function oa(a,b){var c=Array(da(a)+1);a=fa(a,c,0,c.length);b&&(c.length=a);return c}var vb=[];function wb(a,b){vb[a]={input:[],output:[],Xa:b};xb(a,yb)}
 var yb={open(a){var b=vb[a.node.rdev];if(!b)throw new P(43);a.tty=b;a.seekable=!1},close(a){a.tty.Xa.fsync(a.tty)},fsync(a){a.tty.Xa.fsync(a.tty)},read(a,b,c,d){if(!a.tty||!a.tty.Xa.sb)throw new P(60);for(var e=0,h=0;h<d;h++){try{var k=a.tty.Xa.sb(a.tty)}catch(r){throw new P(29);}if(void 0===k&&0===e)throw new P(6);if(null===k||void 0===k)break;e++;b[c+h]=k}e&&(a.node.timestamp=Date.now());return e},write(a,b,c,d){if(!a.tty||!a.tty.Xa.jb)throw new P(60);try{for(var e=0;e<d;e++)a.tty.Xa.jb(a.tty,b[c+
-e])}catch(h){throw new P(29);}d&&(a.node.timestamp=Date.now());return e}},zb={sb(){a:{if(!nb.length){var a=null;if(Da){var b=Buffer.alloc(256),c=0,d=process/browser.stdin.fd;try{c=fs.readSync(d,b)}catch(e){if(e.toString().includes("EOF"))c=0;else throw e;}0<c?a=b.slice(0,c).toString("utf-8"):a=null}else"undefined"!=typeof window&&"function"==typeof window.prompt?(a=window.prompt("Input: "),null!==a&&(a+="\n")):"function"==typeof readline&&(a=readline(),null!==a&&(a+="\n"));if(!a){a=null;break a}nb=oa(a,!0)}a=
+e])}catch(h){throw new P(29);}d&&(a.node.timestamp=Date.now());return e}},zb={sb(){a:{if(!nb.length){var a=null;if(Da){var b=Buffer.alloc(256),c=0,d=process.stdin.fd;try{c=fs.readSync(d,b)}catch(e){if(e.toString().includes("EOF"))c=0;else throw e;}0<c?a=b.slice(0,c).toString("utf-8"):a=null}else"undefined"!=typeof window&&"function"==typeof window.prompt?(a=window.prompt("Input: "),null!==a&&(a+="\n")):"function"==typeof readline&&(a=readline(),null!==a&&(a+="\n"));if(!a){a=null;break a}nb=oa(a,!0)}a=
 nb.shift()}return a},jb(a,b){null===b||10===b?(Ja(M(a.output,0)),a.output=[]):0!=b&&a.output.push(b)},fsync(a){a.output&&0<a.output.length&&(Ja(M(a.output,0)),a.output=[])},Mb(){return{Ib:25856,Kb:5,Hb:191,Jb:35387,Gb:[3,28,127,21,4,0,1,0,17,19,26,0,18,15,23,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},Nb(){return 0},Ob(){return[24,80]}},Ab={jb(a,b){null===b||10===b?(B(M(a.output,0)),a.output=[]):0!=b&&a.output.push(b)},fsync(a){a.output&&0<a.output.length&&(B(M(a.output,0)),a.output=[])}};
 function Bb(a,b){var c=a.Ia?a.Ia.length:0;c>=b||(b=Math.max(b,c*(1048576>c?2:1.125)>>>0),0!=c&&(b=Math.max(b,256)),c=a.Ia,a.Ia=new Uint8Array(b),0<a.Ma&&a.Ia.set(c.subarray(0,a.Ma),0))}
 var Q={Qa:null,Ra(){return Q.createNode(null,"/",16895,0)},createNode(a,b,c,d){if(24576===(c&61440)||4096===(c&61440))throw new P(63);Q.Qa||(Q.Qa={dir:{node:{Pa:Q.Ga.Pa,Oa:Q.Ga.Oa,lookup:Q.Ga.lookup,ab:Q.Ga.ab,rename:Q.Ga.rename,unlink:Q.Ga.unlink,rmdir:Q.Ga.rmdir,readdir:Q.Ga.readdir,symlink:Q.Ga.symlink},stream:{Ta:Q.Ha.Ta}},file:{node:{Pa:Q.Ga.Pa,Oa:Q.Ga.Oa},stream:{Ta:Q.Ha.Ta,read:Q.Ha.read,write:Q.Ha.write,lb:Q.Ha.lb,bb:Q.Ha.bb,cb:Q.Ha.cb}},link:{node:{Pa:Q.Ga.Pa,Oa:Q.Ga.Oa,readlink:Q.Ga.readlink},
@@ -92860,7 +92883,7 @@ function onend() {
 
   // no more data can be written.
   // But allow more writes to happen in this tick.
-  process/browser.nextTick(onEndNT, this);
+  process.nextTick(onEndNT, this);
 }
 function onEndNT(self) {
   self.end();
@@ -93435,7 +93458,7 @@ function emitReadable(stream) {
   if (!state.emittedReadable) {
     debug('emitReadable', state.flowing);
     state.emittedReadable = true;
-    process/browser.nextTick(emitReadable_, stream);
+    process.nextTick(emitReadable_, stream);
   }
 }
 function emitReadable_(stream) {
@@ -93465,7 +93488,7 @@ function emitReadable_(stream) {
 function maybeReadMore(stream, state) {
   if (!state.readingMore) {
     state.readingMore = true;
-    process/browser.nextTick(maybeReadMore_, stream, state);
+    process.nextTick(maybeReadMore_, stream, state);
   }
 }
 function maybeReadMore_(stream, state) {
@@ -93526,9 +93549,9 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
   }
   state.pipesCount += 1;
   debug('pipe count=%d opts=%j', state.pipesCount, pipeOpts);
-  var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process/browser.stdout && dest !== process/browser.stderr;
+  var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process.stdout && dest !== process.stderr;
   var endFn = doEnd ? onend : unpipe;
-  if (state.endEmitted) process/browser.nextTick(endFn);else src.once('end', endFn);
+  if (state.endEmitted) process.nextTick(endFn);else src.once('end', endFn);
   dest.on('unpipe', onunpipe);
   function onunpipe(readable, unpipeInfo) {
     debug('onunpipe');
@@ -93708,7 +93731,7 @@ Readable.prototype.on = function (ev, fn) {
       if (state.length) {
         emitReadable(this);
       } else if (!state.reading) {
-        process/browser.nextTick(nReadingNextTick, this);
+        process.nextTick(nReadingNextTick, this);
       }
     }
   }
@@ -93724,7 +93747,7 @@ Readable.prototype.removeListener = function (ev, fn) {
     // support once('readable', fn) cycles. This means that calling
     // resume within the same tick will have no
     // effect.
-    process/browser.nextTick(updateReadableListening, this);
+    process.nextTick(updateReadableListening, this);
   }
   return res;
 };
@@ -93737,7 +93760,7 @@ Readable.prototype.removeAllListeners = function (ev) {
     // support once('readable', fn) cycles. This means that calling
     // resume within the same tick will have no
     // effect.
-    process/browser.nextTick(updateReadableListening, this);
+    process.nextTick(updateReadableListening, this);
   }
   return res;
 };
@@ -93777,7 +93800,7 @@ Readable.prototype.resume = function () {
 function resume(stream, state) {
   if (!state.resumeScheduled) {
     state.resumeScheduled = true;
-    process/browser.nextTick(resume_, stream, state);
+    process.nextTick(resume_, stream, state);
   }
 }
 function resume_(stream, state) {
@@ -93938,7 +93961,7 @@ function endReadable(stream) {
   debug('endReadable', state.endEmitted);
   if (!state.endEmitted) {
     state.ended = true;
-    process/browser.nextTick(endReadableNT, state, stream);
+    process.nextTick(endReadableNT, state, stream);
   }
 }
 function endReadableNT(state, stream) {
@@ -94449,7 +94472,7 @@ function writeAfterEnd(stream, cb) {
   var er = new ERR_STREAM_WRITE_AFTER_END();
   // TODO: defer error events consistently everywhere, not just the cb
   errorOrDestroy(stream, er);
-  process/browser.nextTick(cb, er);
+  process.nextTick(cb, er);
 }
 
 // Checks that a user-supplied chunk is valid, especially for the particular
@@ -94464,7 +94487,7 @@ function validChunk(stream, state, chunk, cb) {
   }
   if (er) {
     errorOrDestroy(stream, er);
-    process/browser.nextTick(cb, er);
+    process.nextTick(cb, er);
     return false;
   }
   return true;
@@ -94580,10 +94603,10 @@ function onwriteError(stream, state, sync, er, cb) {
   if (sync) {
     // defer the callback if we are being called synchronously
     // to avoid piling up things on the stack
-    process/browser.nextTick(cb, er);
+    process.nextTick(cb, er);
     // this can emit finish, and it will always happen
     // after error
-    process/browser.nextTick(finishMaybe, stream, state);
+    process.nextTick(finishMaybe, stream, state);
     stream._writableState.errorEmitted = true;
     errorOrDestroy(stream, er);
   } else {
@@ -94616,7 +94639,7 @@ function onwrite(stream, er) {
       clearBuffer(stream, state);
     }
     if (sync) {
-      process/browser.nextTick(afterWrite, stream, state, finished, cb);
+      process.nextTick(afterWrite, stream, state, finished, cb);
     } else {
       afterWrite(stream, state, finished, cb);
     }
@@ -94748,7 +94771,7 @@ function prefinish(stream, state) {
     if (typeof stream._final === 'function' && !state.destroyed) {
       state.pendingcb++;
       state.finalCalled = true;
-      process/browser.nextTick(callFinal, stream, state);
+      process.nextTick(callFinal, stream, state);
     } else {
       state.prefinished = true;
       stream.emit('prefinish');
@@ -94778,7 +94801,7 @@ function endWritable(stream, state, cb) {
   state.ending = true;
   finishMaybe(stream, state);
   if (cb) {
-    if (state.finished) process/browser.nextTick(cb);else stream.once('finish', cb);
+    if (state.finished) process.nextTick(cb);else stream.once('finish', cb);
   }
   state.ended = true;
   stream.writable = false;
@@ -94872,7 +94895,7 @@ function readAndResolve(iter) {
 function onReadable(iter) {
   // we wait for the next tick, because it might
   // emit an error with process.nextTick
-  process/browser.nextTick(readAndResolve, iter);
+  process.nextTick(readAndResolve, iter);
 }
 function wrapForNext(lastPromise, iter) {
   return function (resolve, reject) {
@@ -94907,7 +94930,7 @@ var ReadableStreamAsyncIteratorPrototype = Object.setPrototypeOf((_Object$setPro
       // we cannot guarantee that there is no error lingering around
       // waiting to be emitted.
       return new Promise(function (resolve, reject) {
-        process/browser.nextTick(function () {
+        process.nextTick(function () {
           if (_this[kError]) {
             reject(_this[kError]);
           } else {
@@ -95229,10 +95252,10 @@ function destroy(err, cb) {
       cb(err);
     } else if (err) {
       if (!this._writableState) {
-        process/browser.nextTick(emitErrorNT, this, err);
+        process.nextTick(emitErrorNT, this, err);
       } else if (!this._writableState.errorEmitted) {
         this._writableState.errorEmitted = true;
-        process/browser.nextTick(emitErrorNT, this, err);
+        process.nextTick(emitErrorNT, this, err);
       }
     }
     return this;
@@ -95252,18 +95275,18 @@ function destroy(err, cb) {
   this._destroy(err || null, function (err) {
     if (!cb && err) {
       if (!_this._writableState) {
-        process/browser.nextTick(emitErrorAndCloseNT, _this, err);
+        process.nextTick(emitErrorAndCloseNT, _this, err);
       } else if (!_this._writableState.errorEmitted) {
         _this._writableState.errorEmitted = true;
-        process/browser.nextTick(emitErrorAndCloseNT, _this, err);
+        process.nextTick(emitErrorAndCloseNT, _this, err);
       } else {
-        process/browser.nextTick(emitCloseNT, _this);
+        process.nextTick(emitCloseNT, _this);
       }
     } else if (cb) {
-      process/browser.nextTick(emitCloseNT, _this);
+      process.nextTick(emitCloseNT, _this);
       cb(err);
     } else {
-      process/browser.nextTick(emitCloseNT, _this);
+      process.nextTick(emitCloseNT, _this);
     }
   });
   return this;
@@ -96410,7 +96433,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("a3c2ff5dfb1f5ad10a85")
+/******/ 		__webpack_require__.h = () => ("3621e2fe4aaeb9c100b8")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -96890,7 +96913,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
-/******/ 		__webpack_require__.p = "http://localhost:8000/scratchjr_assets/";
+/******/ 		__webpack_require__.p = "http://localhost:3000/";
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
