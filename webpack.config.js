@@ -81,8 +81,8 @@ module.exports = function (env, argv) {
                 // process: 'process/browser'
             }),
             new webpack.ProvidePlugin({
+                'window.IntlMessageFormat': ['intl-messageformat', 'default'],
                 IntlMessageFormat: ['intl-messageformat', 'default']
-                // process: 'process'
             }),
             new webpack.HotModuleReplacementPlugin() // Enable hot reload
         ],
