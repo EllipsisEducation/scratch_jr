@@ -107,9 +107,12 @@ export default class UI {
         var sl = newHTML('div', 'leftpanel', div);
         var flip = newHTML('div', 'flipme', sl);
         flip.setAttribute('id', 'flip');
+
         flip.onclick = function (evt) {
-            window.location.href = 'https://codehs.com/';
+            // window.location.href = 'https://codehs.com/';
+            ScratchJr.saveAndFlip(evt);
         }; // move to project
+
         UI.layoutLibrary(sl);
     }
 

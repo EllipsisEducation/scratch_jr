@@ -93,102 +93,93 @@ window.onload = async () => {
         window.addEventListener('keydown', window.setActive);
     }
 
-    console.log('waitin for db');
     const shouldCreateNewProject = await db.initDB();
-    console.log('done waitin for db');
 
     // Load CSS and set root/entryFunction for all pages
     switch (page) {
-    case 'index':
-            // Index page (splash screen)
-        preprocessAndLoadCss('css', 'css/font.css');
-        preprocessAndLoadCss('css', 'css/base.css');
-        preprocessAndLoadCss('css', 'css/start.css');
-        preprocessAndLoadCss('css', 'css/thumbs.css');
-            /* For parental gate. These CSS properties should be refactored */
-        preprocessAndLoadCss('css', 'css/editor.css');
+      case "index":
+        // Index page (splash screen)
+        preprocessAndLoadCss("css", "css/font.css");
+        preprocessAndLoadCss("css", "css/base.css");
+        preprocessAndLoadCss("css", "css/start.css");
+        preprocessAndLoadCss("css", "css/thumbs.css");
+        /* For parental gate. These CSS properties should be refactored */
+        preprocessAndLoadCss("css", "css/editor.css");
         entryFunction = () =>
-                OS.waitForInterface(function () {
-                    var assets = Object.keys(MediaLib.keys).join(',');
-                    OS.registerLibraryAssets(
-                        MediaLib.version,
-                        assets,
-                        indexMain
-                    );
-                });
+          OS.waitForInterface(function () {
+            var assets = Object.keys(MediaLib.keys).join(",");
+            OS.registerLibraryAssets(MediaLib.version, assets, indexMain);
+          });
         break;
-    case 'home':
-            // Lobby pages
-        preprocessAndLoadCss('css', 'css/font.css');
-        preprocessAndLoadCss('css', 'css/base.css');
-        preprocessAndLoadCss('css', 'css/lobby.css');
-        preprocessAndLoadCss('css', 'css/thumbs.css');
+      case "home":
+        // Lobby pages
+        preprocessAndLoadCss("css", "css/font.css");
+        preprocessAndLoadCss("css", "css/base.css");
+        preprocessAndLoadCss("css", "css/lobby.css");
+        preprocessAndLoadCss("css", "css/thumbs.css");
         entryFunction = () => OS.waitForInterface(homeMain);
         break;
-    case 'editor':
-            // Editor pages
-        preprocessAndLoadCss('css', 'css/font.css');
-        preprocessAndLoadCss('css', 'css/base.css');
-        preprocessAndLoadCss('css', 'css/editor.css');
-        preprocessAndLoadCss('css', 'css/editorleftpanel.css');
-        preprocessAndLoadCss('css', 'css/editorstage.css');
-        preprocessAndLoadCss('css', 'css/editormodal.css');
-        preprocessAndLoadCss('css', 'css/librarymodal.css');
-        preprocessAndLoadCss('css', 'css/paintlook.css');
+      case "editor":
+        // Editor pages
+        preprocessAndLoadCss("css", "css/font.css");
+        preprocessAndLoadCss("css", "css/base.css");
+        preprocessAndLoadCss("css", "css/editor.css");
+        preprocessAndLoadCss("css", "css/editorleftpanel.css");
+        preprocessAndLoadCss("css", "css/editorstage.css");
+        preprocessAndLoadCss("css", "css/editormodal.css");
+        preprocessAndLoadCss("css", "css/librarymodal.css");
+        preprocessAndLoadCss("css", "css/paintlook.css");
         entryFunction = () =>
-                OS.waitForInterface(() => {
-                    if (shouldCreateNewProject) {
-                        var obj = {};
-                        obj.name =
-                            Localization.localize('NEW_PROJECT_PREFIX') +
-                            ' ' +
-                            1;
-                        obj.version = window.Settings.scratchJrVersion;
-                        obj.mtime = new Date().getTime().toString();
-                        IO.createProject(obj, editorMain);
-                    } else editorMain();
-                });
+          OS.waitForInterface(() => {
+            if (shouldCreateNewProject) {
+              var obj = {};
+              obj.name = Localization.localize("NEW_PROJECT_PREFIX") + " " + 1;
+              obj.version = window.Settings.scratchJrVersion;
+              obj.mtime = new Date().getTime().toString();
+              IO.createProject(obj, editorMain);
+            } else editorMain();
+          });
         break;
-    case 'gettingStarted':
-            // Getting started video page
-        preprocessAndLoadCss('css', 'css/font.css');
-        preprocessAndLoadCss('css', 'css/base.css');
-        preprocessAndLoadCss('css', 'css/gs.css');
+      case "gettingStarted":
+        // Getting started video page
+        preprocessAndLoadCss("css", "css/font.css");
+        preprocessAndLoadCss("css", "css/base.css");
+        preprocessAndLoadCss("css", "css/gs.css");
         entryFunction = () => OS.waitForInterface(gettingStartedMain);
         break;
-    case 'inappAbout':
-            // About ScratchJr in-app help frame
-        preprocessAndLoadCss('style', 'style/about.css');
+      case "inappAbout":
+        // About ScratchJr in-app help frame
+        preprocessAndLoadCss("style", "style/about.css");
         entryFunction = () => inappAbout();
-        root = '../';
+        root = "../";
         break;
-    case 'inappInterfaceGuide':
-            // Interface guide in-app help frame
-        preprocessAndLoadCss('style', 'style/style.css');
-        preprocessAndLoadCss('style', 'style/interface.css');
+      case "inappInterfaceGuide":
+        // Interface guide in-app help frame
+        preprocessAndLoadCss("style", "style/style.css");
+        preprocessAndLoadCss("style", "style/interface.css");
         entryFunction = () => inappInterfaceGuide();
-        root = '../';
+        root = "../";
         break;
-    case 'inappPaintEditorGuide':
-            // Paint editor guide in-app help frame
-        preprocessAndLoadCss('style', 'style/style.css');
-        preprocessAndLoadCss('style', 'style/paint.css');
+      case "inappPaintEditorGuide":
+        // Paint editor guide in-app help frame
+        preprocessAndLoadCss("style", "style/style.css");
+        preprocessAndLoadCss("style", "style/paint.css");
         entryFunction = () => inappPaintEditorGuide();
-        root = '../';
+        root = "../";
         break;
-    case 'inappBlocksGuide':
-            // Blocks guide in-app help frame
-        preprocessAndLoadCss('style', 'style/style.css');
-        preprocessAndLoadCss('style', 'style/blocks.css');
+      case "inappBlocksGuide":
+        // Blocks guide in-app help frame
+        preprocessAndLoadCss("style", "style/style.css");
+        preprocessAndLoadCss("style", "style/blocks.css");
         entryFunction = () => inappBlocksGuide();
-        root = '../';
+        root = "../";
         break;
-    case 'inappPrivacyPolicy':
-            // Blocks guide in-app help frame
-        preprocessAndLoadCss('style', 'style/style.css');
-        preprocessAndLoadCss('style', 'style/privacy.css');
+      case "inappPrivacyPolicy":
+        // Blocks guide in-app help frame
+        preprocessAndLoadCss("style", "style/style.css");
+        preprocessAndLoadCss("style", "style/privacy.css");
         entryFunction = () => inappPrivacyPolicy();
-        root = '../';
+        root = "../";
         break;
     }
 

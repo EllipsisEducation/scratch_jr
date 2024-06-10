@@ -1,19 +1,7 @@
 {
     "parser": "babel-eslint",
     "rules": {
-        "curly": [2, "multi-line"],
-        "eol-last": [2],
-        "indent": [2],
-        "linebreak-style": [2, "unix"],
-        "max-len": [2, 180, 4],
-        "no-console": [0],
-        "no-trailing-spaces": [2, { "skipBlankLines": true }],
-        "no-unused-vars": [0, {"args": "after-used", "varsIgnorePattern": "^_"}],
-        "comma-dangle": [0],
-        "quotes": [2, "single"],
-        "semi": [2, "always"],
-        "strict": [2, "never"],
-        "brace-style": [2, "1tbs", { "allowSingleLine": false }]
+      "no-console": [0]
     },
     "env": {
         "browser": true
