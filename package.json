@@ -42,7 +42,7 @@
     "webpack-notifier": "^1.6.0"
   },
   "dependencies": {
-    "firebase": "^9.19.1",
+    "firebase": "^10.12.2",
     "intl": "^1.0.1",
     "intl-messageformat": "^1.2.0",
     "snapsvg": "^0.3.0",
