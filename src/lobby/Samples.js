@@ -53,13 +53,20 @@ export default class Samples {
     ////////////////////////////
 
     static display(key) {
+        console.log('### Samples.display', key);
+
         var files = MediaLib[key];
+        console.log('### Sample.display files', files);
+
         var div = gn(key);
         for (var i = 0; i < files.length; i++) {
             Samples.addLink(div, i, files[i]);
             Samples.requestFromServer(i, files[i], displayThumb);
         }
+
         function displayThumb(pos, str) {
+            console.log('### Samples.displayThumb', pos, str);
+
             var mt = gn('sample-' + pos);
             var data = IO.parseProjectData(JSON.parse(str)[0]);
             var name = mt.childNodes[1];
@@ -82,29 +89,30 @@ export default class Samples {
     }
 
     static loadMe(e, mt) {
+        console.log('### Samples.loadMe', e, mt);
+
         e.preventDefault();
         e.stopPropagation();
         ScratchAudio.sndFX('tap.wav');
         OS.analyticsEvent('samples', 'sample_opened', mt.textContent);
         var md5 = mt.md5;
-        const params = new URLSearchParams();
-        if (window.studentAssignmentID) {
-            params.append(
-                'student_assignment_id',
-                window.studentAssignmentID
-            );
-        }
-        if (window.itemID) {
-            params.append('item_id', window.itemID);
-        }
+        // const params = new URLSearchParams();
+        // if (window.studentAssignmentID) {
+        //     params.append('student_assignment_id', window.studentAssignmentID);
+        // }
+        // if (window.itemID) {
+        //     params.append('item_id', window.itemID);
+        // }
 
         const url =
             'editor.html?pmd5=' +
             md5 +
             '&mode=' +
-            (window.Settings.useStoryStarters ? 'storyStarter' : 'look') +
-            '&' +
-            params.toString();
+            (window.Settings.useStoryStarters ? 'storyStarter' : 'look');
+        // '&' +
+        // params.toString();
+
+        console.log('### Samples.loadMe url', url);
         window.location.href = url;
     }
 
@@ -128,11 +136,17 @@ export default class Samples {
     }
 
     static requestFromServer(pos, url, whenDone) {
+        console.log('### Samples.requestFromServer', pos, url);
         url = absoluteURL(url);
         var xmlrequest = new XMLHttpRequest();
         xmlrequest.addEventListener('error', transferFailed, false);
         xmlrequest.onreadystatechange = function () {
             if (xmlrequest.readyState == 4) {
+                console.log(
+                    '### Samples.requestFromServer',
+                    pos,
+                    xmlrequest.responseText
+                );
                 whenDone(pos, xmlrequest.responseText);
             }
         };

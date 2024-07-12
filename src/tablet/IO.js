@@ -39,6 +39,8 @@ export default class IO {
     }
 
     static requestFromServer (url, whenDone) {
+        console.log('### IO.requestFromServer', url);
+
         url = absoluteURL(url);
         var xmlrequest = new XMLHttpRequest();
         xmlrequest.addEventListener('error', transferFailed, false);
@@ -260,7 +262,8 @@ export default class IO {
     }
 
     static async saveProject (obj, fcn) {
-        console.log('saveProject');
+        console.log('### IO.saveProject', obj);
+
         var json = {};
         var keylist = ['version = ?', 'deleted = ?', 'name = ?', 'json = ?', 'thumbnail = ?', 'mtime = ?'];
         json.values = [obj.version, obj.deleted, obj.name, JSON.stringify(obj.json),
@@ -298,14 +301,21 @@ export default class IO {
     }
 
     static parseProjectData (data) {
+        console.log('### IO.parseProjectData', data);
+
         var res = new Object();
         for (var key in data) {
             res[key.toLowerCase()] = data[key];
         }
 
-        for (var i = 0; i < data['columns'].length; i++) {
-            res[data['columns'][i].toLowerCase()] = data['values'][0][i];
+        // Not sure what's going on here, must be some meta data on CodeHS columns
+        // TODO: Figure out what to do with this
+        if (data['columns']) {
+            for (var i = 0; i < data['columns'].length; i++) {
+                res[data['columns'][i].toLowerCase()] = data['values'][0][i];
+            }
         }
+
         return res;
     }
 

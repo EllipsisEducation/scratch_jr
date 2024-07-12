@@ -20,55 +20,57 @@ let performingAction = false;
 export default class Home {
     static init() {
         version = Lobby.version;
-        Home.gotoEditor(1);
-        // frame = gn("htmlcontents");
-        // var inner = newHTML("div", "inner", frame);
-        // var div = newHTML("div", "scrollarea", inner);
-        // div.setAttribute("id", "scrollarea");
-        // frame.ontouchstart = Home.handleTouchStart;
-        // frame.ontouchend = Home.handleTouchEnd;
-        // frame.onmousedown = Home.handleTouchStart;
-        // frame.onmouseup = Home.handleTouchEnd;
-        // if (localStorage.getItem("loadFromFirebase")) {
+        // Home.gotoEditor(1);
+
+        frame = gn('htmlcontents');
+        var inner = newHTML('div', 'inner', frame);
+        var div = newHTML('div', 'scrollarea', inner);
+        div.setAttribute('id', 'scrollarea');
+        frame.ontouchstart = Home.handleTouchStart;
+        frame.ontouchend = Home.handleTouchEnd;
+        frame.onmousedown = Home.handleTouchStart;
+        frame.onmouseup = Home.handleTouchEnd;
+        // if (localStorage.getItem('loadFromFirebase')) {
         //     Home.gotoEditor(1);
+        // if (false) {
         // } else {
         //     if (window.studentAssignmentID) {
         //         if (
         //             !localStorage.getItem(
-        //                 "sa-" + window.studentAssignmentID + "-initialized"
+        //                 'sa-' + window.studentAssignmentID + '-initialized'
         //             )
         //         ) {
         //             localStorage.setItem(
-        //                 "sa-" + window.studentAssignmentID + "-initialized",
-        //                 "true"
+        //                 'sa-' + window.studentAssignmentID + '-initialized',
+        //                 'true'
         //             );
-        //             console.log("creating new project (SA)");
+        //             console.log('creating new project (SA)');
         //             Home.createNewProject();
         //         } else {
         //             //get the only project
-        //             console.log("project found (SA)");
+        //             console.log('project found (SA)');
         //             Home.gotoEditor(1);
         //         }
         //     } else {
         //         if (
         //             !localStorage.getItem(
-        //                 "item-" + window.itemID + "-initialized"
+        //                 'item-' + window.itemID + '-initialized'
         //             )
         //         ) {
         //             localStorage.setItem(
-        //                 "item-" + window.itemID + "-initialized",
-        //                 "true"
+        //                 'item-' + window.itemID + '-initialized',
+        //                 'true'
         //             );
-        //             console.log("creating new project (item)");
+        //             console.log('creating new project (item)');
         //             Home.createNewProject();
         //         } else {
-        //             console.log("project found (item)");
+        //             console.log('project found (item)');
         //             //get the only project
         //             Home.gotoEditor(1);
         //         }
         //     }
         // }
-        // Home.displayYourProjects();
+        Home.displayYourProjects();
     }
 
     ////////////////////////////
@@ -256,7 +258,7 @@ export default class Home {
 
             const url =
                 'editor.html?pmd5=' + md5 + '&mode=edit&' + params.toString();
-            window.location.href = url;
+            // window.location.href = url;
         }
     }
 
@@ -291,6 +293,8 @@ export default class Home {
 
             const url =
                 'editor.html?pmd5=' + md5 + '&mode=edit&' + params.toString();
+
+            console.log('### gotoEditor url:', url);
             window.location.href = url;
         }
     }
@@ -363,7 +367,10 @@ export default class Home {
     }
 
     static displayProjects(str) {
+        console.log('### Home.displayProjects str', str);
+
         var data = JSON.parse(str);
+
         var div = gn('scrollarea');
         while (div.childElementCount > 0) {
             div.removeChild(div.childNodes[0]);

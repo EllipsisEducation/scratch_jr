@@ -222,233 +222,240 @@ window.addEventListener('beforeunload', function () {
 
 let saveTimeout = null;
 export function saveDB() {
-    if (db === null) return null;
+  console.log("### WebDB.saveDB");
 
-    if (saveTimeout !== null) {
-        clearTimeout(saveTimeout);
+  // If DB connection is null, do nothing
+  if (db === null) return null;
+
+  // If a save is already scheduled, cancel it
+  if (saveTimeout !== null) {
+    clearTimeout(saveTimeout);
+  }
+
+  // Schedule a new save timeout
+  saveTimeout = setTimeout(async () => {
+    console.log("WebDb.saveDB saving...");
+
+    // Export the db binary
+    const binaryData = db.export();
+
+    // Convert the binary data to a UTF-16 string
+    const stringData = binaryDataToUTF16String(binaryData);
+
+    // Hash the DB string
+    // const dbHash = await hashString(stringData);
+    const dbHash = stringData;
+
+    // Use the hash to determine if the DB has changed, if it has not changed, do not save
+    // and return DB string data
+    if (dbHash === localStorage.getItem(baseKey)) {
+      console.log("no changes to save, skipping");
+      return stringData;
     }
 
-    saveTimeout = setTimeout(() => {
-        console.log('savedb');
+    console.log("WebDB.saveDB changes detected, saving");
 
-        const binaryData = db.export();
-        const stringData = binaryDataToUTF16String(binaryData);
-        const dbHash = hashString(stringData);
-        // early return if no changes were made to the db string
-        if (dbHash === localStorage.getItem(baseKey)) {
-            console.log('no changes to save, skipping');
-            return stringData;
-        } else {
-            console.log('changes detected, saving');
-        }
+    // If DB hash is different, save the DB
+    if (window.saveScratchJrProject) {
+      window.saveScratchJrProject(
+        UTF16StringToUTF8String(stringData),
+        latestThumbnail
+      );
+    }
 
-        if (window.saveScratchJrProject) {
-            window.saveScratchJrProject(
-                UTF16StringToUTF8String(stringData),
-                latestThumbnail
-            );
-        }
+    console.log("WebDB.saveDB baseKey:", baseKey);
+    console.log("WebDB.saveDB dbHash:", dbHash);
 
-        localStorage.setItem(baseKey, dbHash);
-    }, 1000);
+    // Set new DB hash
+    localStorage.setItem(baseKey, dbHash);
+    console.log("WebDb.saveDB saved");
+  }, 1000);
 }
 
 // Returns the current database as a UTF-8 string.
 // Make sure the database is saved BEFORE calling this function.
 export function getDBString() {
-    if (db === null) return null;
+  if (db === null) return null;
 
-    const binaryData = db.export();
-    return UTF16StringToUTF8String(binaryDataToUTF16String(binaryData));
+  const binaryData = db.export();
+  return UTF16StringToUTF8String(binaryDataToUTF16String(binaryData));
 }
 
 async function getInitialDBString() {
-    let dbData = null;
+  console.log("### WebDB.getInitialDBString");
+  let dbData = null;
 
-    try {
-        // Try to load from CodeHS DB
-        // This function is defined in scratchjr.js on the CodeHS side and called on page load
-        if (window.loadScratchJrProject) {
-            let showUploadDB = false;
-            const result = await window.loadScratchJrProject();
-            // determine whether to show the upload DB button
-            // window.loadScratchJrProject was only returning the DB data before this change,
-            // but now it also returns the showUploadDB boolean as well, so we need to check
-            // if the result is an array or not to keep backwards compatibility
-            if (Array.isArray(result)) {
-                dbData = result[0];
-                showUploadDB = result[1];
-            } else {
-                dbData = result;
-            }
-            if (showUploadDB) {
-                try {
-                    const uploadedBinaryData = await uploadFileToUint8Array();
-                    return binaryDataToUTF16String(uploadedBinaryData);
-                } catch (e) {
-                    // Print out error and continue loading DB from CodeHS
-                    console.log(e);
-                }
-            }
+  dbData = localStorage.getItem(baseKey);
 
-            if (dbData) {
-                dbData = UTF8StringToUTF16String(dbData);
-            }
-        }
-    } catch (e) {
-        console.log('Error loading from CodeHS DB:', e);
-    }
-    return dbData;
+  // try {
+  //   // Try to load from CodeHS DB
+  //   // This function is defined in scratchjr.js on the CodeHS side and called on page load
+  //   if (window.loadScratchJrProject) {
+  //     let showUploadDB = false;
+  //     const result = await window.loadScratchJrProject();
+  //     // determine whether to show the upload DB button
+  //     // window.loadScratchJrProject was only returning the DB data before this change,
+  //     // but now it also returns the showUploadDB boolean as well, so we need to check
+  //     // if the result is an array or not to keep backwards compatibility
+  //     if (Array.isArray(result)) {
+  //       dbData = result[0];
+  //       showUploadDB = result[1];
+  //     } else {
+  //       dbData = result;
+  //     }
+  //     if (showUploadDB) {
+  //       try {
+  //         const uploadedBinaryData = await uploadFileToUint8Array();
+  //         return binaryDataToUTF16String(uploadedBinaryData);
+  //       } catch (e) {
+  //         // Print out error and continue loading DB from CodeHS
+  //         console.log(e);
+  //       }
+  //     }
+
+  //     if (dbData) {
+  //       dbData = UTF8StringToUTF16String(dbData);
+  //     }
+  //   }
+  // } catch (e) {
+  //   console.log("Error loading from CodeHS DB:", e);
+  // }
+
+  return dbData;
 }
 
 export async function initDB() {
-    try {
-        console.log('init');
-
-        // return existing promise if it exists
-        if (initPromise) {
-            console.log('returning existing promise');
-            return initPromise;
-        }
-        console.log('gonna have to create a new promise...');
-        // create a new promise that resolves with whether we should
-        // create a new project once it's initialized
-        initPromise = new Promise(async (resolve) => {
-            console.log('creating that new promise, as promised...');
-            let shouldCreateNewProject = false;
-            const SQL = await Promise.race([
-                initSqlJs({
-                    locateFile: () => sqlWasm
-                }),
-                new Promise((_, reject) => {
-                    setTimeout(() => {
-                        reject(new Error('initSqlJs timed out'));
-                    }, 5000); // Adjust the timeout value as needed
-                })
-            ]);
-            console.log('SQL is: ', SQL);
-            window.SQL = SQL;
-            console.log('Before baseKey initialization');
-            if (window.sharedProgramID) {
-                console.log('sharedProgramID: ', window.sharedProgramID);
-                const id = window.sharedProgramID;
-                baseKey = 'sp-' + id;
-            } else if (window.studentAssignmentID) {
-                console.log(
-                    'studentAssignmentID: ',
-                    window.studentAssignmentID
-                );
-                const id = window.studentAssignmentID;
-                baseKey = 'sa-' + id;
-            } else if (window.itemID) {
-                console.log('itemID: ', window.itemID);
-                const id = window.itemID;
-                baseKey = 'item-' + id;
-            } else if (window.scratchJrPage === 'editor') {
-                console.log('editor page');
-                alert('No IDs found. DB will not be loaded or saved.');
-            }
-            console.log('baseKey: ', baseKey);
-            // get saved data from codehs, then initialize the database with it if it
-            // exists. otherwise, create a new database and initialize the tables and run migrations.
-            console.log('Before getInitialDBString');
-            const dbDataString = await getInitialDBString();
-            console.log(
-                'After getInitialDBString, dbDataString: ',
-                dbDataString
-            );
-
-            if (dbDataString) {
-                console.log('loading existing database');
-                const binaryData = UTF16StringToBinaryData(dbDataString);
-                console.log('binaryData:', binaryData);
-                db = new SQL.Database(binaryData);
-            } else {
-                console.log('creating new database');
-                db = new SQL.Database();
-                initTables();
-                runMigrations();
-                shouldCreateNewProject = true;
-            }
-            console.log('db is: ', db);
-            window.db = db;
-            console.log('shouldCreateNewProject: ', shouldCreateNewProject);
-            if (
-                (console.log('checking if we should display project files'),
-                new URLSearchParams(window.location.search).get(
-                    'show-project-files'
-                ) === 'true')
-            ) {
-                console.log('displaying project files');
-                await displayProjectFiles();
-            }
-            console.log('resolving that promise');
-            resolve(shouldCreateNewProject);
-        });
-        console.log('returning that promise');
-    } catch (error) {
-        console.error('Error in initDB:', error);
-        throw error;
+  try {
+    if (initPromise) {
+      return initPromise;
     }
-    return initPromise;
+    // create a new promise that resolves with whether we should
+    // create a new project once it's initialized
+    initPromise = new Promise(async (resolve) => {
+      let shouldCreateNewProject = false;
+      const SQL = await Promise.race([
+        initSqlJs({
+          locateFile: () => sqlWasm,
+        }),
+        new Promise((_, reject) => {
+          setTimeout(() => {
+            reject(new Error("initSqlJs timed out"));
+          }, 5000); // Adjust the timeout value as needed
+        }),
+      ]);
+
+      window.SQL = SQL;
+
+      if (window.sharedProgramID) {
+        console.log("sharedProgramID: ", window.sharedProgramID);
+        const id = window.sharedProgramID;
+        baseKey = "sp-" + id;
+      } else if (window.studentAssignmentID) {
+        console.log("studentAssignmentID: ", window.studentAssignmentID);
+        const id = window.studentAssignmentID;
+        baseKey = "sa-" + id;
+      } else if (window.itemID) {
+        console.log("itemID: ", window.itemID);
+        const id = window.itemID;
+        baseKey = "item-" + id;
+      } else if (window.scratchJrPage === "editor") {
+        // alert("No IDs found. DB will not be loaded or saved.");
+        baseKey = "scratchjr-web";
+      }
+
+      // get saved data from codehs, then initialize the database with it if it
+      // exists. otherwise, create a new database and initialize the tables and run migrations.
+      const dbDataString = await getInitialDBString();
+
+      console.log("### WebDB.initDB dbDataString", dbDataString);
+
+      if (dbDataString) {
+        console.log("### WebDB.initDB loading existing database");
+        const binaryData = UTF16StringToBinaryData(dbDataString);
+        db = new SQL.Database(binaryData);
+      } else {
+        db = new SQL.Database();
+        initTables();
+        runMigrations();
+        shouldCreateNewProject = true;
+      }
+      window.db = db;
+
+      if (
+        new URLSearchParams(window.location.search).get(
+          "show-project-files"
+        ) === "true"
+      ) {
+        console.log("displaying project files");
+        await displayProjectFiles();
+      }
+      resolve(shouldCreateNewProject);
+    });
+  } catch (error) {
+    console.error("Error in initDB:", error);
+    throw error;
+  }
+  return initPromise;
 }
 
 async function displayProjectFiles() {
-    return new Promise(async (resolve) => {
-        const rows = JSON.parse(
-            await executeQueryFromJSON({
-                stmt: `select * from projectfiles`
-            })
-        )[0].values;
-        const container = document.createElement('div');
+  return new Promise(async (resolve) => {
+    const rows = JSON.parse(
+      await executeQueryFromJSON({
+        stmt: `select * from projectfiles`,
+      })
+    )[0].values;
+    const container = document.createElement("div");
 
-        for (const row of rows) {
-            const md5 = row[0];
-            const contents = row[1];
+    for (const row of rows) {
+      const md5 = row[0];
+      const contents = row[1];
 
-            // Determine the image type based on the md5 filename
-            const imageType = md5.endsWith('.png')
-                ? 'image/png'
-                : 'image/svg+xml';
+      // Determine the image type based on the md5 filename
+      const imageType = md5.endsWith(".png") ? "image/png" : "image/svg+xml";
 
-            // Create an img element
-            const img = document.createElement('img');
+      // Create an img element
+      const img = document.createElement("img");
 
-            // Set the src attribute to the data URI
-            img.src = `data:${imageType};base64,${contents}`;
-            img.title = md5;
+      // Set the src attribute to the data URI
+      img.src = `data:${imageType};base64,${contents}`;
+      img.title = md5;
 
-            // Append the img element to the container
-            container.appendChild(img);
-        }
+      // Append the img element to the container
+      container.appendChild(img);
+    }
 
-        // Append the container to the DOM
-        document.body.appendChild(container);
-    });
+    // Append the container to the DOM
+    document.body.appendChild(container);
+  });
 }
 
 export async function executeQueryFromJSON(json) {
-    if (db === null) await initDB();
+  console.log("### WebDB.executeQueryFromJSON", json);
 
-    // see Web interface, query()
-    const { stmt, values } = json;
-    return JSON.stringify(db.exec(stmt, values));
+  if (db === null) await initDB();
+
+  // see Web interface, query()
+  const { stmt, values } = json;
+  return JSON.stringify(db.exec(stmt, values));
 }
 
 // see https://github.com/jfo8000/ScratchJr-Desktop/blob/master/src/main.js#L898
 export async function executeStatementFromJSON(json) {
-    if (db === null) await initDB();
-    // see Web interface, stmt()
-    const { stmt, values } = json;
-    const statement = db.prepare(stmt, values);
-    while (statement.step()) statement.get();
-    const result = db.exec('select last_insert_rowid();');
-    const lastRowId = result[0].values[0][0];
-    return lastRowId;
+  console.log("### WebDB.executeStatementFromJSON", json);
+
+  if (db === null) await initDB();
+  // see Web interface, stmt()
+  const { stmt, values } = json;
+  const statement = db.prepare(stmt, values);
+  while (statement.step()) statement.get();
+  const result = db.exec("select last_insert_rowid();");
+  const lastRowId = result[0].values[0][0];
+  return lastRowId;
 }
 
 function isThumbnail(md5) {
-    return md5.endsWith('.png') && md5.includes('_');
+  return md5.endsWith(".png") && md5.includes("_");
 }
 
 /**
@@ -457,29 +464,29 @@ function isThumbnail(md5) {
  * See saveToProjectFiles() for more context.
  */
 async function clearThumbnails() {
-    const result = JSON.parse(
-        await executeQueryFromJSON({
-            stmt: `select * from projectfiles`
-        })
-    );
+  const result = JSON.parse(
+    await executeQueryFromJSON({
+      stmt: `select * from projectfiles`,
+    })
+  );
 
-    // early return if there are no rows in the table
-    if (!result.length) return;
+  // early return if there are no rows in the table
+  if (!result.length) return;
 
-    const rows = result[0].values;
-    const md5sToDelete = [];
-    for (const row of rows) {
-        const md5 = row[0];
-        if (isThumbnail(md5)) {
-            md5sToDelete.push(md5);
-        }
+  const rows = result[0].values;
+  const md5sToDelete = [];
+  for (const row of rows) {
+    const md5 = row[0];
+    if (isThumbnail(md5)) {
+      md5sToDelete.push(md5);
     }
+  }
 
-    const placeholders = md5sToDelete.map(() => '?').join(', ');
-    await executeStatementFromJSON({
-        stmt: `delete from projectfiles where md5 in (${placeholders});`,
-        values: md5sToDelete
-    });
+  const placeholders = md5sToDelete.map(() => "?").join(", ");
+  await executeStatementFromJSON({
+    stmt: `delete from projectfiles where md5 in (${placeholders});`,
+    values: md5sToDelete,
+  });
 }
 
 /**
@@ -503,70 +510,74 @@ async function clearThumbnails() {
  * @param {string} content
  */
 export async function saveToProjectFiles(fileMD5, content) {
-    // query for the current file contents to see if they actually changed
-    let currentContents = '';
-    const queryResult = JSON.parse(
-        await executeQueryFromJSON({
-            stmt: `select contents from projectfiles where md5 = ?`,
-            values: [fileMD5]
-        })
-    );
-    if (
-        queryResult.length > 0 &&
-        queryResult[0].values.length > 0 &&
-        queryResult[0].values[0].length > 0
-    ) {
-        currentContents = queryResult[0].values[0][0];
+  console.log("### WebDB.saveToProjectFiles", fileMD5, content);
+
+  // query for the current file contents to see if they actually changed
+  let currentContents = "";
+  const queryResult = JSON.parse(
+    await executeQueryFromJSON({
+      stmt: `select contents from projectfiles where md5 = ?`,
+      values: [fileMD5],
+    })
+  );
+  if (
+    queryResult.length > 0 &&
+    queryResult[0].values.length > 0 &&
+    queryResult[0].values[0].length > 0
+  ) {
+    currentContents = queryResult[0].values[0][0];
+  }
+
+  // if the contents changed, update the db and save
+  if (content !== currentContents) {
+    if (isThumbnail(fileMD5)) {
+      await clearThumbnails();
+      latestThumbnail = "data:image/png;base64," + content;
     }
+    await executeStatementFromJSON({
+      stmt: `insert or replace into projectfiles (md5, contents) values (?, ?);`,
+      values: [fileMD5, content],
+    });
 
-    // if the contents changed, update the db and save
-    if (content !== currentContents) {
-        if (isThumbnail(fileMD5)) {
-            await clearThumbnails();
-            latestThumbnail = 'data:image/png;base64,' + content;
-        }
-        await executeStatementFromJSON({
-            stmt: `insert or replace into projectfiles (md5, contents) values (?, ?);`,
-            values: [fileMD5, content]
-        });
+    await executeStatementFromJSON({
+      stmt: `vacuum;`,
+    });
 
-        await executeStatementFromJSON({
-            stmt: `vacuum;`
-        });
-
-        saveDB();
-    }
+    saveDB();
+  }
 }
 
 // actually returns SHA-256
 export async function getMD5(data) {
-    // return crypto.createHash('md5').update(data).digest('hex');
-    const utf8 = new TextEncoder().encode(data);
-    return crypto.subtle.digest('SHA-256', utf8).then((hashBuffer) => {
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        const hashHex = hashArray
-            .map((bytes) => bytes.toString(16).padStart(2, '0'))
-            .join('');
-        return hashHex;
-    });
+  // return crypto.createHash('md5').update(data).digest('hex');
+  const utf8 = new TextEncoder().encode(data);
+  return crypto.subtle.digest("SHA-256", utf8).then((hashBuffer) => {
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((bytes) => bytes.toString(16).padStart(2, "0"))
+      .join("");
+    return hashHex;
+  });
 }
 
 // see https://github.com/jfo8000/ScratchJr-Desktop/blob/master/src/main.js#L822
 export async function readProjectFile(fileMD5) {
-    const json = {};
-    json.cond = 'MD5 = ?';
-    json.items = ['CONTENTS'];
-    json.values = [fileMD5];
-    const table = 'PROJECTFILES';
+  console.log("### WebDB.readProjectFile", fileMD5);
 
-    json.stmt = `select ${json.items} from ${table} where ${json.cond}${
-        json.order ? ` order by ${json.order}` : ''
-    }`;
+  const json = {};
+  json.cond = "MD5 = ?";
+  json.items = ["CONTENTS"];
+  json.values = [fileMD5];
+  const table = "PROJECTFILES";
 
-    var rows = await executeQueryFromJSON(json);
-    rows = JSON.parse(rows);
-    if (rows.length > 0) {
-        return rows[0]['values'][0][0];
-    }
-    return null;
+  json.stmt = `select ${json.items} from ${table} where ${json.cond}${
+    json.order ? ` order by ${json.order}` : ""
+  }`;
+
+  var rows = await executeQueryFromJSON(json);
+  rows = JSON.parse(rows);
+  if (rows.length > 0) {
+    return rows[0]["values"][0][0];
+  }
+  return null;
 }

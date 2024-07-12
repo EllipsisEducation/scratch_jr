@@ -23,8 +23,10 @@ function homeGoBack() {
         params.append('item_id', window.itemID);
     }
 
-    const url = 'index.html?back=yes&' + params.toString();
-    window.location.href = url;
+    // const url = 'index.html?back=yes&' + params.toString();
+    // const url = 'index.html' + params.toString();
+    // console.log('####### url:', url);
+    // window.location.href = url;
 }
 
 function homeStrings() {

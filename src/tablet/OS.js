@@ -70,6 +70,7 @@ export default class OS {
     }
 
     static query(json, fcn) {
+        console.log('### OS.query', json, fcn);
         tabletInterface.query(json, fcn);
     }
 

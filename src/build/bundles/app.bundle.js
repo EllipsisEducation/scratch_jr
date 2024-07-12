@@ -494,36 +494,35 @@ var ScratchJr = /*#__PURE__*/function () {
       var params = new URLSearchParams();
       var wat;
       if (window.studentAssignmentID) {
-        params.append('student_assignment_id', window.studentAssignmentID);
+        params.append("student_assignment_id", window.studentAssignmentID);
       }
       if (window.itemID) {
-        params.append('item_id', window.itemID);
+        params.append("item_id", window.itemID);
       }
-      if (editmode == 'storyStarter') {
+      if (editmode == "storyStarter") {
         if (!storyStarted) {
           // return 'home.html?place=help&' + params.toString();
-          wat = 'home.html?place=help&' + params.toString();
+          wat = "home.html?place=help&" + params.toString();
         } else {
           // return 'home.html?place=home&' + params.toString();
-          wat = 'home.html?place=home&' + params.toString();
+          wat = "home.html?place=home&" + params.toString();
         }
       }
       if (!currentProject) {
-        wat = 'home.html?place=home&' + params.toString();
+        wat = "home.html?place=home&" + params.toString();
         // return 'home.html?place=home&' + params.toString();
       }
-      if (_ui_Project__WEBPACK_IMPORTED_MODULE_0__["default"].metadata.gallery == 'samples') {
-        wat = 'home.html?place=help&' + params.toString();
+      if (_ui_Project__WEBPACK_IMPORTED_MODULE_0__["default"].metadata.gallery == "samples") {
+        wat = "home.html?place=help&" + params.toString();
         // return 'home.html?place=help&' + params.toString();
       } else {
-        params.append('timestamp', new Date().getTime());
-        wat = 'home.html?place=home&' + params.toString();
+        params.append("timestamp", new Date().getTime());
+        wat = "home.html?place=home&" + params.toString();
         // return 'home.html?place=home&' + params.toString();
       }
-      console.log('#### wat:', wat);
 
       // return wat;
-      return 'home.html';
+      return "home.html";
     }
   }, {
     key: "updateRunStopButtons",
@@ -13510,118 +13509,114 @@ window.onload = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime
           window.addEventListener('touchstart', window.setActive);
           window.addEventListener('keydown', window.setActive);
         }
-        console.log('waitin for db');
-        _context.next = 10;
+        _context.next = 9;
         return _tablet_WebDB_js__WEBPACK_IMPORTED_MODULE_6__.initDB();
-      case 10:
+      case 9:
         shouldCreateNewProject = _context.sent;
-        console.log('done waitin for db');
-
-        // Load CSS and set root/entryFunction for all pages
         _context.t0 = page;
-        _context.next = _context.t0 === 'index' ? 15 : _context.t0 === 'home' ? 22 : _context.t0 === 'editor' ? 28 : _context.t0 === 'gettingStarted' ? 38 : _context.t0 === 'inappAbout' ? 43 : _context.t0 === 'inappInterfaceGuide' ? 47 : _context.t0 === 'inappPaintEditorGuide' ? 52 : _context.t0 === 'inappBlocksGuide' ? 57 : _context.t0 === 'inappPrivacyPolicy' ? 62 : 67;
+        _context.next = _context.t0 === "index" ? 13 : _context.t0 === "home" ? 20 : _context.t0 === "editor" ? 26 : _context.t0 === "gettingStarted" ? 36 : _context.t0 === "inappAbout" ? 41 : _context.t0 === "inappInterfaceGuide" ? 45 : _context.t0 === "inappPaintEditorGuide" ? 50 : _context.t0 === "inappBlocksGuide" ? 55 : _context.t0 === "inappPrivacyPolicy" ? 60 : 65;
         break;
-      case 15:
+      case 13:
         // Index page (splash screen)
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/font.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/base.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/start.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/thumbs.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/font.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/base.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/start.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/thumbs.css");
         /* For parental gate. These CSS properties should be refactored */
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editor.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editor.css");
         entryFunction = function entryFunction() {
           return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(function () {
-            var assets = Object.keys(_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_5__["default"].keys).join(',');
+            var assets = Object.keys(_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_5__["default"].keys).join(",");
             _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].registerLibraryAssets(_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_5__["default"].version, assets, _index__WEBPACK_IMPORTED_MODULE_7__.indexMain);
           });
         };
-        return _context.abrupt("break", 67);
-      case 22:
+        return _context.abrupt("break", 65);
+      case 20:
         // Lobby pages
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/font.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/base.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/lobby.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/thumbs.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/font.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/base.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/lobby.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/thumbs.css");
         entryFunction = function entryFunction() {
           return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(_home__WEBPACK_IMPORTED_MODULE_8__.homeMain);
         };
-        return _context.abrupt("break", 67);
-      case 28:
+        return _context.abrupt("break", 65);
+      case 26:
         // Editor pages
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/font.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/base.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editor.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editorleftpanel.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editorstage.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/editormodal.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/librarymodal.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/paintlook.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/font.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/base.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editor.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editorleftpanel.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editorstage.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/editormodal.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/librarymodal.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/paintlook.css");
         entryFunction = function entryFunction() {
           return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(function () {
             if (shouldCreateNewProject) {
               var obj = {};
-              obj.name = _utils_Localization__WEBPACK_IMPORTED_MODULE_1__["default"].localize('NEW_PROJECT_PREFIX') + ' ' + 1;
+              obj.name = _utils_Localization__WEBPACK_IMPORTED_MODULE_1__["default"].localize("NEW_PROJECT_PREFIX") + " " + 1;
               obj.version = window.Settings.scratchJrVersion;
               obj.mtime = new Date().getTime().toString();
               _tablet_IO__WEBPACK_IMPORTED_MODULE_4__["default"].createProject(obj, _editor__WEBPACK_IMPORTED_MODULE_9__.editorMain);
             } else (0,_editor__WEBPACK_IMPORTED_MODULE_9__.editorMain)();
           });
         };
-        return _context.abrupt("break", 67);
-      case 38:
+        return _context.abrupt("break", 65);
+      case 36:
         // Getting started video page
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/font.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/base.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('css', 'css/gs.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/font.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/base.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/gs.css");
         entryFunction = function entryFunction() {
           return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(_gettingstarted__WEBPACK_IMPORTED_MODULE_10__.gettingStartedMain);
         };
-        return _context.abrupt("break", 67);
-      case 43:
+        return _context.abrupt("break", 65);
+      case 41:
         // About ScratchJr in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/about.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/about.css");
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappAbout)();
         };
-        root = '../';
-        return _context.abrupt("break", 67);
-      case 47:
+        root = "../";
+        return _context.abrupt("break", 65);
+      case 45:
         // Interface guide in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/style.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/interface.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/style.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/interface.css");
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappInterfaceGuide)();
         };
-        root = '../';
-        return _context.abrupt("break", 67);
-      case 52:
+        root = "../";
+        return _context.abrupt("break", 65);
+      case 50:
         // Paint editor guide in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/style.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/paint.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/style.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/paint.css");
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappPaintEditorGuide)();
         };
-        root = '../';
-        return _context.abrupt("break", 67);
-      case 57:
+        root = "../";
+        return _context.abrupt("break", 65);
+      case 55:
         // Blocks guide in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/style.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/blocks.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/style.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/blocks.css");
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappBlocksGuide)();
         };
-        root = '../';
-        return _context.abrupt("break", 67);
-      case 62:
+        root = "../";
+        return _context.abrupt("break", 65);
+      case 60:
         // Blocks guide in-app help frame
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/style.css');
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)('style', 'style/privacy.css');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/style.css");
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("style", "style/privacy.css");
         entryFunction = function entryFunction() {
           return (0,_inapp__WEBPACK_IMPORTED_MODULE_11__.inappPrivacyPolicy)();
         };
-        root = '../';
-        return _context.abrupt("break", 67);
-      case 67:
+        root = "../";
+        return _context.abrupt("break", 65);
+      case 65:
         // Start up sequence
         // Load settings from JSON
         loadSettings(root, function () {
@@ -13635,7 +13630,7 @@ window.onload = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime
           // Initialize currentUsage data
           _utils_InitialOptions__WEBPACK_IMPORTED_MODULE_2__["default"].initWithSettings(window.Settings.initialOptions);
         });
-      case 68:
+      case 66:
       case "end":
         return _context.stop();
     }
@@ -13742,7 +13737,6 @@ function gettingStartedMain() {
   }, document);
 }
 function gettingStartedCloseMe() {
-  console.log('@!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@');
   var params = new URLSearchParams();
   if (window.studentAssignmentID) {
     params.append('student_assignment_id', window.studentAssignmentID);
@@ -15097,9 +15091,8 @@ var Home = /*#__PURE__*/function () {
   }, {
     key: "displayProjects",
     value: function displayProjects(str) {
-      console.log('######### displayProjects str', str);
+      console.log('### Home.displayProjects str', str);
       var data = JSON.parse(str);
-      console.log('data', data);
       var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('scrollarea');
       while (div.childElementCount > 0) {
         div.removeChild(div.childNodes[0]);
@@ -15684,13 +15677,16 @@ var Samples = /*#__PURE__*/function () {
   }, {
     key: "display",
     value: function display(key) {
+      console.log('### Samples.display', key);
       var files = _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"][key];
+      console.log('### Sample.display files', files);
       var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(key);
       for (var i = 0; i < files.length; i++) {
         Samples.addLink(div, i, files[i]);
         Samples.requestFromServer(i, files[i], displayThumb);
       }
       function displayThumb(pos, str) {
+        console.log('### Samples.displayThumb', pos, str);
         var mt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('sample-' + pos);
         var data = _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].parseProjectData(JSON.parse(str)[0]);
         var name = mt.childNodes[1];
@@ -15715,20 +15711,26 @@ var Samples = /*#__PURE__*/function () {
   }, {
     key: "loadMe",
     value: function loadMe(e, mt) {
+      console.log('### Samples.loadMe', e, mt);
       e.preventDefault();
       e.stopPropagation();
       _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_4__["default"].sndFX('tap.wav');
       _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent('samples', 'sample_opened', mt.textContent);
       var md5 = mt.md5;
-      var params = new URLSearchParams();
-      if (window.studentAssignmentID) {
-        params.append('student_assignment_id', window.studentAssignmentID);
-      }
-      if (window.itemID) {
-        params.append('item_id', window.itemID);
-      }
-      var url = 'editor.html?pmd5=' + md5 + '&mode=' + (window.Settings.useStoryStarters ? 'storyStarter' : 'look') + '&' + params.toString();
-      // window.location.href = url;
+      // const params = new URLSearchParams();
+      // if (window.studentAssignmentID) {
+      //     params.append('student_assignment_id', window.studentAssignmentID);
+      // }
+      // if (window.itemID) {
+      //     params.append('item_id', window.itemID);
+      // }
+
+      var url = 'editor.html?pmd5=' + md5 + '&mode=' + (window.Settings.useStoryStarters ? 'storyStarter' : 'look');
+      // '&' +
+      // params.toString();
+
+      console.log('### Samples.loadMe url', url);
+      window.location.href = url;
     }
   }, {
     key: "insertThumbnail",
@@ -15754,11 +15756,13 @@ var Samples = /*#__PURE__*/function () {
   }, {
     key: "requestFromServer",
     value: function requestFromServer(pos, url, whenDone) {
+      console.log('### Samples.requestFromServer', pos, url);
       url = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.absoluteURL)(url);
       var xmlrequest = new XMLHttpRequest();
       xmlrequest.addEventListener('error', transferFailed, false);
       xmlrequest.onreadystatechange = function () {
         if (xmlrequest.readyState == 4) {
+          console.log('### Samples.requestFromServer', pos, xmlrequest.responseText);
           whenDone(pos, xmlrequest.responseText);
         }
       };
@@ -24941,6 +24945,7 @@ var IO = /*#__PURE__*/function () {
   }, {
     key: "requestFromServer",
     value: function requestFromServer(url, whenDone) {
+      console.log('### IO.requestFromServer', url);
       url = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_3__.absoluteURL)(url);
       var xmlrequest = new XMLHttpRequest();
       xmlrequest.addEventListener('error', transferFailed, false);
@@ -25179,7 +25184,7 @@ var IO = /*#__PURE__*/function () {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              console.log('saveProject');
+              console.log('### IO.saveProject', obj);
               json = {};
               keylist = ['version = ?', 'deleted = ?', 'name = ?', 'json = ?', 'thumbnail = ?', 'mtime = ?'];
               json.values = [obj.version, obj.deleted, obj.name, JSON.stringify(obj.json), JSON.stringify(obj.thumbnail), (0,_utils_lib__WEBPACK_IMPORTED_MODULE_3__.mTime)().toString()];
@@ -25233,12 +25238,18 @@ var IO = /*#__PURE__*/function () {
   }, {
     key: "parseProjectData",
     value: function parseProjectData(data) {
+      console.log('### IO.parseProjectData', data);
       var res = new Object();
       for (var key in data) {
         res[key.toLowerCase()] = data[key];
       }
-      for (var i = 0; i < data['columns'].length; i++) {
-        res[data['columns'][i].toLowerCase()] = data['values'][0][i];
+
+      // Not sure what's going on here, must be some meta data on CodeHS columns
+      // TODO: Figure out what to do with this
+      if (data['columns']) {
+        for (var i = 0; i < data['columns'].length; i++) {
+          res[data['columns'][i].toLowerCase()] = data['values'][0][i];
+        }
       }
       return res;
     }
@@ -25475,7 +25486,6 @@ var MediaLib = /*#__PURE__*/function () {
   }, {
     key: "loadMediaLib",
     value: function loadMediaLib(root, whenDone) {
-      console.log('loadMediaLib');
       _IO__WEBPACK_IMPORTED_MODULE_0__["default"].requestFromServer(root + 'media.json', function (result) {
         var parsedResult = JSON.parse(result);
         path = parsedResult.path;
@@ -25661,7 +25671,7 @@ var OS = /*#__PURE__*/function () {
   }, {
     key: "query",
     value: function query(json, fcn) {
-      console.log('### OS.query', json);
+      console.log('### OS.query', json, fcn);
       tabletInterface.query(json, fcn);
     }
 
@@ -26137,7 +26147,7 @@ var Web = /*#__PURE__*/function () {
               return _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.executeStatementFromJSON(json);
             case 2:
               result = _context.sent;
-              console.log('stmt', json, result);
+              console.log("### Web.stmt", json, result);
               if (fcn) fcn(result);
               _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.saveDB();
             case 6:
@@ -26164,9 +26174,9 @@ var Web = /*#__PURE__*/function () {
               return _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.executeQueryFromJSON(json);
             case 2:
               result = _context2.sent;
-              // console.log("query", json, result);
+              console.log("### Web.query", json, result);
               if (fcn) fcn(result);
-            case 4:
+            case 5:
             case "end":
               return _context2.stop();
           }
@@ -26176,7 +26186,7 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "setfield",
     value: function setfield(db, id, fieldname, val, fcn) {
-      console.log('setfield');
+      console.log("setfield");
       if (fcn) fcn();
     }
 
@@ -26184,13 +26194,13 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "cleanassets",
     value: function cleanassets(ft, fcn) {
-      console.log('cleanassets');
+      console.log("cleanassets");
       if (fcn) fcn();
     }
   }, {
     key: "getmedia",
     value: function getmedia(file, fcn) {
-      console.log('getmedia');
+      console.log("getmedia");
       _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var content;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -26211,31 +26221,30 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "getmediadata",
     value: function getmediadata(key, offset, len, fcn) {
-      console.log('getmediadata');
+      console.log("getmediadata");
       if (fcn) fcn();
     }
   }, {
     key: "processdata",
     value: function processdata(key, off, len, oldstr, fcn) {
-      console.log('processdata');
+      console.log("processdata");
       if (fcn) fcn();
     }
   }, {
     key: "getsettings",
     value: function getsettings(fcn) {
-      console.log('getsettings');
-      fcn('path,0,NO,NO');
+      fcn("path,0,NO,NO");
     }
   }, {
     key: "getmediadone",
     value: function getmediadone(file, fcn) {
-      console.log('getmediadone');
+      console.log("getmediadone");
       if (fcn) fcn();
     }
   }, {
     key: "setmedia",
     value: function setmedia(content, ext, fcn) {
-      console.log('setmedia');
+      console.log("setmedia");
       _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
         var name, filename;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
@@ -26248,7 +26257,7 @@ var Web = /*#__PURE__*/function () {
               filename = "".concat(name, ".").concat(ext);
               _context4.next = 6;
               return _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.saveToProjectFiles(filename, content, {
-                encoding: 'base64'
+                encoding: "base64"
               });
             case 6:
               if (fcn) fcn(filename);
@@ -26262,17 +26271,17 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "setmedianame",
     value: function setmedianame(str, name, ext, fcn) {
-      console.log('setmedianame');
+      console.log("setmedianame");
       var filename = "".concat(name, ".").concat(ext);
       _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.saveToProjectFiles(filename, str, {
-        encoding: 'base64'
+        encoding: "base64"
       });
       if (fcn) fcn(filename);
     }
   }, {
     key: "getmd5",
     value: function getmd5(str, fcn) {
-      console.log('getmd5');
+      console.log("getmd5");
       _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         var name;
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
@@ -26293,19 +26302,19 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "remove",
     value: function remove(str, fcn) {
-      console.log('remove');
+      console.log("remove");
       if (fcn) fcn();
     }
   }, {
     key: "getfile",
     value: function getfile(str, fcn) {
-      console.log('getfile');
-      if (fcn) fcn('');
+      console.log("getfile");
+      if (fcn) fcn("");
     }
   }, {
     key: "setfile",
     value: function setfile(name, str, fcn) {
-      console.log('setfile');
+      console.log("setfile");
       if (fcn) fcn();
     }
 
@@ -26320,26 +26329,25 @@ var Web = /*#__PURE__*/function () {
             case 0:
               // In this case, the user can not save the project, so we don't upload
               // the audio to the server and instead just use a blob URL
-              if (name.startsWith('blob:')) {
-                dir = '';
+              if (name.startsWith("blob:")) {
+                dir = "";
               }
               url = (0,_utils_lib_js__WEBPACK_IMPORTED_MODULE_3__.absoluteURL)(dir + name);
-              console.log('registerSound', dir, name);
-              _context6.next = 5;
+              _context6.next = 4;
               return fetch(url);
-            case 5:
+            case 4:
               response = _context6.sent;
-              _context6.next = 8;
+              _context6.next = 7;
               return response.arrayBuffer();
-            case 8:
+            case 7:
               arrayBuffer = _context6.sent;
-              _context6.next = 11;
+              _context6.next = 10;
               return audioContext.decodeAudioData(arrayBuffer);
-            case 11:
+            case 10:
               audioBuffer = _context6.sent;
               audioBuffers[name] = audioBuffer;
               if (fcn) fcn(name, audioBuffer.duration);
-            case 14:
+            case 13:
             case "end":
               return _context6.stop();
           }
@@ -26349,14 +26357,13 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "playSound",
     value: function playSound(name, onSoundEnd) {
-      console.log('playSound');
       if (audioSources[name]) {
         audioSources[name].stop();
       }
       audioSources[name] = audioContext.createBufferSource();
       audioSources[name].buffer = audioBuffers[name];
       audioSources[name].connect(audioContext.destination);
-      audioSources[name].addEventListener('ended', function () {
+      audioSources[name].addEventListener("ended", function () {
         this.stop();
         audioSources[name] = null;
         if (onSoundEnd) onSoundEnd();
@@ -26366,7 +26373,7 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "stopSound",
     value: function stopSound(name, fcn) {
-      console.log('stopSound');
+      console.log("stopSound");
       if (audioSources[name]) {
         audioSources[name].stop();
       }
@@ -26377,9 +26384,9 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "sndrecord",
     value: function sndrecord(fcn) {
-      console.log('sndrecord');
+      console.log("sndrecord");
       if (audioRecorder === null) {
-        console.log('Audio recorder not available');
+        console.log("Audio recorder not available");
         if (fcn) fcn(false);
         return;
       }
@@ -26391,9 +26398,9 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "recordstop",
     value: function recordstop(fcn) {
-      console.log('recordstop');
+      console.log("recordstop");
       if (audioRecorder === null) {
-        console.log('Audio recorder not available');
+        console.log("Audio recorder not available");
         if (fcn) fcn(false);
         return;
       }
@@ -26403,9 +26410,9 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "volume",
     value: function volume(fcn) {
-      console.log('volume');
+      console.log("volume");
       if (audioVolumeBuffer === null) {
-        console.log('Audio volume not available');
+        console.log("Audio volume not available");
         if (fcn) fcn(0);
         return;
       }
@@ -26416,21 +26423,21 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "startplay",
     value: function startplay(fcn) {
-      console.log('startplay');
-      Web.playSound('__recording__');
-      if (fcn) fcn(audioBuffers['__recording__'].duration);
+      console.log("startplay");
+      Web.playSound("__recording__");
+      if (fcn) fcn(audioBuffers["__recording__"].duration);
     }
   }, {
     key: "stopplay",
     value: function stopplay(fcn) {
-      console.log('stopplay');
-      Web.stopSound('__recording__');
+      console.log("stopplay");
+      Web.stopSound("__recording__");
       if (fcn) fcn();
     }
   }, {
     key: "recorddisappear",
     value: function recorddisappear(b, fcn) {
-      console.log('recorddisappear');
+      console.log("recorddisappear");
       if (fcn) fcn();
     }
 
@@ -26438,20 +26445,20 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "askpermission",
     value: function askpermission() {
-      console.log('askpermission');
+      console.log("askpermission");
     }
 
     // camera functions
   }, {
     key: "hascamera",
     value: function hascamera() {
-      console.log('hascamera');
+      console.log("hascamera");
       return videoRecorderAvailable();
     }
   }, {
     key: "startfeed",
     value: function startfeed(data, fcn) {
-      console.log('startfeed');
+      console.log("startfeed");
       if (webVideo === null) {
         webVideo = new _WebVideo_js__WEBPACK_IMPORTED_MODULE_1__.WebVideo(data);
         webVideo.show();
@@ -26461,7 +26468,7 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "stopfeed",
     value: function stopfeed(fcn) {
-      console.log('stopfeed');
+      console.log("stopfeed");
       if (webVideo !== null) {
         webVideo.hide();
         webVideo = null;
@@ -26472,19 +26479,19 @@ var Web = /*#__PURE__*/function () {
     key: "choosecamera",
     value: function choosecamera(mode, fcn) {
       // This is not needed for the web version
-      console.log('choosecamera');
+      console.log("choosecamera");
       if (fcn) fcn();
     }
   }, {
     key: "captureimage",
     value: function captureimage(fcn) {
-      console.log('captureimage');
+      console.log("captureimage");
       if (webVideo !== null) {
         // The image is returned as a data URL
         var imgDataURL = webVideo.snapshot();
         if (imgDataURL) {
           // we just want the base64 encoded image data without the header
-          var rawImgData = imgDataURL.split(',')[1];
+          var rawImgData = imgDataURL.split(",")[1];
           Camera.processimage(rawImgData);
         }
       }
@@ -26493,28 +26500,28 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "hidesplash",
     value: function hidesplash(fcn) {
-      console.log('hidesplash');
+      console.log("hidesplash");
       if (fcn) fcn();
     }
   }, {
     key: "trace",
     value: function trace(str) {
-      console.log('trace');
+      console.log("trace");
     }
   }, {
     key: "parse",
     value: function parse(str) {
-      console.log('parse');
+      console.log("parse");
     }
   }, {
     key: "tracemedia",
     value: function tracemedia(str) {
-      console.log('tracemedia');
+      console.log("tracemedia");
     }
   }, {
     key: "createZipForProject",
     value: function createZipForProject(projectData, metadata, name, fcn) {
-      console.log('createZipForProject');
+      console.log("createZipForProject");
       if (fcn) fcn();
     }
 
@@ -26527,18 +26534,17 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "sendSjrToShareDialog",
     value: function sendSjrToShareDialog(fileName, emailSubject, emailBody, shareType) {
-      console.log('sendSjrToShareDialog');
+      console.log("sendSjrToShareDialog");
     }
   }, {
     key: "registerLibraryAssets",
     value: function registerLibraryAssets(version, assets, fcn) {
-      console.log('registerLibraryAssets');
+      console.log("registerLibraryAssets");
       if (fcn) fcn();
     }
   }, {
     key: "duplicateAsset",
     value: function duplicateAsset(path, name, fcn) {
-      console.log('duplicateAsset');
       if (fcn) fcn();
     }
 
@@ -26547,23 +26553,22 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "deviceName",
     value: function deviceName(fcn) {
-      console.log('deviceName');
-      if (fcn) fcn('Web');
+      if (fcn) fcn("Web");
     }
   }, {
     key: "analyticsEvent",
     value: function analyticsEvent(category, action, label) {
-      console.log('analyticsEvent');
+      console.log("analyticsEvent");
     }
   }, {
     key: "setAnalyticsPlacePref",
     value: function setAnalyticsPlacePref(preferredPlace) {
-      console.log('setAnalyticsPlacePref');
+      console.log("setAnalyticsPlacePref");
     }
   }, {
     key: "setAnalyticsPref",
     value: function setAnalyticsPref(key, value) {
-      console.log('setAnalyticsPref');
+      console.log("setAnalyticsPref");
     }
   }]);
 }();
@@ -26852,26 +26857,45 @@ window.addEventListener('beforeunload', function () {
 });
 var saveTimeout = null;
 function saveDB() {
+  console.log("### WebDB.saveDB");
+
+  // If DB connection is null, do nothing
   if (db === null) return null;
+
+  // If a save is already scheduled, cancel it
   if (saveTimeout !== null) {
     clearTimeout(saveTimeout);
   }
+
+  // Schedule a new save timeout
   saveTimeout = setTimeout(function () {
-    console.log('savedb');
+    console.log("WebDb.saveDB saving...");
+
+    // Export the db binary
     var binaryData = db["export"]();
+
+    // Convert the binary data to a UTF-16 string
     var stringData = binaryDataToUTF16String(binaryData);
+
+    // Hash the DB string
     var dbHash = hashString(stringData);
-    // early return if no changes were made to the db string
+
+    // Use the hash to determine if the DB has changed, if it has not changed, do not save
+    // and return DB string data
     if (dbHash === localStorage.getItem(baseKey)) {
-      console.log('no changes to save, skipping');
+      console.log("no changes to save, skipping");
       return stringData;
-    } else {
-      console.log('changes detected, saving');
     }
+    console.log("WebDB.saveDB changes detected, saving");
+
+    // If DB hash is different, save the DB
     if (window.saveScratchJrProject) {
       window.saveScratchJrProject(UTF16StringToUTF8String(stringData), latestThumbnail);
     }
+
+    // Set new DB hash
     localStorage.setItem(baseKey, dbHash);
+    console.log("WebDb.saveDB saved");
   }, 1000);
 }
 
@@ -26937,7 +26961,7 @@ function _getInitialDBString() {
         case 22:
           _context5.prev = 22;
           _context5.t1 = _context5["catch"](1);
-          console.log('Error loading from CodeHS DB:', _context5.t1);
+          console.log("Error loading from CodeHS DB:", _context5.t1);
         case 25:
           return _context5.abrupt("return", dbData);
         case 26:
@@ -26957,18 +26981,12 @@ function _initDB() {
       while (1) switch (_context7.prev = _context7.next) {
         case 0:
           _context7.prev = 0;
-          console.info('try to initialize db');
-
-          // if db is already initializing, return init promise
           if (!initPromise) {
-            _context7.next = 5;
+            _context7.next = 3;
             break;
           }
-          console.info('db already initializing, return promise');
           return _context7.abrupt("return", initPromise);
-        case 5:
-          console.info('db not initializing,  creating new init promise');
-
+        case 3:
           // create a new promise that resolves with whether we should
           // create a new project once it's initialized
           initPromise = new Promise( /*#__PURE__*/function () {
@@ -26985,65 +27003,55 @@ function _initDB() {
                       }
                     }), new Promise(function (_, reject) {
                       setTimeout(function () {
-                        reject(new Error('initSqlJs timed out'));
+                        reject(new Error("initSqlJs timed out"));
                       }, 5000); // Adjust the timeout value as needed
                     })]);
                   case 3:
                     SQL = _context6.sent;
                     window.SQL = SQL;
                     if (window.sharedProgramID) {
-                      console.log('sharedProgramID: ', window.sharedProgramID);
+                      console.log("sharedProgramID: ", window.sharedProgramID);
                       id = window.sharedProgramID;
-                      baseKey = 'sp-' + id;
+                      baseKey = "sp-" + id;
                     } else if (window.studentAssignmentID) {
-                      console.log('studentAssignmentID: ', window.studentAssignmentID);
+                      console.log("studentAssignmentID: ", window.studentAssignmentID);
                       _id = window.studentAssignmentID;
-                      baseKey = 'sa-' + _id;
+                      baseKey = "sa-" + _id;
                     } else if (window.itemID) {
-                      console.log('itemID: ', window.itemID);
+                      console.log("itemID: ", window.itemID);
                       _id2 = window.itemID;
-                      baseKey = 'item-' + _id2;
-                    } else if (window.scratchJrPage === 'editor') {
-                      // console.log('editor page');
-                      // alert('No IDs found. DB will not be loaded or saved.');
+                      baseKey = "item-" + _id2;
+                    } else if (window.scratchJrPage === "editor") {
+                      alert("No IDs found. DB will not be loaded or saved.");
                     }
-                    console.log('baseKey: ', baseKey);
 
                     // get saved data from codehs, then initialize the database with it if it
                     // exists. otherwise, create a new database and initialize the tables and run migrations.
-
-                    console.log('Before getInitialDBString');
-                    _context6.next = 10;
+                    _context6.next = 8;
                     return getInitialDBString();
-                  case 10:
+                  case 8:
                     dbDataString = _context6.sent;
-                    console.log('After getInitialDBString, dbDataString: ', dbDataString);
                     if (dbDataString) {
-                      console.log('loading existing database');
+                      console.log("### WebDB.initDB loading existing database");
                       binaryData = UTF16StringToBinaryData(dbDataString);
-                      console.log('binaryData:', binaryData);
                       db = new SQL.Database(binaryData);
                     } else {
-                      console.log('creating new database');
                       db = new SQL.Database();
                       initTables();
                       runMigrations();
                       shouldCreateNewProject = true;
                     }
-                    console.log('db is: ', db);
                     window.db = db;
-                    console.log('shouldCreateNewProject: ', shouldCreateNewProject);
-                    if (!(console.log('checking if we should display project files'), new URLSearchParams(window.location.search).get('show-project-files') === 'true')) {
-                      _context6.next = 20;
+                    if (!(new URLSearchParams(window.location.search).get("show-project-files") === "true")) {
+                      _context6.next = 15;
                       break;
                     }
-                    console.log('displaying project files');
-                    _context6.next = 20;
+                    console.log("displaying project files");
+                    _context6.next = 15;
                     return displayProjectFiles();
-                  case 20:
-                    console.log('resolving that promise');
+                  case 15:
                     resolve(shouldCreateNewProject);
-                  case 22:
+                  case 16:
                   case "end":
                     return _context6.stop();
                 }
@@ -27053,21 +27061,20 @@ function _initDB() {
               return _ref.apply(this, arguments);
             };
           }());
-          console.log('returning that promise');
-          _context7.next = 14;
+          _context7.next = 10;
           break;
-        case 10:
-          _context7.prev = 10;
+        case 6:
+          _context7.prev = 6;
           _context7.t0 = _context7["catch"](0);
-          console.error('Error in initDB:', _context7.t0);
+          console.error("Error in initDB:", _context7.t0);
           throw _context7.t0;
-        case 14:
+        case 10:
           return _context7.abrupt("return", initPromise);
-        case 15:
+        case 11:
         case "end":
           return _context7.stop();
       }
-    }, _callee7, null, [[0, 10]]);
+    }, _callee7, null, [[0, 6]]);
   }));
   return _initDB.apply(this, arguments);
 }
@@ -27093,15 +27100,15 @@ function _displayProjectFiles() {
                   case 3:
                     _context8.t1 = _context8.sent;
                     rows = _context8.t0.parse.call(_context8.t0, _context8.t1)[0].values;
-                    container = document.createElement('div');
+                    container = document.createElement("div");
                     _iterator = _createForOfIteratorHelper(rows);
                     try {
                       for (_iterator.s(); !(_step = _iterator.n()).done;) {
                         row = _step.value;
                         md5 = row[0];
                         contents = row[1]; // Determine the image type based on the md5 filename
-                        imageType = md5.endsWith('.png') ? 'image/png' : 'image/svg+xml'; // Create an img element
-                        img = document.createElement('img'); // Set the src attribute to the data URI
+                        imageType = md5.endsWith(".png") ? "image/png" : "image/svg+xml"; // Create an img element
+                        img = document.createElement("img"); // Set the src attribute to the data URI
                         img.src = "data:".concat(imageType, ";base64,").concat(contents);
                         img.title = md5;
 
@@ -27145,17 +27152,18 @@ function _executeQueryFromJSON() {
     return _regeneratorRuntime().wrap(function _callee10$(_context10) {
       while (1) switch (_context10.prev = _context10.next) {
         case 0:
+          console.log("### WebDB.executeQueryFromJSON", json);
           if (!(db === null)) {
-            _context10.next = 3;
+            _context10.next = 4;
             break;
           }
-          _context10.next = 3;
+          _context10.next = 4;
           return initDB();
-        case 3:
+        case 4:
           // see Web interface, query()
           stmt = json.stmt, values = json.values;
           return _context10.abrupt("return", JSON.stringify(db.exec(stmt, values)));
-        case 5:
+        case 6:
         case "end":
           return _context10.stop();
       }
@@ -27172,21 +27180,22 @@ function _executeStatementFromJSON() {
     return _regeneratorRuntime().wrap(function _callee11$(_context11) {
       while (1) switch (_context11.prev = _context11.next) {
         case 0:
+          console.log("### WebDB.executeStatementFromJSON", json);
           if (!(db === null)) {
-            _context11.next = 3;
+            _context11.next = 4;
             break;
           }
-          _context11.next = 3;
+          _context11.next = 4;
           return initDB();
-        case 3:
+        case 4:
           // see Web interface, stmt()
           stmt = json.stmt, values = json.values;
           statement = db.prepare(stmt, values);
           while (statement.step()) statement.get();
-          result = db.exec('select last_insert_rowid();');
+          result = db.exec("select last_insert_rowid();");
           lastRowId = result[0].values[0][0];
           return _context11.abrupt("return", lastRowId);
-        case 9:
+        case 10:
         case "end":
           return _context11.stop();
       }
@@ -27195,7 +27204,7 @@ function _executeStatementFromJSON() {
   return _executeStatementFromJSON.apply(this, arguments);
 }
 function isThumbnail(md5) {
-  return md5.endsWith('.png') && md5.includes('_');
+  return md5.endsWith(".png") && md5.includes("_");
 }
 
 /**
@@ -27263,8 +27272,8 @@ function _clearThumbnails() {
             _iterator2.f();
           }
           placeholders = md5sToDelete.map(function () {
-            return '?';
-          }).join(', ');
+            return "?";
+          }).join(", ");
           _context12.next = 14;
           return executeStatementFromJSON({
             stmt: "delete from projectfiles where md5 in (".concat(placeholders, ");"),
@@ -27289,15 +27298,17 @@ function _saveToProjectFiles() {
     return _regeneratorRuntime().wrap(function _callee13$(_context13) {
       while (1) switch (_context13.prev = _context13.next) {
         case 0:
+          console.log("### WebDB.saveToProjectFiles", fileMD5, content);
+
           // query for the current file contents to see if they actually changed
-          currentContents = '';
+          currentContents = "";
           _context13.t0 = JSON;
-          _context13.next = 4;
+          _context13.next = 5;
           return executeQueryFromJSON({
             stmt: "select contents from projectfiles where md5 = ?",
             values: [fileMD5]
           });
-        case 4:
+        case 5:
           _context13.t1 = _context13.sent;
           queryResult = _context13.t0.parse.call(_context13.t0, _context13.t1);
           if (queryResult.length > 0 && queryResult[0].values.length > 0 && queryResult[0].values[0].length > 0) {
@@ -27306,31 +27317,31 @@ function _saveToProjectFiles() {
 
           // if the contents changed, update the db and save
           if (!(content !== currentContents)) {
-            _context13.next = 17;
+            _context13.next = 18;
             break;
           }
           if (!isThumbnail(fileMD5)) {
-            _context13.next = 12;
+            _context13.next = 13;
             break;
           }
-          _context13.next = 11;
+          _context13.next = 12;
           return clearThumbnails();
-        case 11:
-          latestThumbnail = 'data:image/png;base64,' + content;
         case 12:
-          _context13.next = 14;
+          latestThumbnail = "data:image/png;base64," + content;
+        case 13:
+          _context13.next = 15;
           return executeStatementFromJSON({
             stmt: "insert or replace into projectfiles (md5, contents) values (?, ?);",
             values: [fileMD5, content]
           });
-        case 14:
-          _context13.next = 16;
+        case 15:
+          _context13.next = 17;
           return executeStatementFromJSON({
             stmt: "vacuum;"
           });
-        case 16:
-          saveDB();
         case 17:
+          saveDB();
+        case 18:
         case "end":
           return _context13.stop();
       }
@@ -27351,11 +27362,11 @@ function _getMD() {
         case 0:
           // return crypto.createHash('md5').update(data).digest('hex');
           utf8 = new TextEncoder().encode(data);
-          return _context14.abrupt("return", crypto.subtle.digest('SHA-256', utf8).then(function (hashBuffer) {
+          return _context14.abrupt("return", crypto.subtle.digest("SHA-256", utf8).then(function (hashBuffer) {
             var hashArray = Array.from(new Uint8Array(hashBuffer));
             var hashHex = hashArray.map(function (bytes) {
-              return bytes.toString(16).padStart(2, '0');
-            }).join('');
+              return bytes.toString(16).padStart(2, "0");
+            }).join("");
             return hashHex;
           }));
         case 2:
@@ -27375,25 +27386,26 @@ function _readProjectFile() {
     return _regeneratorRuntime().wrap(function _callee15$(_context15) {
       while (1) switch (_context15.prev = _context15.next) {
         case 0:
+          console.log("### WebDB.readProjectFile", fileMD5);
           json = {};
-          json.cond = 'MD5 = ?';
-          json.items = ['CONTENTS'];
+          json.cond = "MD5 = ?";
+          json.items = ["CONTENTS"];
           json.values = [fileMD5];
-          table = 'PROJECTFILES';
-          json.stmt = "select ".concat(json.items, " from ").concat(table, " where ").concat(json.cond).concat(json.order ? " order by ".concat(json.order) : '');
-          _context15.next = 8;
+          table = "PROJECTFILES";
+          json.stmt = "select ".concat(json.items, " from ").concat(table, " where ").concat(json.cond).concat(json.order ? " order by ".concat(json.order) : "");
+          _context15.next = 9;
           return executeQueryFromJSON(json);
-        case 8:
+        case 9:
           rows = _context15.sent;
           rows = JSON.parse(rows);
           if (!(rows.length > 0)) {
-            _context15.next = 12;
+            _context15.next = 13;
             break;
           }
-          return _context15.abrupt("return", rows[0]['values'][0][0]);
-        case 12:
-          return _context15.abrupt("return", null);
+          return _context15.abrupt("return", rows[0]["values"][0][0]);
         case 13:
+          return _context15.abrupt("return", null);
+        case 14:
         case "end":
           return _context15.stop();
       }
@@ -30750,10 +30762,6 @@ var WINDOW_INNER_HEIGHT = window.innerHeight;
 var WINDOW_INNER_WIDTH = window.innerWidth;
 var scaleMultiplier = WINDOW_INNER_HEIGHT / 768.0;
 var fullscreenScaleMultiplier = 136;
-
-/* eslint-disable no-console */
-console.log('setting OS flags');
-/* eslint-enable no-console */
 var isWeb = !('ontouchstart' in document.documentElement);
 var isiOS = typeof AndroidInterface == 'undefined';
 var isAndroid = typeof AndroidInterface != 'undefined';
@@ -96433,7 +96441,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("3621e2fe4aaeb9c100b8")
+/******/ 		__webpack_require__.h = () => ("fc61dc7cd02a5f3219bb")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
