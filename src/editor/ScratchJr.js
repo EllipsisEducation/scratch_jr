@@ -1,22 +1,22 @@
-import Project from "./ui/Project";
-import ScratchAudio from "../utils/ScratchAudio";
-import Paint from "../painteditor/Paint";
-import Prims from "./engine/Prims";
-import Undo from "./ui/Undo";
-import Alert from "./ui/Alert";
-import Palette from "./ui/Palette";
-import Record from "./ui/Record";
-import IO from "../tablet/IO";
-import OS from "../tablet/OS";
-import UI from "./ui/UI";
-import Menu from "./blocks/Menu";
-import Library from "./ui/Library";
-import Grid from "./ui/Grid";
-import ScriptsPane from "./ui/ScriptsPane";
-import Events from "../utils/Events";
-import BlockSpecs from "./blocks/BlockSpecs";
-import Runtime from "./engine/Runtime";
-import Localization from "../utils/Localization";
+import Project from './ui/Project';
+import ScratchAudio from '../utils/ScratchAudio';
+import Paint from '../painteditor/Paint';
+import Prims from './engine/Prims';
+import Undo from './ui/Undo';
+import Alert from './ui/Alert';
+import Palette from './ui/Palette';
+import Record from './ui/Record';
+import IO from '../tablet/IO';
+import OS from '../tablet/OS';
+import UI from './ui/UI';
+import Menu from './blocks/Menu';
+import Library from './ui/Library';
+import Grid from './ui/Grid';
+import ScriptsPane from './ui/ScriptsPane';
+import Events from '../utils/Events';
+import BlockSpecs from './blocks/BlockSpecs';
+import Runtime from './engine/Runtime';
+import Localization from '../utils/Localization';
 import {
     libInit,
     gn,
@@ -28,10 +28,10 @@ import {
     frame,
     mTime,
     absoluteURL,
-} from "../utils/lib";
+} from '../utils/lib';
 
-let workingCanvas = document.createElement("canvas");
-let workingCanvas2 = document.createElement("canvas");
+let workingCanvas = document.createElement('canvas');
+let workingCanvas2 = document.createElement('canvas');
 let activeFocus = undefined;
 let changed = false;
 // Our behavior for story-starters are slightly different from changed
@@ -201,21 +201,21 @@ export default class ScratchJr {
         time = new Date() - 0;
         var urlvars = getUrlVars();
         OS.hascamera();
-        ScratchJr.log("starting the app");
+        ScratchJr.log('starting the app');
         BlockSpecs.initBlocks();
-        Project.loadIcon = document.createElement("img");
-        Project.loadIcon.src = absoluteURL("assets/loading.png");
+        Project.loadIcon = document.createElement('img');
+        Project.loadIcon.src = absoluteURL('assets/loading.png');
         ScratchJr.log(
-            "blocks init",
+            'blocks init',
             ScratchJr.getTime(),
-            "sec",
+            'sec',
             BlockSpecs.loadCount
         );
-        currentProject = "1";
+        currentProject = '1';
         editmode = urlvars.mode;
         libInit();
         Project.init();
-        ScratchJr.log("Start ui init", ScratchJr.getTime(), "sec");
+        ScratchJr.log('Start ui init', ScratchJr.getTime(), 'sec');
         Project.setProgress(10);
         ScratchAudio.init();
         Library.init();
@@ -253,9 +253,9 @@ export default class ScratchJr {
 
     static editorEvents() {
         document.ongesturestart = undefined;
-        window.setEventHandler("touchstart", ScratchJr.unfocus);
+        window.setEventHandler('touchstart', ScratchJr.unfocus);
         window.onmousedown = ScratchJr.unfocus;
-        window.setEventHandler("touchend", undefined);
+        window.setEventHandler('touchend', undefined);
         window.onmouseup = undefined;
     }
 
@@ -279,7 +279,7 @@ export default class ScratchJr {
                 return;
             } // infobox text box
         }
-        if (document.activeElement.tagName.toLowerCase() == "input") {
+        if (document.activeElement.tagName.toLowerCase() == 'input') {
             document.activeElement.blur();
         }
         ScratchJr.clearSelection();
@@ -322,9 +322,9 @@ export default class ScratchJr {
             return;
         }
         var len = arguments.length;
-        var res = "";
+        var res = '';
         for (var i = 0; i < len - 1; i++) {
-            res = res + arguments[i] + " ";
+            res = res + arguments[i] + ' ';
         }
         res += arguments[len - 1];
         console.log(res); //eslint-disable-line no-console
@@ -335,10 +335,10 @@ export default class ScratchJr {
     }
 
     static isSampleOrStarter() {
-        return editmode == "look" || editmode == "storyStarter";
+        return editmode == 'look' || editmode == 'storyStarter';
     }
     static isEditable() {
-        return editmode != "look";
+        return editmode != 'look';
     }
 
     // Called when ScratchJr is brought back to focus
@@ -375,7 +375,7 @@ export default class ScratchJr {
 
     static saveProject(e, onDone) {
         if (ScratchJr.isEditable() && !Project.error && changed) {
-            if (editmode != "storyStarter") {
+            if (editmode != 'storyStarter') {
                 if (currentProject) {
                     Project.prepareToSave(currentProject, onDone);
                     return;
@@ -396,8 +396,8 @@ export default class ScratchJr {
      */
     static saveStory(onDone) {
         OS.analyticsEvent(
-            "samples",
-            "story_starter_edited",
+            'samples',
+            'story_starter_edited',
             Project.metadata.name
         );
         // Localize sample project names
@@ -421,7 +421,7 @@ export default class ScratchJr {
                         // Save project data
                         currentProject = md5;
                         // Switch out of story-starter mode to avoid creating new projects
-                        editmode = "edit";
+                        editmode = 'edit';
                         Project.prepareToSave(currentProject, onDone);
                     }
                 );
@@ -435,14 +435,14 @@ export default class ScratchJr {
         ScratchJr.stopStripsFromTop(e);
         ScratchJr.unfocus(e);
         ScratchJr.saveProject(e, ScratchJr.flippage);
-        OS.analyticsEvent("editor", "project_editor_close");
+        OS.analyticsEvent('editor', 'project_editor_close');
     }
 
     static flippage() {
         Alert.close();
-        OS.cleanassets("wav", doNext);
+        OS.cleanassets('wav', doNext);
         function doNext() {
-            OS.cleanassets("svg", ScratchJr.switchPage);
+            OS.cleanassets('svg', ScratchJr.switchPage);
         }
     }
 
@@ -451,46 +451,53 @@ export default class ScratchJr {
     }
 
     static getGotoLink() {
-        const params = new URLSearchParams();
-        if (window.studentAssignmentID) {
-            params.append(
-                "student_assignment_id",
-                window.studentAssignmentID
-            );
-        }
-        if (window.itemID) {
-            params.append("item_id", window.itemID);
-        }
+      const params = new URLSearchParams();
+      // TODO: Remove
+      let wat;
+      if (window.studentAssignmentID) {
+        params.append("student_assignment_id", window.studentAssignmentID);
+      }
+      if (window.itemID) {
+        params.append("item_id", window.itemID);
+      }
 
-        if (editmode == "storyStarter") {
-            if (!storyStarted) {
-                return "home.html?place=help&" + params.toString();
-            } else {
-                return "home.html?place=home&" + params.toString();
-            }
-        }
-
-        if (!currentProject) {
-            return "home.html?place=home&" + params.toString();
-        }
-
-        if (Project.metadata.gallery == "samples") {
-            return "home.html?place=help&" + params.toString();
+      if (editmode == "storyStarter") {
+        if (!storyStarted) {
+          // return 'home.html?place=help&' + params.toString();
+          wat = "home.html?place=help&" + params.toString();
         } else {
-            params.append("timestamp", new Date().getTime());
-            return "home.html?place=home&" + params.toString();
+          // return 'home.html?place=home&' + params.toString();
+          wat = "home.html?place=home&" + params.toString();
         }
+      }
+
+      if (!currentProject) {
+        wat = "home.html?place=home&" + params.toString();
+        // return 'home.html?place=home&' + params.toString();
+      }
+
+      if (Project.metadata.gallery == "samples") {
+        wat = "home.html?place=help&" + params.toString();
+        // return 'home.html?place=help&' + params.toString();
+      } else {
+        params.append("timestamp", new Date().getTime());
+        wat = "home.html?place=home&" + params.toString();
+        // return 'home.html?place=home&' + params.toString();
+      }
+
+      // return wat;
+      return "home.html";
     }
 
     static updateRunStopButtons() {
         var isOff = runtime.inactive();
         if (inFullscreen) {
-            gn("go").className = isOff
-                ? "go on presentationmode"
-                : "go off presentationmode";
+            gn('go').className = isOff
+                ? 'go on presentationmode'
+                : 'go off presentationmode';
             UI.updatePageControls();
         } else {
-            gn("go").className = isOff ? "go on" : "go off";
+            gn('go').className = isOff ? 'go on' : 'go off';
             Grid.updateCursor();
         }
         if (ScratchJr.getSprite()) {
@@ -517,7 +524,7 @@ export default class ScratchJr {
 
     static startGreenFlagThreads() {
         ScratchJr.resetSprites();
-        ScratchJr.startCurrentPageStrips(["onflag", "ontouch"]);
+        ScratchJr.startCurrentPageStrips(['onflag', 'ontouch']);
     }
 
     static startCurrentPageStrips(list) {
@@ -527,7 +534,7 @@ export default class ScratchJr {
             if (!spr) {
                 continue;
             }
-            if (!gn(spr.id + "_scripts")) {
+            if (!gn(spr.id + '_scripts')) {
                 continue;
             } // text case
             ScratchJr.startScriptsFor(spr, list);
@@ -535,7 +542,7 @@ export default class ScratchJr {
     }
 
     static startScriptsFor(spr, list) {
-        var sc = gn(spr.id + "_scripts");
+        var sc = gn(spr.id + '_scripts');
         var topblocks = sc.owner.getBlocksType(list);
         for (var j = 0; j < topblocks.length; j++) {
             var b = topblocks[j];
@@ -561,9 +568,9 @@ export default class ScratchJr {
     }
 
     static fullScreen(e) {
-        if (gn("full").className == "fullscreen") {
+        if (gn('full').className == 'fullscreen') {
             onBackButtonCallback.push(function () {
-                var fakeEvent = document.createEvent("TouchEvent");
+                var fakeEvent = document.createEvent('TouchEvent');
                 fakeEvent.initTouchEvent();
                 ScratchJr.quitFullScreen(fakeEvent);
             });
@@ -576,11 +583,11 @@ export default class ScratchJr {
 
     static displayStatus(type) {
         var ids = [
-            "topsection",
-            "blockspalette",
-            "scripts",
-            "flip",
-            "projectinfo",
+            'topsection',
+            'blockspalette',
+            'scripts',
+            'flip',
+            'projectinfo',
         ];
         for (var i = 0; i < ids.length; i++) {
             if (gn(ids[i])) {
@@ -598,23 +605,23 @@ export default class ScratchJr {
             e.stopPropagation();
             ScratchJr.unfocus(e);
         }
-        ScratchJr.displayStatus("none");
+        ScratchJr.displayStatus('none');
         inFullscreen = true;
         UI.enterFullScreen();
-        OS.analyticsEvent("editor", "full_screen_entered");
-        document.body.style.background = "black";
+        OS.analyticsEvent('editor', 'full_screen_entered');
+        document.body.style.background = 'black';
     }
 
     static quitFullScreen(e) {
         //  time = (new Date()) - 0;
         e.preventDefault();
         e.stopPropagation();
-        ScratchJr.displayStatus("block");
+        ScratchJr.displayStatus('block');
         inFullscreen = false;
         UI.quitFullScreen();
         onBackButtonCallback.pop();
-        OS.analyticsEvent("editor", "full_screen_exited");
-        document.body.style.background = "white";
+        OS.analyticsEvent('editor', 'full_screen_exited');
+        document.body.style.background = 'white';
     }
 
     /////////////////////////////////////////
@@ -622,7 +629,7 @@ export default class ScratchJr {
     /////////////////////////////////////////
 
     static getActiveScript() {
-        var str = stage.currentPage.currentSpriteName + "_scripts";
+        var str = stage.currentPage.currentSpriteName + '_scripts';
         return gn(str);
     }
 
@@ -634,10 +641,10 @@ export default class ScratchJr {
     //Setup editable field
 
     static setupEditableField() {
-        textForm = newHTML("form", "textform", frame);
-        textForm.name = "editable";
-        var ti = newHTML("input", "textinput", textForm);
-        ti.name = "field";
+        textForm = newHTML('form', 'textform', frame);
+        textForm.name = 'editable';
+        var ti = newHTML('input', 'textinput', textForm);
+        ti.name = 'field';
         ti.onkeypress = function (evt) {
             handleKeyPress(evt);
         };
@@ -695,17 +702,17 @@ export default class ScratchJr {
                 ? w - 486 * scaleMultiplier
                 : pt.x - 6 * scaleMultiplier;
         var ti = document.forms.editable.field;
-        ti.style.textAlign = "center";
-        document.forms.editable.style.left = dx + "px";
+        ti.style.textAlign = 'center';
+        document.forms.editable.style.left = dx + 'px';
         var top = pt.y + 55 * scaleMultiplier;
-        document.forms.editable.style.top = top + "px";
+        document.forms.editable.style.top = top + 'px';
         if (isAndroid) {
             AndroidInterface.scratchjr_setsoftkeyboardscrolllocation(
                 top * window.devicePixelRatio,
                 (top + h) * window.devicePixelRatio
             );
         }
-        document.forms.editable.className = "textform on";
+        document.forms.editable.className = 'textform on';
         ti.value = b.argValue;
         if (isAndroid) {
             AndroidInterface.scratchjr_forceShowKeyboard();
@@ -727,17 +734,17 @@ export default class ScratchJr {
         var str = ti.value.substring(0, ti.maxLength);
         activeFocus.argValue = str;
         activeFocus.setValue(str);
-        document.forms.editable.className = "textform off";
+        document.forms.editable.className = 'textform off';
         if (activeFocus.daddy.div.parentNode) {
             var spr = activeFocus.daddy.div.parentNode.owner.spr;
             var action = {
-                action: "scripts",
+                action: 'scripts',
                 where: spr.div.parentNode.owner.id,
                 who: spr.id,
             };
             if (activeFocus.input.textContent != activeFocus.oldvalue) {
                 Undo.record(action);
-                ScratchJr.storyStart("ScratchJr.handleTextFieldBlur");
+                ScratchJr.storyStart('ScratchJr.handleTextFieldBlur');
             }
         }
         activeFocus = undefined;
@@ -753,17 +760,17 @@ export default class ScratchJr {
     /////////////////////////////////////////
 
     static setupKeypad() {
-        keypad = newHTML("div", "picokeyboard", frame);
-        window.setEventHandler("touchstart", ScratchJr.eatEvent, keypad);
+        keypad = newHTML('div', 'picokeyboard', frame);
+        window.setEventHandler('touchstart', ScratchJr.eatEvent, keypad);
         keypad.onmousedown = ScratchJr.eatEvent;
-        var pad = newHTML("div", "insidekeyboard", keypad);
+        var pad = newHTML('div', 'insidekeyboard', keypad);
         for (var i = 1; i < 10; i++) {
-            ScratchJr.keyboardAddKey(pad, i, "onekey");
+            ScratchJr.keyboardAddKey(pad, i, 'onekey');
         }
-        ScratchJr.keyboardAddKey(pad, "-", "onekey minus");
+        ScratchJr.keyboardAddKey(pad, '-', 'onekey minus');
         //  ScratchJr.keyboardAddKey (pad, undefined, 'onekey space');
-        ScratchJr.keyboardAddKey(pad, "0", "onekey");
-        ScratchJr.keyboardAddKey(pad, undefined, "onekey delete");
+        ScratchJr.keyboardAddKey(pad, '0', 'onekey');
+        ScratchJr.keyboardAddKey(pad, undefined, 'onekey delete');
         //  var keym = newHTML("div", 'onkey' ,pad);
     }
 
@@ -773,10 +780,10 @@ export default class ScratchJr {
     }
 
     static keyboardAddKey(p, str, c) {
-        var keym = newHTML("div", c, p);
-        var mk = newHTML("span", undefined, keym);
-        mk.textContent = str ? str : "";
-        window.setEventHandler("touchstart", ScratchJr.numEditKey, keym);
+        var keym = newHTML('div', c, p);
+        var mk = newHTML('span', undefined, keym);
+        mk.textContent = str ? str : '';
+        window.setEventHandler('touchstart', ScratchJr.numEditKey, keym);
         keym.onmousedown = ScratchJr.numEditKey;
     }
 
@@ -785,16 +792,16 @@ export default class ScratchJr {
 
     static numberClicked(e, ti) {
         var delta = activeFocus ? activeFocus.delta : 0;
-        if (activeFocus && activeFocus.type == "blockarg") {
-            activeFocus.div.className = "numfield off";
+        if (activeFocus && activeFocus.type == 'blockarg') {
+            activeFocus.div.className = 'numfield off';
             ScratchJr.numEditDone();
         }
         var b = ti.owner; // b is a BlockArg
         activeFocus = b;
         activeFocus.delta = delta;
         b.oldvalue = ti.textContent;
-        activeFocus.div.className = "numfield on";
-        keypad.className = "picokeyboard on";
+        activeFocus.div.className = 'numfield on';
+        keypad.className = 'picokeyboard on';
         editfirst = true;
         var p = ti.parentNode.parentNode.owner;
         if (Number(p.min) < 0) {
@@ -820,9 +827,9 @@ export default class ScratchJr {
         if (delta < 0) {
             var transition = {
                 duration: 0.5,
-                transition: "ease-out",
+                transition: 'ease-out',
                 style: {
-                    left: look.left + delta + "px",
+                    left: look.left + delta + 'px',
                 },
                 onComplete: function () {
                     ScriptsPane.scroll.refresh();
@@ -838,12 +845,12 @@ export default class ScratchJr {
         // 57 is the keyCode for 9
         // For the detail of keyCode of keyboard event
         // please refer to https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode#value_of_keycode
-        if ((evt.keyCode >= 48 && evt.keyCode <= 57) || evt.key == "-") {
+        if ((evt.keyCode >= 48 && evt.keyCode <= 57) || evt.key == '-') {
             // if the user input numbers or negative sign
             ScratchJr.fillValueWithKey(evt.key);
             return;
         }
-        if (evt.key == "Backspace") {
+        if (evt.key == 'Backspace') {
             ScratchJr.numEditDelete();
         }
     }
@@ -855,17 +862,17 @@ export default class ScratchJr {
         if (!t) {
             return;
         }
-        if (t.className == "") {
+        if (t.className == '') {
             t = t.parentNode;
         }
-        if (t.className != "onekey space") {
-            ScratchAudio.sndFX("keydown.wav");
+        if (t.className != 'onekey space') {
+            ScratchAudio.sndFX('keydown.wav');
         }
         var c = t.textContent;
         if (!c) {
             if (
-                t.parentNode.className == "onekey delete" ||
-                t.className == "onekey delete"
+                t.parentNode.className == 'onekey delete' ||
+                t.className == 'onekey delete'
             ) {
                 ScratchJr.numEditDelete();
             }
@@ -883,35 +890,35 @@ export default class ScratchJr {
         var val = input.textContent;
         if (editfirst) {
             editfirst = false;
-            val = "0";
+            val = '0';
         }
-        if (c == "-" && val != "0") {
-            ScratchAudio.sndFX("boing.wav");
+        if (c == '-' && val != '0') {
+            ScratchAudio.sndFX('boing.wav');
             return;
         }
-        if (val == "0") {
+        if (val == '0') {
             val = c;
         } else {
             val += c;
         }
         if (
-            Number(val).toString() != "NaN" &&
+            Number(val).toString() != 'NaN' &&
             (Number(val) > 99 || Number(val) < -99)
         ) {
-            ScratchAudio.sndFX("boing.wav");
+            ScratchAudio.sndFX('boing.wav');
         } else {
             activeFocus.setValue(val);
         }
     }
 
     static setSpaceKey() {
-        keypad.childNodes[0].childNodes[9].className = "onekey space";
-        keypad.childNodes[0].childNodes[9].childNodes[0].textContent = "";
+        keypad.childNodes[0].childNodes[9].className = 'onekey space';
+        keypad.childNodes[0].childNodes[9].childNodes[0].textContent = '';
     }
 
     static setMinusKey() {
-        keypad.childNodes[0].childNodes[9].className = "onekey minus";
-        keypad.childNodes[0].childNodes[9].childNodes[0].textContent = "-";
+        keypad.childNodes[0].childNodes[9].className = 'onekey minus';
+        keypad.childNodes[0].childNodes[9].childNodes[0].textContent = '-';
     }
 
     static validateNumber(val) {
@@ -928,19 +935,19 @@ export default class ScratchJr {
             val = val.substring(0, val.length - 1);
         }
         if (val.length == 0) {
-            val = "0";
+            val = '0';
         }
         activeFocus.setValue(val);
     }
 
     static editDone() {
-        if (document.activeElement.tagName === "INPUT") {
+        if (document.activeElement.tagName === 'INPUT') {
             document.activeElement.blur();
         }
         if (activeFocus == undefined) {
             return;
         }
-        if (activeFocus.type != "blockarg") {
+        if (activeFocus.type != 'blockarg') {
             return;
         }
         if (activeFocus.isText()) {
@@ -954,8 +961,8 @@ export default class ScratchJr {
     static closeNumberEdit() {
         ScratchJr.numEditDone();
         ScratchJr.resetScroll();
-        keypad.className = "picokeyboard off";
-        activeFocus.div.className = "numfield off";
+        keypad.className = 'picokeyboard off';
+        activeFocus.div.className = 'numfield off';
         activeFocus = undefined;
         // stop accepting keyboard events
         window.onkeydown = undefined;
@@ -963,10 +970,10 @@ export default class ScratchJr {
 
     static numEditDone() {
         var val = activeFocus.input.textContent;
-        if (val == "-") {
+        if (val == '-') {
             val = 0;
         }
-        if (val == "-0") {
+        if (val == '-0') {
             val = 0;
         }
         val = ScratchJr.validateNumber(val);
@@ -977,12 +984,12 @@ export default class ScratchJr {
             var spr = ba.daddy.div.parentNode.owner.spr;
             if (spr && spr.div.parentNode) {
                 var action = {
-                    action: "scripts",
+                    action: 'scripts',
                     where: spr.div.parentNode.owner.id,
                     who: spr.id,
                 };
                 if (ba.argValue != ba.oldvalue) {
-                    ScratchJr.storyStart("ScratchJr.numEditDone");
+                    ScratchJr.storyStart('ScratchJr.numEditDone');
                     Undo.record(action);
                 }
             }
@@ -995,9 +1002,9 @@ export default class ScratchJr {
             var look = ScratchJr.getActiveScript(); // look canvas
             var transition = {
                 duration: 0.5,
-                transition: "ease-out",
+                transition: 'ease-out',
                 style: {
-                    left: look.left - delta + "px",
+                    left: look.left - delta + 'px',
                 },
                 onComplete: function () {
                     ScriptsPane.scroll.refresh();
@@ -1008,7 +1015,7 @@ export default class ScratchJr {
     }
 
     static validate(str, name) {
-        var str2 = str.replace(/\s*/g, "");
+        var str2 = str.replace(/\s*/g, '');
         if (str2.length == 0) {
             return name;
         }
@@ -1017,7 +1024,7 @@ export default class ScratchJr {
 
     static makeThumb(svgName, width, height) {
         IO.getAsset(svgName, function (svgDataUrl) {
-            var svgBase64 = svgDataUrl.split(",")[1];
+            var svgBase64 = svgDataUrl.split(',')[1];
             var dataurl = IO.getThumbnail(
                 atob(svgBase64),
                 width,
@@ -1025,9 +1032,9 @@ export default class ScratchJr {
                 120,
                 90
             );
-            var pngBase64 = dataurl.split(",")[1];
-            var name = svgName.split(".")[0];
-            OS.setmedianame(pngBase64, name, "png");
+            var pngBase64 = dataurl.split(',')[1];
+            var name = svgName.split('.')[0];
+            OS.setmedianame(pngBase64, name, 'png');
         });
     }
 
@@ -1049,7 +1056,7 @@ export default class ScratchJr {
      */
     static goBack() {
         if (onBackButtonCallback.length === 0) {
-            var e = document.createEvent("TouchEvent");
+            var e = document.createEvent('TouchEvent');
             e.initTouchEvent();
             e.preventDefault();
             e.stopPropagation();

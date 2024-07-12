@@ -2,24 +2,24 @@
 //  General UI Layout
 /////////////////////////////////////
 
-import ScratchJr from "../ScratchJr";
-import BlockSpecs from "../blocks/BlockSpecs";
-import Alert from "./Alert";
-import Project from "./Project";
-import Thumbs from "./Thumbs";
-import Palette from "./Palette";
-import Grid from "./Grid";
-import Stage from "../engine/Stage";
-import ScriptsPane from "./ScriptsPane";
-import Undo from "./Undo";
-import Library from "./Library";
-import OS from "../../tablet/OS";
-import IO from "../../tablet/IO";
-import MediaLib from "../../tablet/MediaLib";
-import Paint from "../../painteditor/Paint";
-import Events from "../../utils/Events";
-import Localization from "../../utils/Localization";
-import ScratchAudio from "../../utils/ScratchAudio";
+import ScratchJr from '../ScratchJr';
+import BlockSpecs from '../blocks/BlockSpecs';
+import Alert from './Alert';
+import Project from './Project';
+import Thumbs from './Thumbs';
+import Palette from './Palette';
+import Grid from './Grid';
+import Stage from '../engine/Stage';
+import ScriptsPane from './ScriptsPane';
+import Undo from './Undo';
+import Library from './Library';
+import OS from '../../tablet/OS';
+import IO from '../../tablet/IO';
+import MediaLib from '../../tablet/MediaLib';
+import Paint from '../../painteditor/Paint';
+import Events from '../../utils/Events';
+import Localization from '../../utils/Localization';
+import ScratchAudio from '../../utils/ScratchAudio';
 import {
     absoluteURL,
     frame,
@@ -37,7 +37,7 @@ import {
     getDocumentHeight,
     setProps,
     mTime,
-} from "../../utils/lib";
+} from '../../utils/lib';
 
 let projectNameTextInput = null;
 let info = null;
@@ -86,14 +86,14 @@ export default class UI {
         var aspect = getDocumentWidth() / getDocumentHeight();
         if (aspect > 1.45) {
             // Nudge sprite list right a bit and the pages list left a bit
-            gn("library").style.left = "3vw";
-            gn("pages").style.right = "1vw";
+            gn('library').style.left = '3vw';
+            gn('pages').style.right = '1vw';
         }
     }
 
     static topSection() {
-        var div = newHTML("div", "topsection", frame);
-        div.setAttribute("id", "topsection");
+        var div = newHTML('div', 'topsection', frame);
+        div.setAttribute('id', 'topsection');
         if (ScratchJr.isEditable()) {
             UI.addProjectInfo();
         }
@@ -104,18 +104,21 @@ export default class UI {
 
     static leftPanel(div) {
         // sprite library
-        var sl = newHTML("div", "leftpanel", div);
-        var flip = newHTML("div", "flipme", sl);
-        flip.setAttribute("id", "flip");
+        var sl = newHTML('div', 'leftpanel', div);
+        var flip = newHTML('div', 'flipme', sl);
+        flip.setAttribute('id', 'flip');
+
         flip.onclick = function (evt) {
-            window.location.href = "https://codehs.com/";
+            // window.location.href = 'https://codehs.com/';
+            ScratchJr.saveAndFlip(evt);
         }; // move to project
+
         UI.layoutLibrary(sl);
     }
 
     static middleSection() {
-        var bp = newHTML("div", "blockspalette", frame);
-        bp.setAttribute("id", "blockspalette");
+        var bp = newHTML('div', 'blockspalette', frame);
+        bp.setAttribute('id', 'blockspalette');
         Palette.setup(bp);
         Undo.setup(bp);
     }
@@ -125,76 +128,76 @@ export default class UI {
     }
 
     static addProjectInfo() {
-        info = newHTML("div", "info", frame);
-        info.setAttribute("id", "projectinfo");
-        var infobox = newHTML("div", "infobox fade", frame);
-        infobox.setAttribute("id", "infobox");
-        okclicky = newHTML("div", "paintdone", infobox);
-        newHTML("div", "infoboxlogo", infobox);
+        info = newHTML('div', 'info', frame);
+        info.setAttribute('id', 'projectinfo');
+        var infobox = newHTML('div', 'infobox fade', frame);
+        infobox.setAttribute('id', 'infobox');
+        okclicky = newHTML('div', 'paintdone', infobox);
+        newHTML('div', 'infoboxlogo', infobox);
         var nameField = UI.addEditableName(infobox);
-        var staticinfo = newHTML("div", "fixedinfo", infobox);
-        var author = newHTML("div", "infolabel", staticinfo);
-        author.setAttribute("id", "deviceName");
+        var staticinfo = newHTML('div', 'fixedinfo', infobox);
+        var author = newHTML('div', 'infolabel', staticinfo);
+        author.setAttribute('id', 'deviceName');
 
         if (window.Settings.shareEnabled) {
             // For Parents button
             var parentsSection = newHTML(
-                "div",
-                "infoboxParentsSection",
+                'div',
+                'infoboxParentsSection',
                 infobox
             );
-            parentsSection.setAttribute("id", "parentsection");
+            parentsSection.setAttribute('id', 'parentsection');
 
             var parentsButton = newHTML(
-                "div",
-                "infoboxParentsButton",
+                'div',
+                'infoboxParentsButton',
                 parentsSection
             );
-            parentsButton.id = "infoboxParentsSectionButton";
-            parentsButton.textContent = Localization.localize("FOR_PARENTS");
+            parentsButton.id = 'infoboxParentsSectionButton';
+            parentsButton.textContent = Localization.localize('FOR_PARENTS');
 
             // Sharing
-            var shareButtons = newHTML("div", "infoboxShareButtons", infobox);
-            shareButtons.setAttribute("id", "sharebuttons");
+            var shareButtons = newHTML('div', 'infoboxShareButtons', infobox);
+            shareButtons.setAttribute('id', 'sharebuttons');
 
-            var shareEmail = newHTML("div", "infoboxShareButton", shareButtons);
-            shareEmail.id = "infoboxShareButtonEmail";
-            shareEmail.textContent = Localization.localize("SHARING_BY_EMAIL");
+            var shareEmail = newHTML('div', 'infoboxShareButton', shareButtons);
+            shareEmail.id = 'infoboxShareButtonEmail';
+            shareEmail.textContent = Localization.localize('SHARING_BY_EMAIL');
             shareEmail.onclick = function (e) {
                 UI.infoDoShare(e, nameField, shareLoadingGif, EMAILSHARE);
             };
 
             if (isAndroid) {
-                shareEmail.style.margin = "auto";
+                shareEmail.style.margin = 'auto';
             } else {
-                shareEmail.style.float = "left";
+                shareEmail.style.float = 'left';
             }
 
             if (!isAndroid) {
                 var shareAirdrop = newHTML(
-                    "div",
-                    "infoboxShareButton",
+                    'div',
+                    'infoboxShareButton',
                     shareButtons
                 );
-                shareAirdrop.id = "infoboxShareButtonAirdrop";
+                shareAirdrop.id = 'infoboxShareButtonAirdrop';
                 shareAirdrop.textContent =
-                    Localization.localize("SHARING_BY_AIRDROP");
-                shareAirdrop.style.float = "right";
+                    Localization.localize('SHARING_BY_AIRDROP');
+                shareAirdrop.style.float = 'right';
                 shareAirdrop.onclick = function (e) {
                     UI.infoDoShare(e, nameField, shareLoadingGif, AIRDROPSHARE);
                 };
             }
 
             OS.deviceName(function (name) {
-                gn("deviceName").textContent = name;
+                gn('deviceName').textContent = name;
             });
 
             var shareLoadingGif = newHTML(
-                "img",
-                "infoboxShareLoading",
+                'img',
+                'infoboxShareLoading',
                 shareButtons
             );
-            shareLoadingGif.src = absoluteURL("./assets/ui/loader.png");
+            shareLoadingGif.src = absoluteURL('./assets/ui/loader.png');
 
             parentsButton.onclick = function (e) {
                 UI.parentalGate(e, function (e) {
@@ -210,31 +213,31 @@ export default class UI {
     }
 
     static parentalGate(evt, callback) {
-        ScratchAudio.sndFX("tap.wav");
-        var pgFrame = newHTML("div", "parentalgate", gn("frame"));
+        ScratchAudio.sndFX('tap.wav');
+        var pgFrame = newHTML('div', 'parentalgate', gn('frame'));
 
-        var pgCloseButton = newHTML("div", "paintdone", pgFrame);
+        var pgCloseButton = newHTML('div', 'paintdone', pgFrame);
         pgCloseButton.onclick = function () {
             parentalGateClose(false);
         };
 
-        var pgProblem = newHTML("div", "parentalgateproblem", pgFrame);
-        var pgChoiceA = newHTML("div", "parentalgatechoice", pgFrame);
-        var pgChoiceB = newHTML("div", "parentalgatechoice", pgFrame);
-        var pgChoiceC = newHTML("div", "parentalgatechoice", pgFrame);
+        var pgProblem = newHTML('div', 'parentalgateproblem', pgFrame);
+        var pgChoiceA = newHTML('div', 'parentalgatechoice', pgFrame);
+        var pgChoiceB = newHTML('div', 'parentalgatechoice', pgFrame);
+        var pgChoiceC = newHTML('div', 'parentalgatechoice', pgFrame);
 
         var problems = [
             // Problem, Choice A, Choice B, Choice C, Correct choice #
-            ["30 + 7", "37", "9", "28", 0],
-            ["22 + 3", "18", "25", "3", 1],
-            ["91 + 1", "32", "74", "92", 2],
-            ["30 + 4", "34", "59", "12", 0],
-            ["48 + 1", "9", "49", "20", 1],
-            ["32 + 6", "23", "99", "38", 2],
-            ["53 + 4", "57", "12", "90", 0],
-            ["26 + 3", "17", "29", "8", 1],
-            ["71 + 1", "58", "14", "72", 2],
-            ["11 + 8", "19", "23", "67", 0],
+            ['30 + 7', '37', '9', '28', 0],
+            ['22 + 3', '18', '25', '3', 1],
+            ['91 + 1', '32', '74', '92', 2],
+            ['30 + 4', '34', '59', '12', 0],
+            ['48 + 1', '9', '49', '20', 1],
+            ['32 + 6', '23', '99', '38', 2],
+            ['53 + 4', '57', '12', '90', 0],
+            ['26 + 3', '17', '29', '8', 1],
+            ['71 + 1', '58', '14', '72', 2],
+            ['11 + 8', '19', '23', '67', 0],
         ];
 
         var problemChoice = Math.floor(Math.random() * problems.length);
@@ -255,14 +258,14 @@ export default class UI {
             parentalGateClose(theProblem[4] == 2);
         };
 
-        var pgExplain = newHTML("div", "parentalgateexplain", pgFrame);
+        var pgExplain = newHTML('div', 'parentalgateexplain', pgFrame);
         pgExplain.textContent = Localization.localize(
-            "PARENTAL_GATE_EXPLANATION"
+            'PARENTAL_GATE_EXPLANATION'
         );
 
         function parentalGateClose(success) {
-            ScratchAudio.sndFX("exittap.wav");
-            gn("frame").removeChild(pgFrame);
+            ScratchAudio.sndFX('exittap.wav');
+            gn('frame').removeChild(pgFrame);
             if (success) {
                 callback(evt);
             }
@@ -270,8 +273,8 @@ export default class UI {
     }
 
     static showSharing(evt, shareButtons, parentsSection) {
-        shareButtons.style.visibility = "visible";
-        parentsSection.style.visibility = "hidden";
+        shareButtons.style.visibility = 'visible';
+        parentsSection.style.visibility = 'hidden';
     }
 
     /*
@@ -284,16 +287,16 @@ export default class UI {
     + */
 
     static infoDoShare(evt, nameField, shareLoadingGif, shareType) {
-        ScratchAudio.sndFX("tap.wav");
-        shareLoadingGif.style.visibility = "visible";
+        ScratchAudio.sndFX('tap.wav');
+        shareLoadingGif.style.visibility = 'visible';
         nameField.blur(); // Hide the keyboard for name changes
 
         setTimeout(saveAndShare, 500); // 500ms delay to wait for loading GIF to show and keyboard to hide
 
         OS.analyticsEvent(
-            "editor",
-            "share_button",
-            shareType == EMAILSHARE ? "email" : "airdrop"
+            'editor',
+            'share_button',
+            shareType == EMAILSHARE ? 'email' : 'airdrop'
         );
 
         function saveAndShare() {
@@ -313,7 +316,7 @@ export default class UI {
                     function (fullName) {
                         ScratchJr.onHold = false; // Unfreeze the editing UI
                         var emailSubject = Localization.localize(
-                            "SHARING_EMAIL_SUBJECT",
+                            'SHARING_EMAIL_SUBJECT',
                             {
                                 PROJECT_NAME: IO.shareName,
                             }
@@ -321,11 +324,11 @@ export default class UI {
                         OS.sendSjrToShareDialog(
                             fullName,
                             emailSubject,
-                            Localization.localize("SHARING_EMAIL_TEXT"),
+                            Localization.localize('SHARING_EMAIL_TEXT'),
                             shareType
                         );
 
-                        shareLoadingGif.style.visibility = "hidden";
+                        shareLoadingGif.style.visibility = 'hidden';
                     }
                 );
             });
@@ -333,18 +336,18 @@ export default class UI {
     }
 
     static addEditableName(p) {
-        var pname = newHTML("form", "projectname", p);
-        pname.name = "projectname";
-        pname.id = "title";
+        var pname = newHTML('form', 'projectname', p);
+        pname.name = 'projectname';
+        pname.id = 'title';
         pname.onsubmit = function (evt) {
             submitChange(evt);
         };
-        var ti = newHTML("input", "pnamefield", pname);
+        var ti = newHTML('input', 'pnamefield', pname);
         projectNameTextInput = ti;
-        ti.name = "myproject";
+        ti.name = 'myproject';
         ti.maxLength = 30;
         ti.onkeypress = undefined;
-        ti.autocomplete = "off";
+        ti.autocomplete = 'off';
         ti.autocorrect = false;
         ti.onblur = undefined;
         ti.onfocus = function (e) {
@@ -379,13 +382,13 @@ export default class UI {
         // Handle story-starter mode project
         if (
             ScratchJr.isEditable() &&
-            ScratchJr.editmode == "storyStarter" &&
+            ScratchJr.editmode == 'storyStarter' &&
             !Project.error &&
             ScratchJr.changed
         ) {
             OS.analyticsEvent(
-                "samples",
-                "story_starter_edited",
+                'samples',
+                'story_starter_edited',
                 Project.metadata.name
             );
             // Get the new project name
@@ -409,8 +412,8 @@ export default class UI {
                         function (md5) {
                             Project.metadata.id = md5;
                             ScratchJr.currentProject = md5;
-                            ScratchJr.editmode = "edit";
-                            Project.metadata.gallery = "";
+                            ScratchJr.editmode = 'edit';
+                            Project.metadata.gallery = '';
                             UI.finishTextFieldSave(dontHide);
                         }
                     );
@@ -428,13 +431,13 @@ export default class UI {
                 ? ti.oldvalue
                 : ti.value.substring(0, ti.maxLength);
         if (Project.metadata.name != pname) {
-            ScratchJr.storyStart("UI.handleTextFieldSave");
+            ScratchJr.storyStart('UI.handleTextFieldSave');
         }
         Project.metadata.name = pname;
-        OS.setfield(OS.database, Project.metadata.id, "name", pname);
+        OS.setfield(OS.database, Project.metadata.id, 'name', pname);
         if (!dontHide) {
-            ScratchAudio.sndFX("exittap.wav");
-            gn("infobox").className = "infobox fade";
+            ScratchAudio.sndFX('exittap.wav');
+            gn('infobox').className = 'infobox fade';
         }
     }
 
@@ -450,10 +453,10 @@ export default class UI {
         }
 
         var canShare =
-            ScratchJr.editmode != "storyStarter" || ScratchJr.changed;
-        gn("infoboxParentsSectionButton").style.display = canShare
-            ? "block"
-            : "none";
+            ScratchJr.editmode != 'storyStarter' || ScratchJr.changed;
+        gn('infoboxParentsSectionButton').style.display = canShare
+            ? 'block'
+            : 'none';
 
         // Prevent button from thrashing
         setTimeout(function () {
@@ -472,14 +475,14 @@ export default class UI {
         info.onclick = null;
 
         ScratchJr.onBackButtonCallback.push(function () {
-            var e2 = document.createEvent("TouchEvent");
+            var e2 = document.createEvent('TouchEvent');
             e2.initTouchEvent();
             e2.preventDefault();
             e2.stopPropagation();
             UI.hideInfoBox(e2);
         });
 
-        ScratchAudio.sndFX("entertap.wav");
+        ScratchAudio.sndFX('entertap.wav');
         ScratchJr.stopStrips();
         if (!Project.metadata.ctime) {
             Project.metadata.mtime = mTime();
@@ -488,14 +491,14 @@ export default class UI {
 
         if (ScratchJr.isEditable()) {
             var name = Project.metadata.name;
-            if (ScratchJr.editmode == "storyStarter") {
+            if (ScratchJr.editmode == 'storyStarter') {
                 name = Localization.localizeSampleName(name);
             }
             document.forms.projectname.myproject.value = name;
         } else {
-            gn("pname").textContent = Project.metadata.name;
+            gn('pname').textContent = Project.metadata.name;
         }
-        gn("infobox").className = "infobox fade in";
+        gn('infobox').className = 'infobox fade in';
         if (ScratchJr.isEditable()) {
             setTimeout(function () {
                 //(document.forms["projectname"]["myproject"]).focus();
@@ -512,7 +515,7 @@ export default class UI {
         var min = date.getMinutes();
         var sec = date.getSeconds();
         return (
-            year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec
+            year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec
         );
     }
 
@@ -531,11 +534,11 @@ export default class UI {
             document.forms.projectname.myproject.blur();
             UI.handleTextFieldSave();
         } else {
-            ScratchAudio.sndFX("exittap.wav");
-            gn("infobox").className = "infobox fade";
+            ScratchAudio.sndFX('exittap.wav');
+            gn('infobox').className = 'infobox fade';
         }
-        gn("sharebuttons").style.visibility = "hidden";
-        gn("parentsection").style.visibility = "visible";
+        gn('sharebuttons').style.visibility = 'hidden';
+        gn('parentsection').style.visibility = 'visible';
         infoBoxOpen = false;
     }
 
@@ -544,24 +547,24 @@ export default class UI {
     /////////////////////////////////////
 
     static layoutLibrary(sl) {
-        var sprites = newHTML("div", "thumbpanel", sl);
-        sprites.setAttribute("id", "library");
+        var sprites = newHTML('div', 'thumbpanel', sl);
+        sprites.setAttribute('id', 'library');
         //scrolling area
-        var p = newHTML("div", "spritethumbs", sprites);
-        var div = newHTML("div", "spritecc", p);
-        div.setAttribute("id", "spritecc");
-        window.setEventHandler("touchstart", UI.spriteThumbsActions, div);
+        var p = newHTML('div', 'spritethumbs', sprites);
+        var div = newHTML('div', 'spritecc', p);
+        div.setAttribute('id', 'spritecc');
+        window.setEventHandler('touchstart', UI.spriteThumbsActions, div);
         div.onmousedown = UI.spriteThumbsActions;
 
         // scrollbar
-        var sb = newHTML("div", "scrollbar", sprites);
-        sb.setAttribute("id", "scrollbar");
-        var sbthumb = newHTML("div", "sbthumb", sb);
-        sbthumb.setAttribute("id", "sbthumb");
+        var sb = newHTML('div', 'scrollbar', sprites);
+        sb.setAttribute('id', 'scrollbar');
+        var sbthumb = newHTML('div', 'sbthumb', sb);
+        sbthumb.setAttribute('id', 'sbthumb');
 
         // new sprite
         if (ScratchJr.isEditable()) {
-            var ns = newHTML("div", "addsprite", sprites);
+            var ns = newHTML('div', 'addsprite', sprites);
             ns.onclick = UI.addSprite;
         }
 
@@ -572,7 +575,7 @@ export default class UI {
             UI.scrollSpritesPanel(e.deltaY);
         }
 
-        window.setEventHandler("wheel", scrollSpritesWheel, sprites);
+        window.setEventHandler('wheel', scrollSpritesWheel, sprites);
     }
 
     static mascotData(page) {
@@ -580,13 +583,13 @@ export default class UI {
             flip: false,
             angle: 0,
             shown: true,
-            type: "sprite",
+            type: 'sprite',
             scale: 0.5,
             defaultScale: 0.5,
             speed: 2,
             dirx: 1,
             diry: 1,
-            sounds: ["pop.mp3"],
+            sounds: ['pop.mp3'],
             homex: 240,
             homey: 180,
             xcoor: 240,
@@ -609,57 +612,57 @@ export default class UI {
     //////////////////////////////////////
 
     static needsScroll() {
-        var sc = gn("spritecc");
+        var sc = gn('spritecc');
         var numSprites = sc.childElementCount;
         var p = sc.parentNode;
         if (
             numSprites === 1 ||
             sc.scrollHeight / p.offsetHeight === 1 ||
-            gn("spritecc").childElementCount === 0
+            gn('spritecc').childElementCount === 0
         ) {
-            gn("scrollbar").setAttribute("class", "scrollbar off");
+            gn('scrollbar').setAttribute('class', 'scrollbar off');
         } else {
-            gn("scrollbar").setAttribute("class", "scrollbar on");
+            gn('scrollbar').setAttribute('class', 'scrollbar on');
             UI.updateSpriteScroll();
         }
     }
 
     static updateSpriteScroll() {
-        var sc = gn("spritecc");
+        var sc = gn('spritecc');
         var dy = sc.offsetTop;
         var p = sc.parentNode;
         var top = -dy / (sc.scrollHeight / p.offsetHeight);
         var size = (p.offsetHeight / sc.scrollHeight) * p.offsetHeight;
-        var thumb = gn("sbthumb");
-        thumb.style.height = size + "px";
-        thumb.style.top = top + "px";
+        var thumb = gn('sbthumb');
+        thumb.style.height = size + 'px';
+        thumb.style.top = top + 'px';
     }
 
     static scrollContents(dy) {
-        var sc = gn("spritecc");
+        var sc = gn('spritecc');
         var valy = sc.offsetTop - dy;
         if (valy > 0) {
             valy = 0;
         }
         var transition = {
             duration: 0.5,
-            transition: "ease-out",
+            transition: 'ease-out',
             style: {
-                top: valy + "px",
+                top: valy + 'px',
             },
         };
         CSSTransition(sc, transition);
     }
 
     static spriteInView(spr) {
-        var sc = gn("spritecc");
+        var sc = gn('spritecc');
         var achild = spr.thumbnail;
         if (!achild) {
             return;
         }
-        var h = gn("spritecc").parentNode.offsetHeight;
-        var scroll = -gn("spritecc").offsetTop;
-        var dy = -gn("spritecc").offsetTop;
+        var h = gn('spritecc').parentNode.offsetHeight;
+        var scroll = -gn('spritecc').offsetTop;
+        var dy = -gn('spritecc').offsetTop;
         if (achild.offsetTop + achild.offsetHeight + scroll > h) {
             dy = h - (achild.offsetTop + achild.offsetHeight);
         }
@@ -669,7 +672,7 @@ export default class UI {
         if (dy > 0) {
             dy = 0;
         }
-        sc.style.top = dy + "px";
+        sc.style.top = dy + 'px';
         UI.needsScroll();
     }
 
@@ -703,11 +706,11 @@ export default class UI {
         e.stopPropagation();
         ScratchJr.blur();
         t.focus();
-        if (t.className == "brush") {
+        if (t.className == 'brush') {
             UI.putInPaintEditor(e);
             return;
         }
-        var tb = Thumbs.getType(t, "spritethumb");
+        var tb = Thumbs.getType(t, 'spritethumb');
         if (!tb) {
             if (ScratchJr.shaking) {
                 ScratchJr.clearSelection();
@@ -729,7 +732,7 @@ export default class UI {
         if (!tb) {
             return;
         }
-        if (gn("scrollbar").className == "scrollbar off") {
+        if (gn('scrollbar').className == 'scrollbar off') {
             Events.startDrag(
                 e,
                 tb,
@@ -777,7 +780,7 @@ export default class UI {
     }
 
     static scrollSpritesPanel(deltaY) {
-        var sc = gn("spritecc");
+        var sc = gn('spritecc');
         var dy = sc.offsetTop;
         dy -= deltaY;
         var p = sc.parentNode;
@@ -787,7 +790,7 @@ export default class UI {
         if (dy + sc.offsetHeight < p.offsetHeight) {
             dy = p.offsetHeight - sc.offsetHeight;
         }
-        sc.style.top = dy + "px";
+        sc.style.top = dy + 'px';
         UI.updateSpriteScroll();
     }
 
@@ -803,14 +806,14 @@ export default class UI {
         if (
             ScratchJr.isEditable() &&
             ScratchJr.getSprite() &&
-            ((t.className == "sname" && el.owner == ScratchJr.getSprite().id) ||
-                t.className == "brush")
+            ((t.className == 'sname' && el.owner == ScratchJr.getSprite().id) ||
+                t.className == 'brush')
         ) {
             UI.putInPaintEditor(e);
             return;
         }
-        if (el.className.indexOf("shakeme") < 0) {
-            el.setAttribute("class", "spritethumb on");
+        if (el.className.indexOf('shakeme') < 0) {
+            el.setAttribute('class', 'spritethumb on');
         }
         Thumbs.clickOnSprite(e, el);
     }
@@ -838,21 +841,21 @@ export default class UI {
     //////////////////////////////
 
     static stageArea(inner) {
-        var outerDiv = newHTML("div", "centerpanel", inner);
-        var div = newHTML("div", "stageframe", outerDiv);
-        div.setAttribute("id", "stageframe");
+        var outerDiv = newHTML('div', 'centerpanel', inner);
+        var div = newHTML('div', 'stageframe', outerDiv);
+        div.setAttribute('id', 'stageframe');
         ScratchJr.stage = new Stage(div);
         Grid.init(div);
         if (ScratchJr.isEditable()) {
-            UI.createTopBarClicky(div, "addtext", "addText", UI.addText);
-            UI.createTopBarClicky(div, "setbkg", "changeBkg", UI.addBackground);
+            UI.createTopBarClicky(div, 'addtext', 'addText', UI.addText);
+            UI.createTopBarClicky(div, 'setbkg', 'changeBkg', UI.addBackground);
         }
-        UI.createTopBarClicky(div, "grid", "gridToggle off", UI.switchGrid);
-        UI.createTopBarClicky(div, "go", "go on", UI.toggleRun);
-        UI.createTopBarClicky(div, "resetall", "resetall", UI.resetAllSprites);
-        UI.createTopBarClicky(div, "full", "fullscreen", ScratchJr.fullScreen);
+        UI.createTopBarClicky(div, 'grid', 'gridToggle off', UI.switchGrid);
+        UI.createTopBarClicky(div, 'go', 'go on', UI.toggleRun);
+        UI.createTopBarClicky(div, 'resetall', 'resetall', UI.resetAllSprites);
+        UI.createTopBarClicky(div, 'full', 'fullscreen', ScratchJr.fullScreen);
         if (window.canSave) {
-            UI.createTopBarClicky(div, "save", "manualsave", function (evt) {
+            UI.createTopBarClicky(div, 'save', 'manualsave', function (evt) {
                 ScratchJr.saveProject(evt, function () {
                     Alert.close();
                 });
@@ -868,7 +871,7 @@ export default class UI {
         if (ScratchJr.onHold) {
             return;
         }
-        ScratchAudio.sndFX("tap.wav");
+        ScratchAudio.sndFX('tap.wav');
         if (!ScratchJr.runtime.inactive()) {
             ScratchJr.stopStripsFromTop(e);
         }
@@ -885,25 +888,25 @@ export default class UI {
     }
 
     static switchGrid() {
-        ScratchAudio.sndFX("tap.wav");
+        ScratchAudio.sndFX('tap.wav');
         UI.setShowGrid(Grid.hidden);
-        OS.analyticsEvent("editor", Grid.hidden ? "hide_grid" : "show_grid");
+        OS.analyticsEvent('editor', Grid.hidden ? 'hide_grid' : 'show_grid');
     }
 
     static setShowGrid(b) {
         Grid.hide(!b);
-        gn("grid").className = Grid.hidden ? "gridToggle off" : "gridToggle on";
+        gn('grid').className = Grid.hidden ? 'gridToggle off' : 'gridToggle on';
     }
 
     static createTopBarClicky(p, str, mstyle, fcn) {
-        var toggle = newHTML("div", mstyle, p);
+        var toggle = newHTML('div', mstyle, p);
         toggle.onclick = fcn;
-        toggle.setAttribute("id", str);
+        toggle.setAttribute('id', str);
     }
 
     static fullscreenControls() {
-        UI.nextpage = newHTML("div", "nextpage off", frame);
-        UI.prevpage = newHTML("div", "nextpage off", frame);
+        UI.nextpage = newHTML('div', 'nextpage off', frame);
+        UI.prevpage = newHTML('div', 'nextpage off', frame);
         UI.nextpage.onclick = UI.nextPage;
         UI.prevpage.onclick = UI.prevPage;
     }
@@ -911,14 +914,14 @@ export default class UI {
     static updatePageControls() {
         var n = ScratchJr.stage.pages.indexOf(ScratchJr.stage.currentPage);
         if (n == 0) {
-            UI.prevpage.setAttribute("class", "prevpage off");
+            UI.prevpage.setAttribute('class', 'prevpage off');
         } else {
-            UI.prevpage.setAttribute("class", "prevpage on");
+            UI.prevpage.setAttribute('class', 'prevpage on');
         }
         if (n == ScratchJr.stage.pages.length - 1) {
-            UI.nextpage.setAttribute("class", "nextpage off");
+            UI.nextpage.setAttribute('class', 'nextpage off');
         } else {
-            UI.nextpage.setAttribute("class", "nextpage on");
+            UI.nextpage.setAttribute('class', 'nextpage on');
         }
     }
 
@@ -946,44 +949,44 @@ export default class UI {
     static enterFullScreen() {
         var w = Math.min(getDocumentWidth(), frame.offsetWidth);
         var h = Math.max(getDocumentHeight(), frame.offsetHeight);
-        frame.appendChild(gn("stage"));
-        var list = ["go", "full"];
+        frame.appendChild(gn('stage'));
+        var list = ['go', 'full'];
         for (var i = 0; i < list.length; i++) {
-            gn(list[i]).className = gn(list[i]).className + " presentationmode";
+            gn(list[i]).className = gn(list[i]).className + ' presentationmode';
             frame.appendChild(gn(list[i]));
         }
         var scale = Math.min(
             (w - fullscreenScaleMultiplier * scaleMultiplier) /
-                gn("stage").owner.width,
-            h / gn("stage").owner.height
+                gn('stage').owner.width,
+            h / gn('stage').owner.height
         );
-        var dx = Math.floor((w - gn("stage").owner.width * scale) / 2);
-        var dy = Math.floor((h - gn("stage").owner.height * scale) / 2);
+        var dx = Math.floor((w - gn('stage').owner.width * scale) / 2);
+        var dy = Math.floor((h - gn('stage').owner.height * scale) / 2);
 
         ScratchJr.stage.setStageScaleAndPosition(scale, dx / scale, dy / scale);
 
-        gn("stage").owner.currentZoom = Math.floor(scale * 100) / 100;
-        gn("stage").style.webkitTextSizeAdjust =
-            Math.floor(gn("stage").owner.currentZoom * 100) + "%";
-        document.body.parentNode.style.background = "black";
-        gn("stage").setAttribute("class", "stage fullscreen");
-        UI.nextpage.setAttribute("class", "nextpage on");
+        gn('stage').owner.currentZoom = Math.floor(scale * 100) / 100;
+        gn('stage').style.webkitTextSizeAdjust =
+            Math.floor(gn('stage').owner.currentZoom * 100) + '%';
+        document.body.parentNode.style.background = 'black';
+        gn('stage').setAttribute('class', 'stage fullscreen');
+        UI.nextpage.setAttribute('class', 'nextpage on');
     }
 
     static quitFullScreen() {
-        var div = gn("stageframe");
-        div.appendChild(gn("stage"));
+        var div = gn('stageframe');
+        div.appendChild(gn('stage'));
         ScratchJr.stage.setStageScaleAndPosition(scaleMultiplier, 46, 74);
-        gn("go").className = "go off nopresent";
-        div.appendChild(gn("go"));
-        gn("full").className = "fullscreen";
-        div.appendChild(gn("full"));
-        gn("stage").owner.currentZoom = 1;
-        gn("stage").style.webkitTextSizeAdjust = "100%";
-        document.body.parentNode.style.background = "none";
-        gn("stage").setAttribute("class", "stage normal");
-        UI.nextpage.setAttribute("class", "nextpage off");
-        UI.prevpage.setAttribute("class", "nextpage off");
+        gn('go').className = 'go off nopresent';
+        div.appendChild(gn('go'));
+        gn('full').className = 'fullscreen';
+        div.appendChild(gn('full'));
+        gn('stage').owner.currentZoom = 1;
+        gn('stage').style.webkitTextSizeAdjust = '100%';
+        document.body.parentNode.style.background = 'none';
+        gn('stage').setAttribute('class', 'stage normal');
+        UI.nextpage.setAttribute('class', 'nextpage off');
+        UI.prevpage.setAttribute('class', 'nextpage off');
         ScratchJr.stage.setViewPage(ScratchJr.stage.currentPage);
         Thumbs.updateSprites();
         Thumbs.updatePages();
@@ -994,11 +997,11 @@ export default class UI {
     /////////////////////////////////////
 
     static rightPanel(div) {
-        var rp = newHTML("div", "rightpanel", div);
-        var tb = newHTML("div", "pages", rp);
-        tb.setAttribute("id", "pages");
-        var ndiv = newHTML("div", "pagescc", tb);
-        ndiv.setAttribute("id", "pagecc");
+        var rp = newHTML('div', 'rightpanel', div);
+        var tb = newHTML('div', 'pages', rp);
+        tb.setAttribute('id', 'pages');
+        var ndiv = newHTML('div', 'pagescc', tb);
+        ndiv.setAttribute('id', 'pagecc');
     }
 
     //////////////////////////////////////
@@ -1009,12 +1012,12 @@ export default class UI {
         var h = 56;
         var w = 66 * 2;
         var tb = newDiv(div, 220, 0, w, h, {
-            position: "absolute",
+            position: 'absolute',
         });
-        tb.setAttribute("id", "toolbar");
-        var addt = newHTML("div", "addText", tb);
+        tb.setAttribute('id', 'toolbar');
+        var addt = newHTML('div', 'addText', tb);
         addt.onclick = UI.addText;
-        var changebkg = newHTML("div", "changeBkg", tb);
+        var changebkg = newHTML('div', 'changeBkg', tb);
         changebkg.onclick = UI.addBackground;
     }
 
@@ -1024,13 +1027,13 @@ export default class UI {
         }
         e.preventDefault();
         e.stopPropagation();
-        ScratchAudio.sndFX("tap.wav");
+        ScratchAudio.sndFX('tap.wav');
         ScratchJr.stopStrips();
         ScratchJr.unfocus(e);
         if (Events.dragthumbnail) {
             Events.mouseUp(e);
         }
-        Library.open("costumes");
+        Library.open('costumes');
     }
 
     static addBackground(e) {
@@ -1044,7 +1047,7 @@ export default class UI {
         if (Events.dragthumbnail) {
             Events.mouseUp(e);
         }
-        Library.open("backgrounds");
+        Library.open('backgrounds');
     }
 
     static addText(e) {
@@ -1054,7 +1057,7 @@ export default class UI {
         e.preventDefault();
         e.stopPropagation();
         if (isAndroid) {
-            if (gn("textbox").style.visibility === "visible") {
+            if (gn('textbox').style.visibility === 'visible') {
                 return;
             }
         }
@@ -1067,38 +1070,38 @@ export default class UI {
     //////////////////////////////////
 
     static createFormForText(p) {
-        var tf = newHTML("div", "pagetext off", p);
-        tf.setAttribute("id", "textbox");
+        var tf = newHTML('div', 'pagetext off', p);
+        tf.setAttribute('id', 'textbox');
         // If the textbox background is clicked or touched, the input loses focus,
         // which causes the text input to close unexpectedly
         var eatEvent = function (e) {
             e.stopPropagation();
             e.preventDefault();
         };
-        window.setEventHandler("touchstart", eatEvent, tf);
+        window.setEventHandler('touchstart', eatEvent, tf);
         tf.onmousedown = eatEvent;
-        var activetb = newHTML("form", "pageform", tf);
-        activetb.name = "activetextbox";
-        activetb.id = "myform";
+        var activetb = newHTML('form', 'pageform', tf);
+        activetb.name = 'activetextbox';
+        activetb.id = 'myform';
         activetb.textsprite = null;
-        var field = newTextInput(activetb, "text");
-        field.name = "typing";
-        field.setAttribute("class", "edittext");
+        var field = newTextInput(activetb, 'text');
+        field.name = 'typing';
+        field.setAttribute('class', 'edittext');
         field.maxLength = 50;
         field.onkeypress = undefined;
-        field.autocomplete = "off";
+        field.autocomplete = 'off';
         field.autocorrect = false;
         field.onblur = undefined;
         activetb.onsubmit = undefined;
-        var ta = newHTML("div", "pagetextactions", tf);
-        var clicky = newHTML("div", "fontsizeText off", ta);
-        clicky.setAttribute("id", "fontsizebutton");
-        window.setEventHandler("touchstart", UI.openFontSizeMenu, clicky);
+        var ta = newHTML('div', 'pagetextactions', tf);
+        var clicky = newHTML('div', 'fontsizeText off', ta);
+        clicky.setAttribute('id', 'fontsizebutton');
+        window.setEventHandler('touchstart', UI.openFontSizeMenu, clicky);
         clicky.onmousedown = UI.openFontSizeMenu;
-        var col = newHTML("div", "changecolorText off", ta);
-        col.setAttribute("id", "fontcolorbutton");
+        var col = newHTML('div', 'changecolorText off', ta);
+        col.setAttribute('id', 'fontcolorbutton');
 
-        window.setEventHandler("touchstart", UI.topLevelColor, col);
+        window.setEventHandler('touchstart', UI.topLevelColor, col);
         col.onmousedown = UI.topLevelColor;
         UI.createColorMenu(tf);
         UI.createTextSizeMenu(tf);
@@ -1106,54 +1109,54 @@ export default class UI {
 
     static createColorMenu(div) {
         var swatchlist = BlockSpecs.fontcolors;
-        var spal = newHTML("div", "textuicolormenu off", div);
-        spal.setAttribute("id", "textcolormenu");
+        var spal = newHTML('div', 'textuicolormenu off', div);
+        spal.setAttribute('id', 'textcolormenu');
         for (var i = 0; i < swatchlist.length; i++) {
-            var colour = newHTML("div", "textcolorbucket", spal);
+            var colour = newHTML('div', 'textcolorbucket', spal);
             // bucket
-            var sf = newHTML("div", "swatchframe", colour);
-            var sc = newHTML("div", "swatchcolor", sf);
+            var sf = newHTML('div', 'swatchframe', colour);
+            var sc = newHTML('div', 'swatchcolor', sf);
             sc.style.background = swatchlist[i];
             //
-            sf = newHTML("div", "splasharea off", colour);
+            sf = newHTML('div', 'splasharea off', colour);
             Paint.setSplashColor(sf, Paint.splash, swatchlist[i]);
             Paint.addImageUrl(sf, Paint.splashshade);
-            window.setEventHandler("touchstart", UI.setTextColor, colour);
+            window.setEventHandler('touchstart', UI.setTextColor, colour);
             colour.onmousedown = UI.setTextColor;
         }
-        UI.setMenuTextColor(gn("textcolormenu").childNodes[9]);
+        UI.setMenuTextColor(gn('textcolormenu').childNodes[9]);
     }
 
     static createTextSizeMenu(div) {
         var sizes = BlockSpecs.fontsizes;
-        var spal = newHTML("div", "textuifont off", div);
-        spal.setAttribute("id", "textfontsizes");
+        var spal = newHTML('div', 'textuifont off', div);
+        spal.setAttribute('id', 'textfontsizes');
         for (var i = 0; i < sizes.length; i++) {
-            var textuisize = newHTML("div", "textuisize t" + (i + 1), spal);
+            var textuisize = newHTML('div', 'textuisize t' + (i + 1), spal);
             textuisize.fs = sizes[i];
-            var sf = newHTML("span", undefined, textuisize);
-            sf.textContent = "A";
-            window.setEventHandler("touchstart", UI.setTextSize, textuisize);
+            var sf = newHTML('span', undefined, textuisize);
+            sf.textContent = 'A';
+            window.setEventHandler('touchstart', UI.setTextSize, textuisize);
             textuisize.onmousedown = UI.setTextSize;
         }
-        UI.setMenuTextSize(gn("textfontsizes").childNodes[5]);
+        UI.setMenuTextSize(gn('textfontsizes').childNodes[5]);
     }
 
     static setMenuTextColor(t) {
         var c = t.childNodes[0].childNodes[0].style.backgroundColor;
-        for (var i = 0; i < gn("textcolormenu").childElementCount; i++) {
+        for (var i = 0; i < gn('textcolormenu').childElementCount; i++) {
             var mycolor =
-                gn("textcolormenu").childNodes[i].childNodes[0].childNodes[0]
+                gn('textcolormenu').childNodes[i].childNodes[0].childNodes[0]
                     .style.backgroundColor;
             if (c == mycolor) {
-                gn("textcolormenu").childNodes[i].childNodes[1].setAttribute(
-                    "class",
-                    "splasharea on"
+                gn('textcolormenu').childNodes[i].childNodes[1].setAttribute(
+                    'class',
+                    'splasharea on'
                 );
             } else {
-                gn("textcolormenu").childNodes[i].childNodes[1].setAttribute(
-                    "class",
-                    "splasharea off"
+                gn('textcolormenu').childNodes[i].childNodes[1].setAttribute(
+                    'class',
+                    'splasharea off'
                 );
             }
         }
@@ -1161,16 +1164,16 @@ export default class UI {
 
     static setMenuTextSize(t) {
         var c = t.fs;
-        for (var i = 0; i < gn("textfontsizes").childElementCount; i++) {
-            var kid = gn("textfontsizes").childNodes[i];
+        for (var i = 0; i < gn('textfontsizes').childElementCount; i++) {
+            var kid = gn('textfontsizes').childNodes[i];
             var fs = kid.fs;
-            var ckid = kid.className.split(" ")[1];
+            var ckid = kid.className.split(' ')[1];
             if (c == fs) {
-                gn("textfontsizes").childNodes[i].className =
-                    "textuisize " + ckid + " on";
+                gn('textfontsizes').childNodes[i].className =
+                    'textuisize ' + ckid + ' on';
             } else {
-                gn("textfontsizes").childNodes[i].className =
-                    "textuisize " + ckid + " off";
+                gn('textfontsizes').childNodes[i].className =
+                    'textuisize ' + ckid + ' off';
             }
         }
     }
@@ -1182,19 +1185,19 @@ export default class UI {
     static topLevelColor(e) {
         e.preventDefault();
         e.stopPropagation();
-        if (gn("fontcolorbutton").className == "changecolorText on") {
-            gn("fontcolorbutton").className = "changecolorText off";
-            gn("textcolormenu").className = "textuicolormenu off";
+        if (gn('fontcolorbutton').className == 'changecolorText on') {
+            gn('fontcolorbutton').className = 'changecolorText off';
+            gn('textcolormenu').className = 'textuicolormenu off';
         } else {
-            gn("fontsizebutton").className = "fontsizeText off";
-            gn("textfontsizes").className = "textuifont off";
+            gn('fontsizebutton').className = 'fontsizeText off';
+            gn('textfontsizes').className = 'textuifont off';
             var text = document.forms.activetextbox.textsprite;
             var indx = BlockSpecs.fontcolors.indexOf(text);
             if (indx > -1) {
-                UI.setMenuTextColor(gn("textcolormenu").childNodes[indx]);
+                UI.setMenuTextColor(gn('textcolormenu').childNodes[indx]);
             }
-            gn("textcolormenu").className = "textuicolormenu on";
-            gn("fontcolorbutton").className = "changecolorText on";
+            gn('textcolormenu').className = 'textuicolormenu on';
+            gn('fontcolorbutton').className = 'changecolorText on';
         }
     }
 
@@ -1209,25 +1212,25 @@ export default class UI {
         } else {
             t = e.target;
         }
-        var b = "textcolorbucket" != t.className;
+        var b = 'textcolorbucket' != t.className;
         while (b) {
             var t = t.parentNode;
-            b = t && "textcolorbucket" != t.className;
+            b = t && 'textcolorbucket' != t.className;
         }
         if (!t) {
             return;
         }
-        ScratchAudio.sndFX("splash.wav");
+        ScratchAudio.sndFX('splash.wav');
         UI.setMenuTextColor(t);
         var text = document.forms.activetextbox.textsprite;
         var c = t.childNodes[0].childNodes[0].style.background;
         text.setColor(c);
         Undo.record({
-            action: "edittext",
+            action: 'edittext',
             where: text.div.parentNode.owner.id,
             who: text.id,
         });
-        ScratchJr.storyStart("UI.setTextColor"); // Record a change for sample projects in story-starter mode
+        ScratchJr.storyStart('UI.setTextColor'); // Record a change for sample projects in story-starter mode
         var ti = document.forms.activetextbox.typing;
         ti.style.color = c;
     }
@@ -1235,19 +1238,19 @@ export default class UI {
     static openFontSizeMenu(e) {
         e.preventDefault();
         e.stopPropagation();
-        if (gn("fontsizebutton").className == "fontsizeText on") {
-            gn("fontsizebutton").className = "fontsizeText off";
-            gn("textfontsizes").className = "textuifont off";
+        if (gn('fontsizebutton').className == 'fontsizeText on') {
+            gn('fontsizebutton').className = 'fontsizeText off';
+            gn('textfontsizes').className = 'textuifont off';
         } else {
-            gn("fontcolorbutton").className = "changecolorText off";
-            gn("textcolormenu").className = "textuicolormenu off";
+            gn('fontcolorbutton').className = 'changecolorText off';
+            gn('textcolormenu').className = 'textuicolormenu off';
             var text = document.forms.activetextbox.textsprite;
             var indx = BlockSpecs.fontsizes.indexOf(text.fontsize);
             if (indx > -1) {
-                UI.setMenuTextSize(gn("textfontsizes").childNodes[indx]);
+                UI.setMenuTextSize(gn('textfontsizes').childNodes[indx]);
             }
-            gn("textfontsizes").className = "textuifont on";
-            gn("fontsizebutton").className = "fontsizeText on";
+            gn('textfontsizes').className = 'textuifont on';
+            gn('fontsizebutton').className = 'fontsizeText on';
         }
     }
 
@@ -1260,29 +1263,29 @@ export default class UI {
         } else {
             t = e.target;
         }
-        if (t.nodeName == "SPAN") {
+        if (t.nodeName == 'SPAN') {
             t = t.parentNode;
         }
         if (!t) {
             return;
         }
-        var ckid = t.className.split(" ")[0];
-        if (ckid != "textuisize") {
+        var ckid = t.className.split(' ')[0];
+        if (ckid != 'textuisize') {
             return;
         }
         UI.setMenuTextSize(t);
         var text = document.forms.activetextbox.textsprite;
         text.setFontSize(t.fs);
         Undo.record({
-            action: "edittext",
+            action: 'edittext',
             where: text.div.parentNode.owner.id,
             who: text.id,
         });
-        ScratchJr.storyStart("UI.setTextSize"); // Record a change for sample projects in story-starter mode
+        ScratchJr.storyStart('UI.setTextSize'); // Record a change for sample projects in story-starter mode
         var ti = document.forms.activetextbox.typing;
-        ti.style.fontSize = t.fs * scaleMultiplier + "px";
+        ti.style.fontSize = t.fs * scaleMultiplier + 'px';
         setProps(document.forms.activetextbox.style, {
-            height: (t.fs + 10) * scaleMultiplier + "px",
+            height: (t.fs + 10) * scaleMultiplier + 'px',
         });
     }
 
@@ -1291,11 +1294,11 @@ export default class UI {
     /////////////////////////////////////////
 
     static clear() {
-        var costumes = gn("spritecc");
+        var costumes = gn('spritecc');
         while (costumes.childElementCount > 0) {
             costumes.removeChild(costumes.childNodes[0]);
         }
-        var pthumbs = gn("pagecc");
+        var pthumbs = gn('pagecc');
         while (pthumbs.childElementCount > 0) {
             pthumbs.removeChild(pthumbs.childNodes[0]);
         }

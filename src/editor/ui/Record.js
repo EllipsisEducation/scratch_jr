@@ -1,9 +1,9 @@
-import ScratchJr from "../ScratchJr";
-import Palette from "./Palette";
-import Undo from "./Undo";
-import OS from "../../tablet/OS";
-import ScratchAudio from "../../utils/ScratchAudio";
-import { frame, gn, newHTML, isAndroid, setProps } from "../../utils/lib";
+import ScratchJr from '../ScratchJr';
+import Palette from './Palette';
+import Undo from './Undo';
+import OS from '../../tablet/OS';
+import ScratchAudio from '../../utils/ScratchAudio';
+import { frame, gn, newHTML, isAndroid, setProps } from '../../utils/lib';
 
 let interval = null;
 let isRecording = false;
@@ -33,55 +33,55 @@ export default class Record {
 
     // Create the recording window, including buttons and volume indicators
     static init() {
-        var modal = newHTML("div", "record fade", frame);
-        modal.setAttribute("id", "recorddialog");
-        var topbar = newHTML("div", "toolbar", modal);
-        var actions = newHTML("div", "actions", topbar);
-        newHTML("div", "microphone", actions);
-        var buttons = newHTML("div", "recordbuttons", actions);
-        var okbut = newHTML("div", "recorddone", buttons);
+        var modal = newHTML('div', 'record fade', frame);
+        modal.setAttribute('id', 'recorddialog');
+        var topbar = newHTML('div', 'toolbar', modal);
+        var actions = newHTML('div', 'actions', topbar);
+        newHTML('div', 'microphone', actions);
+        var buttons = newHTML('div', 'recordbuttons', actions);
+        var okbut = newHTML('div', 'recorddone', buttons);
         okbut.onclick = Record.saveSoundAndClose;
-        var sc = newHTML("div", "soundbox", modal);
-        sc.setAttribute("id", "soundbox");
-        var sv = newHTML("div", "soundvolume", sc);
-        sv.setAttribute("id", "soundvolume");
+        var sc = newHTML('div', 'soundbox', modal);
+        sc.setAttribute('id', 'soundbox');
+        var sv = newHTML('div', 'soundvolume', sc);
+        sv.setAttribute('id', 'soundvolume');
         for (var i = 0; i < 13; i++) {
-            var si = newHTML("div", "indicator", sv);
-            newHTML("div", "soundlevel", si);
+            var si = newHTML('div', 'indicator', sv);
+            newHTML('div', 'soundlevel', si);
         }
-        var ctrol = newHTML("div", "soundcontrols", sc);
-        ctrol.setAttribute("id", "soundcontrols");
+        var ctrol = newHTML('div', 'soundcontrols', sc);
+        ctrol.setAttribute('id', 'soundcontrols');
         var lib = [
-            ["record", Record.record],
-            ["stop", Record.stopSnd],
-            ["play", Record.playSnd],
+            ['record', Record.record],
+            ['stop', Record.stopSnd],
+            ['play', Record.playSnd],
         ];
         for (var j = 0; j < lib.length; j++) {
-            Record.newToggleClicky(ctrol, "id_", lib[j][0], lib[j][1]);
+            Record.newToggleClicky(ctrol, 'id_', lib[j][0], lib[j][1]);
         }
     }
 
     // Dialog box hide/show
     static appear() {
-        OS.analyticsEvent("editor", "record_dialog_open");
-        gn("backdrop").setAttribute("class", "modal-backdrop fade in");
-        setProps(gn("backdrop").style, {
-            display: "block",
+        OS.analyticsEvent('editor', 'record_dialog_open');
+        gn('backdrop').setAttribute('class', 'modal-backdrop fade in');
+        setProps(gn('backdrop').style, {
+            display: 'block',
         });
-        gn("recorddialog").setAttribute("class", "record fade in");
+        gn('recorddialog').setAttribute('class', 'record fade in');
         ScratchJr.stopStrips();
         dialogOpen = true;
         ScratchJr.onBackButtonCallback.push(Record.saveSoundandClose);
     }
 
     static disappear() {
-        OS.analyticsEvent("editor", "record_dialog_close");
+        OS.analyticsEvent('editor', 'record_dialog_close');
         setTimeout(function () {
-            gn("backdrop").setAttribute("class", "modal-backdrop fade");
-            setProps(gn("backdrop").style, {
-                display: "none",
+            gn('backdrop').setAttribute('class', 'modal-backdrop fade');
+            setProps(gn('backdrop').style, {
+                display: 'none',
             });
-            gn("recorddialog").setAttribute("class", "record fade");
+            gn('recorddialog').setAttribute('class', 'record fade');
         }, 333);
         dialogOpen = false;
         ScratchJr.onBackButtonCallback.pop();
@@ -89,10 +89,10 @@ export default class Record {
 
     // Register toggle buttons and handlers
     static newToggleClicky(p, prefix, key, fcn) {
-        var button = newHTML("div", "controlwrap", p);
-        newHTML("div", key + "snd off", button);
-        button.setAttribute("type", "toggleclicky");
-        button.setAttribute("id", prefix + key);
+        var button = newHTML('div', 'controlwrap', p);
+        newHTML('div', key + 'snd off', button);
+        button.setAttribute('type', 'toggleclicky');
+        button.setAttribute('id', prefix + key);
         if (fcn) {
             button.onclick = function (evt) {
                 fcn(evt);
@@ -104,43 +104,43 @@ export default class Record {
     // Set whether buttons are on or off.
     static setButtonsEnabled(enabled = false) {
         buttonsAreEnabled = enabled;
-        document.querySelector("div#soundcontrols").style.filter = `brightness(${enabled ? 100 : 50}%)`;
+        document.querySelector('div#soundcontrols').style.filter = `brightness(${enabled ? 100 : 50}%)`;
     }
 
     // Toggle button appearance on/off
     static toggleButtonUI(button, newState) {
-        var element = "id_" + button;
-        var newStateStr = newState ? "on" : "off";
-        var attrclass = button + "snd";
+        var element = 'id_' + button;
+        var newStateStr = newState ? 'on' : 'off';
+        var attrclass = button + 'snd';
         gn(element).childNodes[0].setAttribute(
-            "class",
-            attrclass + " " + newStateStr
+            'class',
+            attrclass + ' ' + newStateStr
         );
     }
 
     // Volume UI updater
     static updateVolume(f) {
         var num = Math.round(f * 13);
-        var div = gn("soundvolume");
+        var div = gn('soundvolume');
         if (!isRecording && !isPlaying) {
             num = 0;
         }
         for (var i = 0; i < 13; i++) {
             div.childNodes[i].childNodes[0].setAttribute(
-                "class",
-                i > num ? "soundlevel off" : "soundlevel on"
+                'class',
+                i > num ? 'soundlevel off' : 'soundlevel on'
             );
         }
     }
 
     // Stop recording UI and turn off volume levels
     static recordUIoff() {
-        Record.toggleButtonUI("record", false);
-        var div = gn("soundvolume");
-        for (var i = 0; i < gn("soundvolume").childElementCount; i++) {
+        Record.toggleButtonUI('record', false);
+        var div = gn('soundvolume');
+        for (var i = 0; i < gn('soundvolume').childElementCount; i++) {
             div.childNodes[i].childNodes[0].setAttribute(
-                "class",
-                "soundlevel off"
+                'class',
+                'soundlevel off'
             );
         }
     }
@@ -170,12 +170,12 @@ export default class Record {
     }
 
     static startRecording(startedRecording) {
-        OS.analyticsEvent("editor", "start_recording");
+        OS.analyticsEvent('editor', 'start_recording');
         volumes = [];
         if (startedRecording) {
             isRecording = true;
             error = false;
-            Record.toggleButtonUI("record", true);
+            Record.toggleButtonUI('record', true);
             var poll = function () {
                 OS.volume(function (f) {
                     volumes.push(f);
@@ -206,7 +206,7 @@ export default class Record {
             return;
         }
         if (!Record.soundname) {
-            Record.soundname = "New Sound";
+            Record.soundname = 'New Sound';
         }
         if (isPlaying) {
             Record.stopPlayingSound();
@@ -222,7 +222,7 @@ export default class Record {
     // Start playing the sound and switch UI appropriately
     static startPlaying() {
         OS.startplay(Record.timeOutPlay);
-        Record.toggleButtonUI("play", true);
+        Record.toggleButtonUI('play', true);
         isPlaying = true;
         volumeIndex = 0;
         var poll = function () {
@@ -242,7 +242,7 @@ export default class Record {
             timeout = 0.1; // Error - stop playing immediately
         }
         playTimeLimit = setTimeout(function () {
-            Record.toggleButtonUI("play", false);
+            Record.toggleButtonUI('play', false);
             isPlaying = false;
             if (interval) {
                 clearTimeout(interval);
@@ -262,7 +262,7 @@ export default class Record {
             return;
         }
         if (!Record.soundname) {
-            Record.soundname = "New Sound";
+            Record.soundname = 'New Sound';
         }
         Record.flashStopButton();
         if (isRecording) {
@@ -273,16 +273,16 @@ export default class Record {
     }
 
     static flashStopButton() {
-        Record.toggleButtonUI("stop", true);
+        Record.toggleButtonUI('stop', true);
         setTimeout(function () {
-            Record.toggleButtonUI("stop", false);
+            Record.toggleButtonUI('stop', false);
         }, 200);
     }
 
     // Stop playing the sound and switch UI appropriately
     static stopPlayingSound(fcn) {
         OS.stopplay(fcn);
-        Record.toggleButtonUI("play", false);
+        Record.toggleButtonUI('play', false);
         isPlaying = false;
         window.clearTimeout(playTimeLimit);
         playTimeLimit = null;
@@ -290,7 +290,7 @@ export default class Record {
 
     // Stop the volume monitor and recording
     static stopRecording(fcn) {
-        OS.analyticsEvent("editor", "stop_recording");
+        OS.analyticsEvent('editor', 'stop_recording');
         if (timeLimit != null) {
             clearTimeout(timeLimit);
             timeLimit = null;
@@ -330,27 +330,27 @@ export default class Record {
     }
 
     static closeContinueSave() {
-        OS.recorddisappear("YES", Record.registerProjectSound);
+        OS.recorddisappear('YES', Record.registerProjectSound);
     }
 
     static closeContinueRemove() {
         // don't get the sound - proceed right to tearDown
-        OS.recorddisappear("NO", Record.tearDownRecorder);
+        OS.recorddisappear('NO', Record.tearDownRecorder);
     }
 
     static registerProjectSound() {
         function whenDone(snd) {
-            if (snd != "error") {
+            if (snd != 'error') {
                 var spr = ScratchJr.getSprite();
                 var page = spr.div.parentNode.owner;
                 spr.sounds.push(Record.soundname);
                 Undo.record({
-                    action: "recordsound",
+                    action: 'recordsound',
                     who: spr.id,
                     where: page.id,
                     sound: Record.soundname,
                 });
-                ScratchJr.storyStart("Record.registerProjectSound");
+                ScratchJr.storyStart('Record.registerProjectSound');
             }
             Record.tearDownRecorder();
             Palette.selectCategory(3);

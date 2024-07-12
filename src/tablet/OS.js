@@ -1,11 +1,11 @@
-import { isiOS, isAndroid, isWeb, gn, mTime } from "../utils/lib";
-import IO from "./IO";
-import iOS from "./iOS";
-import Android from "./Android";
-import Web from "./Web";
-import Lobby from "../lobby/Lobby";
-import Alert from "../editor/ui/Alert";
-import ScratchAudio from "../utils/ScratchAudio";
+import { isiOS, isAndroid, isWeb, gn, mTime } from '../utils/lib';
+import IO from './IO';
+import iOS from './iOS';
+import Android from './Android';
+import Web from './Web';
+import Lobby from '../lobby/Lobby';
+import Alert from '../editor/ui/Alert';
+import ScratchAudio from '../utils/ScratchAudio';
 
 //////////////////////////////////////////////////
 //  Tablet interface functions
@@ -13,7 +13,7 @@ import ScratchAudio from "../utils/ScratchAudio";
 
 let path;
 let camera;
-let database = "projects";
+let database = 'projects';
 let tabletInterface = null;
 
 export default class OS {
@@ -70,16 +70,17 @@ export default class OS {
     }
 
     static query(json, fcn) {
+        console.log('### OS.query', json, fcn);
         tabletInterface.query(json, fcn);
     }
 
     // DB helper - shared by both
     static setfield(db, id, fieldname, val, fcn) {
         var json = {};
-        var keylist = [fieldname + " = ?", "mtime = ?"];
+        var keylist = [fieldname + ' = ?', 'mtime = ?'];
         json.values = [val, mTime().toString()];
         json.stmt =
-            "update " + db + " set " + keylist.toString() + " where id = " + id;
+            'update ' + db + ' set ' + keylist.toString() + ' where id = ' + id;
         OS.stmt(json, fcn);
     }
 
@@ -250,8 +251,8 @@ export default class OS {
             IO.loadProjectFromSjr(b64data);
         } catch (err) {
             var errorMessage =
-                "Couldn't load share -- project data corrupted. " + err.message;
-            Alert.open(gn("frame"), gn("frame"), errorMessage, "#ff0000");
+                'Couldn\'t load share -- project data corrupted. ' + err.message;
+            Alert.open(gn('frame'), gn('frame'), errorMessage, '#ff0000');
             console.log(err); // eslint-disable-line no-console
             return 0;
         }
@@ -287,8 +288,8 @@ export default class OS {
     // Web Wiew delegate call backs
 
     static pageError(desc) {
-        console.log("XCODE ERROR:", desc); // eslint-disable-line no-console
-        if (window.location.href.indexOf("home.html") > -1) {
+        console.log('XCODE ERROR:', desc); // eslint-disable-line no-console
+        if (window.location.href.indexOf('home.html') > -1) {
             if (Lobby.errorTimer) {
                 Lobby.errorLoading(desc);
             }

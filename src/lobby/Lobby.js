@@ -2,19 +2,26 @@
 // Home Screen
 //////////////////////////////////////////////////
 
-import { libInit, getUrlVars, gn, isAndroid, newHTML, absoluteURL } from "../utils/lib";
-import ScratchAudio from "../utils/ScratchAudio";
-import OS from "../tablet/OS";
-import Localization from "../utils/Localization";
-import Cookie from "../utils/Cookie";
+import {
+    libInit,
+    getUrlVars,
+    gn,
+    isAndroid,
+    newHTML,
+    absoluteURL
+} from '../utils/lib';
+import ScratchAudio from '../utils/ScratchAudio';
+import OS from '../tablet/OS';
+import Localization from '../utils/Localization';
+import Cookie from '../utils/Cookie';
 
-import Home from "./Home";
-import Samples from "./Samples";
+import Home from './Home';
+import Samples from './Samples';
 
 let version = undefined;
 let busy = false;
 let errorTimer;
-const host = "inapp/";
+const host = 'inapp/';
 let currentPage = null;
 
 export default class Lobby {
@@ -36,58 +43,58 @@ export default class Lobby {
         version = v;
         var urlvars = getUrlVars();
         var place = urlvars.place;
-        ScratchAudio.addSound("sounds/", "tap.wav", ScratchAudio.uiSounds);
-        ScratchAudio.addSound("sounds/", "cut.wav", ScratchAudio.uiSounds);
+        ScratchAudio.addSound('sounds/', 'tap.wav', ScratchAudio.uiSounds);
+        ScratchAudio.addSound('sounds/', 'cut.wav', ScratchAudio.uiSounds);
         ScratchAudio.init();
-        Lobby.setPage(place ? place : "home");
+        Lobby.setPage(place ? place : 'home');
 
         if (window.Settings.settingsPageDisabled) {
-            gn("settings").style.visibility = "hidden";
+            gn('settings').style.visibility = 'hidden';
         }
 
-        gn("hometab").onclick = function () {
-            if (gn("hometab").className != "home on") {
-                Lobby.setPage("home");
+        gn('hometab').onclick = function () {
+            if (gn('hometab').className != 'home on') {
+                Lobby.setPage('home');
             }
         };
-        gn("helptab").onclick = function () {
-            if (gn("helptab").className != "help on") {
-                Lobby.setPage("help");
+        gn('helptab').onclick = function () {
+            if (gn('helptab').className != 'help on') {
+                Lobby.setPage('help');
             }
         };
-        gn("booktab").onclick = function () {
-            if (gn("booktab").className != "book on") {
-                Lobby.setPage("book");
+        gn('booktab').onclick = function () {
+            if (gn('booktab').className != 'book on') {
+                Lobby.setPage('book');
             }
         };
-        gn("geartab").onclick = function () {
-            if (gn("geartab").className != "gear on") {
-                Lobby.setPage("gear");
+        gn('geartab').onclick = function () {
+            if (gn('geartab').className != 'gear on') {
+                Lobby.setPage('gear');
             }
         };
-        gn("abouttab").onclick = function () {
-            if (gn("abouttab").className != "tab on") {
-                Lobby.setSubMenu("about");
+        gn('abouttab').onclick = function () {
+            if (gn('abouttab').className != 'tab on') {
+                Lobby.setSubMenu('about');
             }
         };
-        gn("interfacetab").onclick = function () {
-            if (gn("interfacetab").className != "tab on") {
-                Lobby.setSubMenu("interface");
+        gn('interfacetab').onclick = function () {
+            if (gn('interfacetab').className != 'tab on') {
+                Lobby.setSubMenu('interface');
             }
         };
-        gn("painttab").onclick = function () {
-            if (gn("painttab").className != "tab on") {
-                Lobby.setSubMenu("paint");
+        gn('painttab').onclick = function () {
+            if (gn('painttab').className != 'tab on') {
+                Lobby.setSubMenu('paint');
             }
         };
-        gn("blockstab").onclick = function () {
-            if (gn("blockstab").className != "tab on") {
-                Lobby.setSubMenu("blocks");
+        gn('blockstab').onclick = function () {
+            if (gn('blockstab').className != 'tab on') {
+                Lobby.setSubMenu('blocks');
             }
         };
-        gn("privacytab").onclick = function () {
-            if (gn("privacytab").className != "tab2 on") {
-                Lobby.setSubMenu("privacy");
+        gn('privacytab').onclick = function () {
+            if (gn('privacytab').className != 'tab2 on') {
+                Lobby.setSubMenu('privacy');
             }
         };
         if (isAndroid) {
@@ -99,11 +106,11 @@ export default class Lobby {
         if (busy) {
             return;
         }
-        if (gn("hometab").className == "home on") {
+        if (gn('hometab').className == 'home on') {
             var doNext = function (page) {
                 Lobby.changePage(page);
             };
-            OS.setfile("homescroll.sjr", gn("wrapc").scrollTop, function () {
+            OS.setfile('homescroll.sjr', gn('wrapc').scrollTop, function () {
                 doNext(page);
             });
         } else {
@@ -114,60 +121,64 @@ export default class Lobby {
     static changePage(page) {
         Lobby.selectButton(page);
         document.documentElement.scrollTop = 0;
-        var div = gn("wrapc");
+        var div = gn('wrapc');
         while (div.childElementCount > 0) {
             div.removeChild(div.childNodes[0]);
         }
         switch (page) {
-            case "home":
-                busy = true;
-                ScratchAudio.sndFX("tap.wav");
-                Lobby.loadProjects(div);
-                break;
-            case "help":
-                busy = true;
-                ScratchAudio.sndFX("tap.wav");
-                Lobby.loadSamples(div);
-                break;
-            case "book":
-                Lobby.loadGuide(div);
-                break;
-            case "gear":
-                ScratchAudio.sndFX("tap.wav");
-                Lobby.loadSettings(div);
-                break;
-            default:
-                break;
+        case 'home':
+            busy = true;
+            ScratchAudio.sndFX('tap.wav');
+            Lobby.loadProjects(div);
+            break;
+        case 'help':
+            busy = true;
+            ScratchAudio.sndFX('tap.wav');
+            Lobby.loadSamples(div);
+            break;
+        case 'book':
+            Lobby.loadGuide(div);
+            break;
+        case 'gear':
+            ScratchAudio.sndFX('tap.wav');
+            Lobby.loadSettings(div);
+            break;
+        default:
+            break;
         }
         currentPage = page;
     }
 
     static loadProjects(p) {
-        window.setEventHandler("touchmove", undefined, document);
+        window.setEventHandler('touchmove', undefined, document);
         document.onmousemove = undefined;
-        gn("topsection").className = "topsection home";
-        gn("tabheader").textContent = Localization.localize("MY_PROJECTS");
-        gn("subtitle").textContent = "";
-        gn("footer").className = "footer off";
-        gn("wrapc").scrollTop = 0;
-        gn("wrapc").className = "contentwrap scroll";
-        var div = newHTML("div", "htmlcontents home", p);
-        div.setAttribute("id", "htmlcontents");
+        gn('topsection').className = 'topsection home';
+        gn('tabheader').textContent = Localization.localize('MY_PROJECTS');
+        gn('subtitle').textContent = '';
+        gn('footer').className = 'footer off';
+        gn('wrapc').scrollTop = 0;
+        gn('wrapc').className = 'contentwrap scroll';
+        var div = newHTML('div', 'htmlcontents home', p);
+        div.setAttribute('id', 'htmlcontents');
         Home.init();
     }
 
     static loadSamples(p) {
-        gn("topsection").className = "topsection help";
-        gn("tabheader").textContent = Localization.localize("QUICK_INTRO");
-        gn("subtitle").textContent = Localization.localize("SAMPLE_PROJECTS");
-        gn("footer").className = "footer off";
-        gn("wrapc").scrollTop = 0;
-        gn("wrapc").className = "contentwrap noscroll";
-        var div = newHTML("div", "htmlcontents help", p);
-        div.setAttribute("id", "htmlcontents");
-        window.setEventHandler("touchmove", function (e) {
-            e.preventDefault();
-        }, document);
+        gn('topsection').className = 'topsection help';
+        gn('tabheader').textContent = Localization.localize('QUICK_INTRO');
+        gn('subtitle').textContent = Localization.localize('SAMPLE_PROJECTS');
+        gn('footer').className = 'footer off';
+        gn('wrapc').scrollTop = 0;
+        gn('wrapc').className = 'contentwrap noscroll';
+        var div = newHTML('div', 'htmlcontents help', p);
+        div.setAttribute('id', 'htmlcontents');
+        window.setEventHandler(
+            'touchmove',
+            function (e) {
+                e.preventDefault();
+            },
+            document
+        );
         document.onmousemove = function (e) {
             e.preventDefault();
         };
@@ -175,53 +186,53 @@ export default class Lobby {
     }
 
     static loadGuide(p) {
-        gn("topsection").className = "topsection book";
-        gn("footer").className = "footer on";
-        var div = newHTML("div", "htmlcontents home", p);
-        div.setAttribute("id", "htmlcontents");
+        gn('topsection').className = 'topsection book';
+        gn('footer').className = 'footer on';
+        var div = newHTML('div', 'htmlcontents home', p);
+        div.setAttribute('id', 'htmlcontents');
         setTimeout(function () {
-            Lobby.setSubMenu("about");
+            Lobby.setSubMenu('about');
         }, 250);
     }
 
     static loadSettings(p) {
         // loadProjects without the header
-        gn("topsection").className = "topsection book";
-        gn("footer").className = "footer off";
-        gn("wrapc").scrollTop = 0;
-        gn("wrapc").className = "contentwrap scroll";
-        var div = newHTML("div", "htmlcontents settings", p);
-        div.setAttribute("id", "htmlcontents");
+        gn('topsection').className = 'topsection book';
+        gn('footer').className = 'footer off';
+        gn('wrapc').scrollTop = 0;
+        gn('wrapc').className = 'contentwrap scroll';
+        var div = newHTML('div', 'htmlcontents settings', p);
+        div.setAttribute('id', 'htmlcontents');
 
         // Localization settings
-        var title = newHTML("h1", "localizationtitle", div);
-        title.textContent = Localization.localize("SELECT_LANGUAGE");
+        var title = newHTML('h1', 'localizationtitle', div);
+        title.textContent = Localization.localize('SELECT_LANGUAGE');
 
-        var languageButtons = newHTML("div", "languagebuttons", div);
+        var languageButtons = newHTML('div', 'languagebuttons', div);
 
         var languageButton;
         for (var l in window.Settings.supportedLocales) {
-            var selected = "";
+            var selected = '';
             if (
                 window.Settings.supportedLocales[l] ==
                 Localization.currentLocale
             ) {
-                selected = " selected";
+                selected = ' selected';
             }
             languageButton = newHTML(
-                "div",
-                "localizationselect" + selected,
+                'div',
+                'localizationselect' + selected,
                 languageButtons
             );
             languageButton.textContent = l;
 
             languageButton.onclick = function (e) {
-                ScratchAudio.sndFX("tap.wav");
+                ScratchAudio.sndFX('tap.wav');
                 let newLocale =
                     window.Settings.supportedLocales[e.target.textContent];
-                Cookie.set("localization", newLocale);
-                OS.analyticsEvent("lobby", "language_changed", newLocale);
-                window.location = "?place=gear";
+                Cookie.set('localization', newLocale);
+                OS.analyticsEvent('lobby', 'language_changed', newLocale);
+                window.location = '?place=gear';
             };
         }
     }
@@ -230,121 +241,129 @@ export default class Lobby {
         if (busy) {
             return;
         }
-        window.setEventHandler("touchmove", undefined, document);
+        window.setEventHandler('touchmove', undefined, document);
         document.onmousemove = undefined;
         busy = true;
-        ScratchAudio.sndFX("tap.wav");
+        ScratchAudio.sndFX('tap.wav');
         Lobby.selectSubButton(page);
         document.documentElement.scrollTop = 0;
-        gn("wrapc").scrollTop = 0;
-        var div = gn("wrapc");
+        gn('wrapc').scrollTop = 0;
+        var div = gn('wrapc');
         while (div.childElementCount > 0) {
             div.removeChild(div.childNodes[0]);
         }
         var url;
         switch (page) {
-            case "about":
-                url = host + "about.html";
-                Lobby.loadLink(
+        case 'about':
+            url = host + 'about.html';
+            Lobby.loadLink(
                     div,
                     url,
-                    "contentwrap scroll",
-                    "htmlcontents scrolled"
+                    'contentwrap scroll',
+                    'htmlcontents scrolled'
                 );
-                break;
-            case "interface":
-                window.setEventHandler("touchmove", function (e) {
-                    e.preventDefault();
-                }, document);
-                document.onmousemove = function (e) {
-                    e.preventDefault();
-                };
-                url = host + "interface.html";
-                Lobby.loadLink(
+            break;
+        case 'interface':
+            window.setEventHandler(
+                    'touchmove',
+                    function (e) {
+                        e.preventDefault();
+                    },
+                    document
+                );
+            document.onmousemove = function (e) {
+                e.preventDefault();
+            };
+            url = host + 'interface.html';
+            Lobby.loadLink(
                     div,
                     url,
-                    "contentwrap noscroll",
-                    "htmlcontents fixed"
+                    'contentwrap noscroll',
+                    'htmlcontents fixed'
                 );
-                break;
-            case "paint":
-                window.setEventHandler("touchmove", function (e) {
-                    e.preventDefault();
-                }, document);
-                document.onmousemove = function (e) {
-                    e.preventDefault();
-                };
-                url = host + "paint.html";
-                Lobby.loadLink(
+            break;
+        case 'paint':
+            window.setEventHandler(
+                    'touchmove',
+                    function (e) {
+                        e.preventDefault();
+                    },
+                    document
+                );
+            document.onmousemove = function (e) {
+                e.preventDefault();
+            };
+            url = host + 'paint.html';
+            Lobby.loadLink(
                     div,
                     url,
-                    "contentwrap noscroll",
-                    "htmlcontents fixed"
+                    'contentwrap noscroll',
+                    'htmlcontents fixed'
                 );
-                break;
-            case "blocks":
-                url = host + "blocks.html";
-                Lobby.loadLink(
+            break;
+        case 'blocks':
+            url = host + 'blocks.html';
+            Lobby.loadLink(
                     div,
                     url,
-                    "contentwrap scroll",
-                    "htmlcontents scrolled"
+                    'contentwrap scroll',
+                    'htmlcontents scrolled'
                 );
-                break;
-            case "privacy":
-                url = host + "privacy.html";
-                Lobby.loadLink(
+            break;
+        case 'privacy':
+            url = host + 'privacy.html';
+            Lobby.loadLink(
                     div,
                     url,
-                    "contentwrap scroll",
-                    "htmlcontents scrolled"
+                    'contentwrap scroll',
+                    'htmlcontents scrolled'
                 );
-                break;
-            default:
-                Lobby.missing(page, div);
-                break;
+            break;
+        default:
+            Lobby.missing(page, div);
+            break;
             //url =  Lobby.loadProjects(div); break;
         }
     }
 
     static selectSubButton(str) {
-        var list = ["about", "interface", "paint", "blocks", "privacy"];
+        var list = ['about', 'interface', 'paint', 'blocks', 'privacy'];
         for (var i = 0; i < list.length; i++) {
-            var kid = gn(list[i] + "tab");
-            var cls = kid.className.split(" ")[0];
-            kid.className = cls + (list[i] == str ? " on" : " off");
+            var kid = gn(list[i] + 'tab');
+            var cls = kid.className.split(' ')[0];
+            kid.className = cls + (list[i] == str ? ' on' : ' off');
         }
     }
 
     static selectButton(str) {
-        var list = ["home", "help", "book", "gear"];
+        var list = ['home', 'help', 'book', 'gear'];
         for (var i = 0; i < list.length; i++) {
             if (str == list[i]) {
-                gn(list[i] + "tab").className = list[i] + " on";
+                gn(list[i] + 'tab').className = list[i] + ' on';
             } else {
-                gn(list[i] + "tab").className = list[i] + " off";
+                gn(list[i] + 'tab').className = list[i] + ' off';
             }
         }
     }
 
     static loadLink(p, url, css, css2) {
         document.documentElement.scrollTop = 0;
-        gn("wrapc").scrollTop = 0;
-        gn("wrapc").className = css;
-        var iframe = newHTML("iframe", "htmlcontents", p);
-        iframe.setAttribute("id", "htmlcontents");
-        gn("htmlcontents").className = css2;
-        gn("htmlcontents").src = absoluteURL(url);
-        gn("htmlcontents").onload = function () {
+        gn('wrapc').scrollTop = 0;
+        gn('wrapc').className = css;
+        var iframe = newHTML('iframe', 'htmlcontents', p);
+        iframe.setAttribute('id', 'htmlcontents');
+        gn('htmlcontents').className = css2;
+        gn('htmlcontents').src = absoluteURL(url);
+        gn('htmlcontents').onload = function () {
             if (errorTimer) {
                 clearTimeout(errorTimer);
             }
             errorTimer = undefined;
             busy = false;
-            gn("wrapc").scrollTop = 0;
+            gn('wrapc').scrollTop = 0;
         };
         errorTimer = window.setTimeout(function () {
-            Lobby.errorLoading("Loading timeout");
+            Lobby.errorLoading('Loading timeout');
         }, 20000);
     }
 
@@ -353,52 +372,52 @@ export default class Lobby {
             clearTimeout(errorTimer);
         }
         errorTimer = undefined;
-        var wc = gn("wrapc");
+        var wc = gn('wrapc');
         while (wc.childElementCount > 0) {
             wc.removeChild(wc.childNodes[0]);
         }
-        var div = newHTML("div", "htmlcontents", wc);
-        div.setAttribute("id", "htmlcontents");
-        var ht = newHTML("div", "errormsg", div);
-        var h = newHTML("h1", undefined, ht);
+        var div = newHTML('div', 'htmlcontents', wc);
+        div.setAttribute('id', 'htmlcontents');
+        var ht = newHTML('div', 'errormsg', div);
+        var h = newHTML('h1', undefined, ht);
         h.textContent = str;
         busy = false;
     }
 
     static missing(page, p) {
-        gn("wrapc").className = "contentwrap scroll";
-        var div = newHTML("div", "htmlcontents", p);
-        div.setAttribute("id", "htmlcontents");
-        div = newHTML("div", "errormsg", div);
-        var h = newHTML("h1", undefined, div);
-        h.textContent = page.toUpperCase() + ": UNDER CONSTRUCTION";
+        gn('wrapc').className = 'contentwrap scroll';
+        var div = newHTML('div', 'htmlcontents', p);
+        div.setAttribute('id', 'htmlcontents');
+        div = newHTML('div', 'errormsg', div);
+        var h = newHTML('h1', undefined, div);
+        h.textContent = page.toUpperCase() + ': UNDER CONSTRUCTION';
         busy = false;
     }
 
     static goHome() {
-        if (currentPage === "home") {
+        if (currentPage === 'home') {
             const params = new URLSearchParams(window.location.search);
             if (window.studentAssignmentID) {
                 params.append(
-                    "student_assignment_id",
+                    'student_assignment_id',
                     window.studentAssignmentID
                 );
             }
             if (window.itemID) {
-                params.append("item_id", window.itemID);
+                params.append('item_id', window.itemID);
             }
 
-            const url = "index.html?back=true&" + params.toString();
+            const url = 'index.html?back=true&' + params.toString();
             window.location.href = url;
         } else {
-            Lobby.setPage("home");
+            Lobby.setPage('home');
         }
     }
 
     static refresh() {
-        if (gn("hometab") !== null) {
+        if (gn('hometab') !== null) {
             // Check if we're on the lobby page
-            Lobby.setPage("home");
+            Lobby.setPage('home');
         }
     }
 }

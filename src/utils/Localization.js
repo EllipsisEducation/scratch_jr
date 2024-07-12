@@ -54,10 +54,10 @@ export default class Localization {
 
         // Try to get a language from the URL query parameters first.
         const url = new URL(window.location.href);
-        let queryLang = url.searchParams.get("lang");
-        if (queryLang && queryLang.indexOf("-") < 0) {
+        let queryLang = url.searchParams.get('lang');
+        if (queryLang && queryLang.indexOf('-') < 0) {
             // Add second part if necessary so that the language is parsed correctly.
-            queryLang += "-xx";
+            queryLang += '-xx';
         }
 
         var localizationLanguage = queryLang || window.navigator.userLanguage || window.navigator.language || 'en-us';

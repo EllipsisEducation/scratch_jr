@@ -48,7 +48,7 @@ export default class Palette {
         Palette.createCategorySelectors(parent);
         var div = newHTML('div', 'palette', parent);
         div.setAttribute('id', 'palette');
-        window.setEventHandler("touchstart", function (evt) {
+        window.setEventHandler('touchstart', function (evt) {
             Palette.paletteMouseDown(evt);
         }, div);
         div.onmousedown = function (evt) {
@@ -322,7 +322,7 @@ export default class Palette {
             zIndex: 8,
             visibility: 'hidden'
         });
-        window.setEventHandler("touchstart", function (evt) {
+        window.setEventHandler('touchstart', function (evt) {
             Palette.clickOnCategory(evt);
         }, div);
         div.onmousedown = function (evt) {
@@ -471,7 +471,7 @@ export default class Palette {
                 drawScaled(BlockSpecs.mic, cnv);
             };
         }
-        window.setEventHandler("touchstart", Palette.recordSound, div);
+        window.setEventHandler('touchstart', Palette.recordSound, div);
         div.onmousedown = Palette.recordSound;
     }
 
@@ -509,8 +509,8 @@ export default class Palette {
         if (pt && box2.hitRect(pt)) {
             return 'palette';
         }
-        if (Palette.overlapsWith(gn("blockspalette"), box)) {
-            return "palette";
+        if (Palette.overlapsWith(gn('blockspalette'), box)) {
+            return 'palette';
         }
         if (Palette.overlapsWith(gn('scripts'), box)) {
             return 'scripts';

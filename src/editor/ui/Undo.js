@@ -35,7 +35,7 @@ export default class Undo {
         div.setAttribute('type', 'toggleclicky');
         div.setAttribute('id', prefix + key);
         if (fcn) {
-            window.setEventHandler("touchstart", function (evt) {
+            window.setEventHandler('touchstart', function (evt) {
                 fcn(evt);
             }, div);
             div.onmousedown = function (evt) {

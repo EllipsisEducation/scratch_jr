@@ -9,18 +9,18 @@ This class opens a video stream using the webcam.
 class VideoCapture {
     constructor(videoElement) {
         // https://www.html5rocks.com/en/tutorials/getusermedia/intro/
-        this.videoElement = videoElement || document.createElement("video");
+        this.videoElement = videoElement || document.createElement('video');
         this.errorHandler = null;
     }
 
     getId() {
         if (!this.id) {
             // uuid generator
-            this.id = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+            this.id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
                 /[xy]/g,
                 function (c) {
                     let r = (Math.random() * 16) | 0,
-                        v = c == "x" ? r : (r & 0x3) | 0x8;
+                        v = c == 'x' ? r : (r & 0x3) | 0x8;
                     return v.toString(16);
                 }
             );
@@ -37,7 +37,7 @@ class VideoCapture {
                     this.onError.bind(this)
                 );
         }
-        return this.getId() + ".webm";
+        return this.getId() + '.webm';
     }
 
     stopRecord() {
@@ -60,7 +60,7 @@ class VideoCapture {
                 this.videoElement.srcObject = null;
             }
         } catch (e) {
-            debugLog("could not close webcam");
+            debugLog('could not close webcam');
         }
     }
 
@@ -70,7 +70,7 @@ class VideoCapture {
 
         if (!this.isRecordingPermitted) {
             this.stopRecord();
-            throw new Error("Recording video is not permitted.");
+            throw new Error('Recording video is not permitted.');
         }
     }
 
@@ -95,7 +95,7 @@ class VideoCapture {
         if (!this.currentStream || !this.isRecordingPermitted) return null;
 
         // make a canvas to draw the current video frame to
-        let canvas = document.createElement("canvas");
+        let canvas = document.createElement('canvas');
 
         // make the canvas the same size as the videoElement.
         let w = cameraRect.width; //this.videoElement.clientWidth;
@@ -103,11 +103,11 @@ class VideoCapture {
 
         canvas.width = w;
         canvas.height = h;
-        canvas.style.width = w + "px";
-        canvas.style.height = h + "px";
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
 
         // draw the video to the canvas, then convert to an image.
-        let ctx = canvas.getContext("2d");
+        let ctx = canvas.getContext('2d');
 
         if (isMirrored) {
             // mirror the context so that the image draws reversed too
@@ -123,7 +123,7 @@ class VideoCapture {
             cameraRect.height
         );
 
-        let data = canvas.toDataURL("image/png");
+        let data = canvas.toDataURL('image/png');
         return data;
     }
 }
@@ -137,18 +137,18 @@ export class WebVideo {
 
     show() {
         if (!this.cameraPickerDiv) {
-            this.cameraPickerDiv = document.createElement("div");
+            this.cameraPickerDiv = document.createElement('div');
             this.cameraPickerDiv.setAttribute(
-                "style",
-                "z-index:90000; position:absolute; top:0px, left:0px, width: 1000px; height: 1000px;"
+                'style',
+                'z-index:90000; position:absolute; top:0px, left:0px, width: 1000px; height: 1000px;'
             );
 
-            this.cameraPickerDiv.id = "cameraPickerDiv";
+            this.cameraPickerDiv.id = 'cameraPickerDiv';
 
             // the video has autoplay so that the feed will start when shown
             // it also has scale so that the camera will act as a mirror - otherwise
             // it can be awkward to get yourself into the frame.
-            let videoStyle = "";
+            let videoStyle = '';
             if (this.isMirrored) {
                 videoStyle = `style='-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); transform: scale(-1, 1); filter: FlipH;'`;
             }
@@ -163,14 +163,14 @@ export class WebVideo {
                                               `;
 
             document
-                .getElementById("backdrop")
+                .getElementById('backdrop')
                 .appendChild(this.cameraPickerDiv);
 
             this.videoElement = document.getElementById(
-                "WebVideo-cameraFeed"
+                'WebVideo-cameraFeed'
             );
             this.maskImg = document.getElementById(
-                "WebVideo-maskImg"
+                'WebVideo-maskImg'
             );
 
             // Similar to ScratchJR.m openfeed
@@ -209,23 +209,23 @@ export class WebVideo {
 
     layoutDiv(el, x, y, w, h) {
         try {
-            el.style.position = "absolute";
-            el.style.top = y + "px";
-            el.style.left = x + "px";
+            el.style.position = 'absolute';
+            el.style.top = y + 'px';
+            el.style.left = x + 'px';
             if (w) {
-                el.style.width = w + "px";
+                el.style.width = w + 'px';
             }
             if (h) {
-                el.style.height = h + "px";
+                el.style.height = h + 'px';
             }
         } catch (e) {
-            debugLog("Cannot layout element", el, e);
+            debugLog('Cannot layout element', el, e);
         }
     }
 
     snapshot() {
         if (!this.videoCaptureElement) {
-            debugLog("snapshot: no active video feed");
+            debugLog('snapshot: no active video feed');
             return null;
         }
 
