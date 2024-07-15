@@ -14,9 +14,9 @@ name: S3 Deploy for Scratch Jr Cloudfront Dist
 # if they originate from a merged PR
 on:
   push:
-    branches:
-      # - dev
-      - main
+    # branches:
+    #   # - dev dunno if this will be used or not
+    #   - main
 
 jobs:
   deploy:
