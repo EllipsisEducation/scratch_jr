@@ -287,40 +287,6 @@ async function getInitialDBString() {
 
   dbData = localStorage.getItem(baseKey);
 
-  // try {
-  //   // Try to load from CodeHS DB
-  //   // This function is defined in scratchjr.js on the CodeHS side and called on page load
-  //   if (window.loadScratchJrProject) {
-  //     let showUploadDB = false;
-  //     const result = await window.loadScratchJrProject();
-  //     // determine whether to show the upload DB button
-  //     // window.loadScratchJrProject was only returning the DB data before this change,
-  //     // but now it also returns the showUploadDB boolean as well, so we need to check
-  //     // if the result is an array or not to keep backwards compatibility
-  //     if (Array.isArray(result)) {
-  //       dbData = result[0];
-  //       showUploadDB = result[1];
-  //     } else {
-  //       dbData = result;
-  //     }
-  //     if (showUploadDB) {
-  //       try {
-  //         const uploadedBinaryData = await uploadFileToUint8Array();
-  //         return binaryDataToUTF16String(uploadedBinaryData);
-  //       } catch (e) {
-  //         // Print out error and continue loading DB from CodeHS
-  //         console.log(e);
-  //       }
-  //     }
-
-  //     if (dbData) {
-  //       dbData = UTF8StringToUTF16String(dbData);
-  //     }
-  //   }
-  // } catch (e) {
-  //   console.log("Error loading from CodeHS DB:", e);
-  // }
-
   return dbData;
 }
 

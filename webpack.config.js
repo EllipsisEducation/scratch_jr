@@ -12,13 +12,13 @@ module.exports = function (env, argv) {
     //     : 'http://localhost:8000/scratchjr_assets/';
     // const assetBaseURL = 'http://localhost:8000/scratchjr_assets/';
     // const assetBaseURL = 'http://localhost:3000/scratchjr_assets/';
-    const assetBaseURL = 'http://localhost:3000/';
+    // const assetBaseURL = 'http://localhost:3000/';
+    const assetBaseURL = 'https://do0bubigj0tft.cloudfront.net/';
     return {
         devtool: 'source-map',
         entry: {
             app: './src/entry/app.js'
         },
-        mode: 'development',
         output: {
             publicPath: assetBaseURL,
             path: path.resolve(__dirname, 'src/build/bundles'),
