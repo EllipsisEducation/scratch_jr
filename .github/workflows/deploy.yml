@@ -14,9 +14,9 @@ name: S3 Deploy for Scratch Jr Cloudfront Dist
 # if they originate from a merged PR
 on:
   push:
-    branches:
-      # - dev dunno if this will be used or not
-      - main
+    # branches:
+    #   # - dev dunno if this will be used or not
+    #   - main
 
 jobs:
   deploy:
@@ -75,7 +75,8 @@ jobs:
           private: true
           # use this parameter to specify cache-control:
           # no-cache, no-store, must-revalidate header
-          no-cache: true
+          # no-cache: true
+          cache: 'max-age=31536000'
           # Allows for a comma delineated Regex String
           # that matches files to include in the deployment
           filesToInclude: '.*/*,*/*'
@@ -97,7 +98,8 @@ jobs:
           private: true
           # use this parameter to specify cache-control:
           # no-cache, no-store, must-revalidate header
-          no-cache: true
+          # no-cache: true
+          cache: 'max-age=31536000'
           # Allows for a comma delineated Regex String
           # that matches files to include in the deployment
-          filesToInclude: '.*/*,*/*'
+          filesToInclude: '**/*'
