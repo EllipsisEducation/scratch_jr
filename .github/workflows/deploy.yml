@@ -80,6 +80,7 @@ jobs:
           # that matches files to include in the deployment
           filesToInclude: '.*/*,*/*'
       # running same action with different folder for static files
+      # folder only accepts a single folder in string format
       - name: Deploy Static Files to S3
         uses: reggionick/s3-deploy@v3
         with:
