@@ -263,12 +263,12 @@ export function saveDB() {
       );
     }
 
-    console.log("WebDB.saveDB baseKey:", baseKey);
-    console.log("WebDB.saveDB dbHash:", dbHash);
+    // console.log("WebDB.saveDB baseKey:", baseKey);
+    // console.log("WebDB.saveDB dbHash:", dbHash);
 
     // Set new DB hash
     localStorage.setItem(baseKey, dbHash);
-    console.log("WebDb.saveDB saved");
+    // console.log("WebDb.saveDB saved");
   }, 1000);
 }
 
@@ -282,7 +282,7 @@ export function getDBString() {
 }
 
 async function getInitialDBString() {
-  console.log("### WebDB.getInitialDBString");
+//   console.log("### WebDB.getInitialDBString");
   let dbData = null;
 
   dbData = localStorage.getItem(baseKey);
@@ -333,7 +333,7 @@ export async function initDB() {
       // exists. otherwise, create a new database and initialize the tables and run migrations.
       const dbDataString = await getInitialDBString();
 
-      console.log("### WebDB.initDB dbDataString", dbDataString);
+    //   console.log("### WebDB.initDB dbDataString", dbDataString);
 
       if (dbDataString) {
         console.log("### WebDB.initDB loading existing database");
@@ -368,7 +368,7 @@ async function displayProjectFiles() {
   return new Promise(async (resolve) => {
     const rows = JSON.parse(
       await executeQueryFromJSON({
-        stmt: `select * from projectfiles`,
+        stmt: `select * from projectfiles`
       })
     )[0].values;
     const container = document.createElement("div");
@@ -432,7 +432,7 @@ function isThumbnail(md5) {
 async function clearThumbnails() {
   const result = JSON.parse(
     await executeQueryFromJSON({
-      stmt: `select * from projectfiles`,
+      stmt: `select * from projectfiles`
     })
   );
 
@@ -451,7 +451,7 @@ async function clearThumbnails() {
   const placeholders = md5sToDelete.map(() => "?").join(", ");
   await executeStatementFromJSON({
     stmt: `delete from projectfiles where md5 in (${placeholders});`,
-    values: md5sToDelete,
+    values: md5sToDelete
   });
 }
 

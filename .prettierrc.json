@@ -2,5 +2,8 @@
     "jsxSingleQuote": true,
     "proseWrap": "always",
     "singleQuote": true,
-    "trailingComma": "none"
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "useTabs": false
 }
+a

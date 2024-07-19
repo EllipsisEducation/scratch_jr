@@ -15,7 +15,8 @@ module.exports = function (env, argv) {
     // const assetBaseURL = 'http://localhost:3000/';
     const assetBaseURL = 'https://do0bubigj0tft.cloudfront.net/';
     return {
-        devtool: 'source-map',
+      devtool: 'source-map',
+      mode: 'development',
         entry: {
             app: './src/entry/app.js'
         },

@@ -27,7 +27,7 @@ export default class IO {
      */
     static requestSynchronous (url) {
         url = absoluteURL(url);
-        var request = new XMLHttpRequest();
+        var request = fetch();
         request.open('GET', url, false);
         request.send(null);
         if (request.status === 0 || request.status === 200) {
@@ -39,7 +39,7 @@ export default class IO {
     }
 
     static requestFromServer (url, whenDone) {
-        console.log('### IO.requestFromServer', url);
+        // console.log('### IO.requestFromServer', url);
 
         url = absoluteURL(url);
         var xmlrequest = new XMLHttpRequest();

@@ -49,8 +49,14 @@ export default class Localization {
     // E.g., if we support 'en-US' but not 'en-GB', the user gets 'en-US'
     // The match in supported locales (or the default locale) is returned.
     static determineLocaleFromBrowser () {
+        let settings = window.Settings && window.Settings[0]
         let defaultLocale = window.Settings.defaultLocale;
         let supportedLocales = window.Settings.supportedLocales;
+
+        if (!settings || !defaultLocale || !supportedLocales) {
+          console.error('window.Settings or its properties are undefined');
+          return 'en-us'; // or any other default locale
+        }
 
         // Try to get a language from the URL query parameters first.
         const url = new URL(window.location.href);
@@ -69,7 +75,7 @@ export default class Localization {
         );
 
         var desiredLocale = localizationLanguageParts.join('-');
-        if (desiredLocale in Object.keys(supportedLocales)) {
+        if (supportedLocales[desiredLocale]) {
             return desiredLocale;
         }
 
