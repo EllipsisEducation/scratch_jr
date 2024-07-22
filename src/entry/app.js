@@ -85,6 +85,9 @@ window.onload = async () => {
         window.studentAssignmentID = params.get('student_assignment_id', null);
         console.log('!!! studentAssignmentID', window.studentAssignmentID);
     }
+    if (typeof URLSearchParams == 'undefined') {
+        console.log('!!! params is undefined');
+    }
     if (!window.itemID) {
         window.itemID = params.get('item_id', null);
         console.log('!!! itemID', window.itemID);

@@ -53,24 +53,13 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy Bundle to S3
-        uses: reggionick/s3-deploy@v3
-        with:
-          # folder to upload
-          folder: src/build/bundles
-          # upload destination
-          bucket: ${{ secrets.S3_BUCKET }}
-          bucket-region: ${{ secrets.S3_BUCKET_REGION }}
-          # cloudfront distribution id to be invalidated
-          dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-          # cloudFront distribution path(s) to invalidate
-          invalidation: /*
-          # upload files with private ACL, needed for S3 static website hosting
-          private: true
-          no-cache: true
-          # Allows for a comma delineated Regex String
-          # that matches files to include in the deployment
-          filesToInclude: '.*/*,*/*'
+      - name: Deploy bundle and static file to CloudFront (S3)
+        run: |
+          aws s3 cp src/build/bundles ${{ secrets.S3_BUCKET }} --recursive
+          aws s3 cp editions/free/src ${{ secrets.S3_BUCKET }} --recursive
+
+      - name: Run CloudFront Invalidations
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths /*
 
       # running same action with different folder for static files
       # folder only accepts a single folder in string format
@@ -85,3 +74,21 @@ jobs:
           private: true
           cache: 'max-age=0'
           filesToInclude: '**/*'
+
+      - name: Set Commit Message
+        id: deploy_message
+        run: |
+          echo "::setOutput name=commit_msg::$(git log --format=%B -n 1 $(git log -1 --pretty=format:%h))"
+          echo "::setOutput name=commit_sha::$(git log -1 pretty=format:%H)"
+
+      - name: Slack Notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: deploy-release
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_FOOTER: ""
+          SLACK_LINK_NAMES: true
+          SLACK_MESSAGE: ${{ steps.deploy_message.outputs.commit_msg }}
+          SLACK_USERNAME: synappsBot
+          SLACK_WEBHOOK: ${{ secrets.DEPLOY_SLACK_WEBHOOK }}
