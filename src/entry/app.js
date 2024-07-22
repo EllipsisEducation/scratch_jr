@@ -6,6 +6,8 @@ import IO from '../tablet/IO';
 import MediaLib from '../tablet/MediaLib';
 import * as db from '../tablet/WebDB.js';
 
+import URLSearchParams from 'url';
+
 import { indexMain } from './index';
 import { homeMain } from './home';
 import { editorMain } from './editor';
@@ -81,9 +83,11 @@ window.onload = async () => {
     const params = new URLSearchParams(window.location.search);
     if (!window.studentAssignmentID) {
         window.studentAssignmentID = params.get('student_assignment_id', null);
+        console.log('!!! studentAssignmentID', window.studentAssignmentID);
     }
     if (!window.itemID) {
         window.itemID = params.get('item_id', null);
+        console.log('!!! itemID', window.itemID);
     }
 
     if (window.setupTimeTracking && window.setActive) {

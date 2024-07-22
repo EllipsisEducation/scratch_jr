@@ -5,7 +5,7 @@ import Record from '../editor/ui/Record';
 import {
     setupMediaRecording,
     audioRecorderAvailable,
-    videoRecorderAvailable,
+    videoRecorderAvailable
 } from '../tablet/Web';
 
 export function editorMain() {

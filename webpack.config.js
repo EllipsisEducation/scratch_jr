@@ -13,10 +13,9 @@ module.exports = function (env, argv) {
     // const assetBaseURL = 'http://localhost:8000/scratchjr_assets/';
     // const assetBaseURL = 'http://localhost:3000/scratchjr_assets/';
     // const assetBaseURL = 'http://localhost:3000/';
-    const assetBaseURL = 'https://do0bubigj0tft.cloudfront.net/';
+    const assetBaseURL = 'https://scratchjr.ellipsiseducation.com/' || 'https://scratch-jr.ellipsiseducation.com/' || 'https://do0bubigj0tft.cloudfront.net/';
     return {
       devtool: 'source-map',
-      mode: 'development',
         entry: {
             app: './src/entry/app.js'
         },

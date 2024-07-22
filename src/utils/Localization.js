@@ -55,7 +55,7 @@ export default class Localization {
 
         if (!settings || !defaultLocale || !supportedLocales) {
           console.error('window.Settings or its properties are undefined');
-          return 'en-us'; // or any other default locale
+          return 'en-US'; // or any other default locale
         }
 
         // Try to get a language from the URL query parameters first.
