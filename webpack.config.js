@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
 const cors = require('cors');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
 
 
 module.exports = function (env, argv) {
@@ -85,6 +87,23 @@ module.exports = function (env, argv) {
                 IntlMessageFormat: ['intl-messageformat', 'default']
             }),
             new webpack.HotModuleReplacementPlugin() // Enable hot reload
+
+            // Adding these for Amplify testing
+            // new CopyWebpackPlugin({ // copy static files to the build directory
+            //   patterns: [
+            //     {
+            //       from: 'editions/free/src/',
+            //       to: 'static'
+            //     }
+            //   ]
+            // }),
+            // new ZipPlugin({ // emit a zip file of the build directory
+            //   filename: 'bundle.zip',
+            //   pathPrefix: 'src/build/bundles',
+            //   include: [/\.js$/, /\.wasm$/, /static/], // include specific file types and static directory
+            //   exclude: [/\.map$/] // exclude specific file types
+            // })
+
         ],
         devServer: {
             static: {

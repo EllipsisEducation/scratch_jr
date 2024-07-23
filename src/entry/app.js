@@ -6,8 +6,6 @@ import IO from '../tablet/IO';
 import MediaLib from '../tablet/MediaLib';
 import * as db from '../tablet/WebDB.js';
 
-import URLSearchParams from 'url';
-
 import { indexMain } from './index';
 import { homeMain } from './home';
 import { editorMain } from './editor';
