@@ -492,6 +492,7 @@ var ScratchJr = /*#__PURE__*/function () {
     key: "getGotoLink",
     value: function getGotoLink() {
       var params = new URLSearchParams();
+      // TODO: Remove
       var wat;
       if (window.studentAssignmentID) {
         params.append("student_assignment_id", window.studentAssignmentID);
@@ -26625,16 +26626,16 @@ function getStringDBAndThumbnail() {
   return _getStringDBAndThumbnail.apply(this, arguments);
 }
 function _getStringDBAndThumbnail() {
-  _getStringDBAndThumbnail = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
+  _getStringDBAndThumbnail = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          return _context.abrupt("return", [getDBString(), latestThumbnail]);
+          return _context2.abrupt("return", [getDBString(), latestThumbnail]);
         case 1:
         case "end":
-          return _context.stop();
+          return _context2.stop();
       }
-    }, _callee);
+    }, _callee2);
   }));
   return _getStringDBAndThumbnail.apply(this, arguments);
 }
@@ -26649,10 +26650,10 @@ function downloadDB() {
  * the file data or rejects with an error if the file operation fails.
  */
 function _downloadDB() {
-  _downloadDB = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+  _downloadDB = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
     var filename, binaryData, blob, response, url;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
           filename = 'scratchDB.sqlite';
           binaryData = db["export"]();
@@ -26664,19 +26665,19 @@ function _downloadDB() {
               'Content-Disposition': "attachment; filename=\"".concat(filename, "\"")
             }
           });
-          _context2.t0 = URL;
-          _context2.next = 7;
+          _context3.t0 = URL;
+          _context3.next = 7;
           return response.blob();
         case 7:
-          _context2.t1 = _context2.sent;
-          url = _context2.t0.createObjectURL.call(_context2.t0, _context2.t1);
+          _context3.t1 = _context3.sent;
+          url = _context3.t0.createObjectURL.call(_context3.t0, _context3.t1);
           window.open(url, '_blank');
           URL.revokeObjectURL(url);
         case 11:
         case "end":
-          return _context2.stop();
+          return _context3.stop();
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _downloadDB.apply(this, arguments);
 }
@@ -26685,11 +26686,11 @@ function uploadFileToUint8Array() {
 } // converts binary data (a Uint8Array, the data format sql.js exports to) to a UTF-16 string
 // see https://github.com/sql-js/sql.js/wiki/Persisting-a-Modified-Database
 function _uploadFileToUint8Array() {
-  _uploadFileToUint8Array = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
+  _uploadFileToUint8Array = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
         case 0:
-          return _context3.abrupt("return", new Promise(function (resolve, reject) {
+          return _context4.abrupt("return", new Promise(function (resolve, reject) {
             // Create a file input element
             var fileInput = document.createElement('input');
             fileInput.type = 'file';
@@ -26729,9 +26730,9 @@ function _uploadFileToUint8Array() {
           }));
         case 1:
         case "end":
-          return _context3.stop();
+          return _context4.stop();
       }
-    }, _callee3);
+    }, _callee4);
   }));
   return _uploadFileToUint8Array.apply(this, arguments);
 }
@@ -26830,25 +26831,25 @@ function hashString(_x) {
 // this event will fire whenever the user closes the tab or navigates away from the page
 // see https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event#usage_notes
 function _hashString() {
-  _hashString = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(inputString) {
+  _hashString = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(inputString) {
     var encoder, data, hashBuffer, hashArray, base64String;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) switch (_context5.prev = _context5.next) {
         case 0:
           encoder = new TextEncoder();
           data = encoder.encode(inputString);
-          _context4.next = 4;
+          _context5.next = 4;
           return crypto.subtle.digest('SHA-256', data);
         case 4:
-          hashBuffer = _context4.sent;
+          hashBuffer = _context5.sent;
           hashArray = Array.from(new Uint8Array(hashBuffer));
           base64String = btoa(String.fromCharCode.apply(null, hashArray));
-          return _context4.abrupt("return", base64String);
+          return _context5.abrupt("return", base64String);
         case 8:
         case "end":
-          return _context4.stop();
+          return _context5.stop();
       }
-    }, _callee4);
+    }, _callee5);
   }));
   return _hashString.apply(this, arguments);
 }
@@ -26868,35 +26869,44 @@ function saveDB() {
   }
 
   // Schedule a new save timeout
-  saveTimeout = setTimeout(function () {
-    console.log("WebDb.saveDB saving...");
+  saveTimeout = setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var binaryData, stringData, dbHash;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          console.log("WebDb.saveDB saving...");
 
-    // Export the db binary
-    var binaryData = db["export"]();
+          // Export the db binary
+          binaryData = db["export"](); // Convert the binary data to a UTF-16 string
+          stringData = binaryDataToUTF16String(binaryData); // Hash the DB string
+          // const dbHash = await hashString(stringData);
+          dbHash = stringData; // Use the hash to determine if the DB has changed, if it has not changed, do not save
+          // and return DB string data
+          if (!(dbHash === localStorage.getItem(baseKey))) {
+            _context.next = 7;
+            break;
+          }
+          console.log("no changes to save, skipping");
+          return _context.abrupt("return", stringData);
+        case 7:
+          console.log("WebDB.saveDB changes detected, saving");
 
-    // Convert the binary data to a UTF-16 string
-    var stringData = binaryDataToUTF16String(binaryData);
+          // If DB hash is different, save the DB
+          if (window.saveScratchJrProject) {
+            window.saveScratchJrProject(UTF16StringToUTF8String(stringData), latestThumbnail);
+          }
+          console.log("WebDB.saveDB baseKey:", baseKey);
+          console.log("WebDB.saveDB dbHash:", dbHash);
 
-    // Hash the DB string
-    var dbHash = hashString(stringData);
-
-    // Use the hash to determine if the DB has changed, if it has not changed, do not save
-    // and return DB string data
-    if (dbHash === localStorage.getItem(baseKey)) {
-      console.log("no changes to save, skipping");
-      return stringData;
-    }
-    console.log("WebDB.saveDB changes detected, saving");
-
-    // If DB hash is different, save the DB
-    if (window.saveScratchJrProject) {
-      window.saveScratchJrProject(UTF16StringToUTF8String(stringData), latestThumbnail);
-    }
-
-    // Set new DB hash
-    localStorage.setItem(baseKey, dbHash);
-    console.log("WebDb.saveDB saved");
-  }, 1000);
+          // Set new DB hash
+          localStorage.setItem(baseKey, dbHash);
+          console.log("WebDb.saveDB saved");
+        case 13:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  })), 1000);
 }
 
 // Returns the current database as a UTF-8 string.
@@ -26910,65 +26920,54 @@ function getInitialDBString() {
   return _getInitialDBString.apply(this, arguments);
 }
 function _getInitialDBString() {
-  _getInitialDBString = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-    var dbData, showUploadDB, result, uploadedBinaryData;
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-      while (1) switch (_context5.prev = _context5.next) {
+  _getInitialDBString = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+    var dbData;
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) switch (_context6.prev = _context6.next) {
         case 0:
+          console.log("### WebDB.getInitialDBString");
           dbData = null;
-          _context5.prev = 1;
-          if (!window.loadScratchJrProject) {
-            _context5.next = 20;
-            break;
-          }
-          showUploadDB = false;
-          _context5.next = 6;
-          return window.loadScratchJrProject();
-        case 6:
-          result = _context5.sent;
-          // determine whether to show the upload DB button
-          // window.loadScratchJrProject was only returning the DB data before this change,
-          // but now it also returns the showUploadDB boolean as well, so we need to check
-          // if the result is an array or not to keep backwards compatibility
-          if (Array.isArray(result)) {
-            dbData = result[0];
-            showUploadDB = result[1];
-          } else {
-            dbData = result;
-          }
-          if (!showUploadDB) {
-            _context5.next = 19;
-            break;
-          }
-          _context5.prev = 9;
-          _context5.next = 12;
-          return uploadFileToUint8Array();
-        case 12:
-          uploadedBinaryData = _context5.sent;
-          return _context5.abrupt("return", binaryDataToUTF16String(uploadedBinaryData));
-        case 16:
-          _context5.prev = 16;
-          _context5.t0 = _context5["catch"](9);
-          // Print out error and continue loading DB from CodeHS
-          console.log(_context5.t0);
-        case 19:
-          if (dbData) {
-            dbData = UTF8StringToUTF16String(dbData);
-          }
-        case 20:
-          _context5.next = 25;
-          break;
-        case 22:
-          _context5.prev = 22;
-          _context5.t1 = _context5["catch"](1);
-          console.log("Error loading from CodeHS DB:", _context5.t1);
-        case 25:
-          return _context5.abrupt("return", dbData);
-        case 26:
+          dbData = localStorage.getItem(baseKey);
+
+          // try {
+          //   // Try to load from CodeHS DB
+          //   // This function is defined in scratchjr.js on the CodeHS side and called on page load
+          //   if (window.loadScratchJrProject) {
+          //     let showUploadDB = false;
+          //     const result = await window.loadScratchJrProject();
+          //     // determine whether to show the upload DB button
+          //     // window.loadScratchJrProject was only returning the DB data before this change,
+          //     // but now it also returns the showUploadDB boolean as well, so we need to check
+          //     // if the result is an array or not to keep backwards compatibility
+          //     if (Array.isArray(result)) {
+          //       dbData = result[0];
+          //       showUploadDB = result[1];
+          //     } else {
+          //       dbData = result;
+          //     }
+          //     if (showUploadDB) {
+          //       try {
+          //         const uploadedBinaryData = await uploadFileToUint8Array();
+          //         return binaryDataToUTF16String(uploadedBinaryData);
+          //       } catch (e) {
+          //         // Print out error and continue loading DB from CodeHS
+          //         console.log(e);
+          //       }
+          //     }
+
+          //     if (dbData) {
+          //       dbData = UTF8StringToUTF16String(dbData);
+          //     }
+          //   }
+          // } catch (e) {
+          //   console.log("Error loading from CodeHS DB:", e);
+          // }
+          return _context6.abrupt("return", dbData);
+        case 4:
         case "end":
-          return _context5.stop();
+          return _context6.stop();
       }
-    }, _callee5, null, [[1, 22], [9, 16]]);
+    }, _callee6);
   }));
   return _getInitialDBString.apply(this, arguments);
 }
@@ -26976,27 +26975,27 @@ function initDB() {
   return _initDB.apply(this, arguments);
 }
 function _initDB() {
-  _initDB = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-      while (1) switch (_context7.prev = _context7.next) {
+  _initDB = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
+    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+      while (1) switch (_context8.prev = _context8.next) {
         case 0:
-          _context7.prev = 0;
+          _context8.prev = 0;
           if (!initPromise) {
-            _context7.next = 3;
+            _context8.next = 3;
             break;
           }
-          return _context7.abrupt("return", initPromise);
+          return _context8.abrupt("return", initPromise);
         case 3:
           // create a new promise that resolves with whether we should
           // create a new project once it's initialized
           initPromise = new Promise( /*#__PURE__*/function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(resolve) {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(resolve) {
               var shouldCreateNewProject, SQL, id, _id, _id2, dbDataString, binaryData;
-              return _regeneratorRuntime().wrap(function _callee6$(_context6) {
-                while (1) switch (_context6.prev = _context6.next) {
+              return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+                while (1) switch (_context7.prev = _context7.next) {
                   case 0:
                     shouldCreateNewProject = false;
-                    _context6.next = 3;
+                    _context7.next = 3;
                     return Promise.race([sql_js__WEBPACK_IMPORTED_MODULE_1___default()({
                       locateFile: function locateFile() {
                         return _file_loader_name_sql_wasm_contenthash_wasm_node_modules_sql_js_dist_sql_wasm_wasm__WEBPACK_IMPORTED_MODULE_0__["default"];
@@ -27007,7 +27006,7 @@ function _initDB() {
                       }, 5000); // Adjust the timeout value as needed
                     })]);
                   case 3:
-                    SQL = _context6.sent;
+                    SQL = _context7.sent;
                     window.SQL = SQL;
                     if (window.sharedProgramID) {
                       console.log("sharedProgramID: ", window.sharedProgramID);
@@ -27022,15 +27021,17 @@ function _initDB() {
                       _id2 = window.itemID;
                       baseKey = "item-" + _id2;
                     } else if (window.scratchJrPage === "editor") {
-                      alert("No IDs found. DB will not be loaded or saved.");
+                      // alert("No IDs found. DB will not be loaded or saved.");
+                      baseKey = "scratchjr-web";
                     }
 
                     // get saved data from codehs, then initialize the database with it if it
                     // exists. otherwise, create a new database and initialize the tables and run migrations.
-                    _context6.next = 8;
+                    _context7.next = 8;
                     return getInitialDBString();
                   case 8:
-                    dbDataString = _context6.sent;
+                    dbDataString = _context7.sent;
+                    console.log("### WebDB.initDB dbDataString", dbDataString);
                     if (dbDataString) {
                       console.log("### WebDB.initDB loading existing database");
                       binaryData = UTF16StringToBinaryData(dbDataString);
@@ -27043,38 +27044,38 @@ function _initDB() {
                     }
                     window.db = db;
                     if (!(new URLSearchParams(window.location.search).get("show-project-files") === "true")) {
-                      _context6.next = 15;
+                      _context7.next = 16;
                       break;
                     }
                     console.log("displaying project files");
-                    _context6.next = 15;
+                    _context7.next = 16;
                     return displayProjectFiles();
-                  case 15:
-                    resolve(shouldCreateNewProject);
                   case 16:
+                    resolve(shouldCreateNewProject);
+                  case 17:
                   case "end":
-                    return _context6.stop();
+                    return _context7.stop();
                 }
-              }, _callee6);
+              }, _callee7);
             }));
             return function (_x8) {
-              return _ref.apply(this, arguments);
+              return _ref2.apply(this, arguments);
             };
           }());
-          _context7.next = 10;
+          _context8.next = 10;
           break;
         case 6:
-          _context7.prev = 6;
-          _context7.t0 = _context7["catch"](0);
-          console.error("Error in initDB:", _context7.t0);
-          throw _context7.t0;
+          _context8.prev = 6;
+          _context8.t0 = _context8["catch"](0);
+          console.error("Error in initDB:", _context8.t0);
+          throw _context8.t0;
         case 10:
-          return _context7.abrupt("return", initPromise);
+          return _context8.abrupt("return", initPromise);
         case 11:
         case "end":
-          return _context7.stop();
+          return _context8.stop();
       }
-    }, _callee7, null, [[0, 6]]);
+    }, _callee8, null, [[0, 6]]);
   }));
   return _initDB.apply(this, arguments);
 }
@@ -27082,24 +27083,24 @@ function displayProjectFiles() {
   return _displayProjectFiles.apply(this, arguments);
 }
 function _displayProjectFiles() {
-  _displayProjectFiles = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-    return _regeneratorRuntime().wrap(function _callee9$(_context9) {
-      while (1) switch (_context9.prev = _context9.next) {
+  _displayProjectFiles = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
+    return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+      while (1) switch (_context10.prev = _context10.next) {
         case 0:
-          return _context9.abrupt("return", new Promise( /*#__PURE__*/function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(resolve) {
+          return _context10.abrupt("return", new Promise( /*#__PURE__*/function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(resolve) {
               var rows, container, _iterator, _step, row, md5, contents, imageType, img;
-              return _regeneratorRuntime().wrap(function _callee8$(_context8) {
-                while (1) switch (_context8.prev = _context8.next) {
+              return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+                while (1) switch (_context9.prev = _context9.next) {
                   case 0:
-                    _context8.t0 = JSON;
-                    _context8.next = 3;
+                    _context9.t0 = JSON;
+                    _context9.next = 3;
                     return executeQueryFromJSON({
                       stmt: "select * from projectfiles"
                     });
                   case 3:
-                    _context8.t1 = _context8.sent;
-                    rows = _context8.t0.parse.call(_context8.t0, _context8.t1)[0].values;
+                    _context9.t1 = _context9.sent;
+                    rows = _context9.t0.parse.call(_context9.t0, _context9.t1)[0].values;
                     container = document.createElement("div");
                     _iterator = _createForOfIteratorHelper(rows);
                     try {
@@ -27125,19 +27126,19 @@ function _displayProjectFiles() {
                     document.body.appendChild(container);
                   case 9:
                   case "end":
-                    return _context8.stop();
+                    return _context9.stop();
                 }
-              }, _callee8);
+              }, _callee9);
             }));
             return function (_x9) {
-              return _ref2.apply(this, arguments);
+              return _ref3.apply(this, arguments);
             };
           }()));
         case 1:
         case "end":
-          return _context9.stop();
+          return _context10.stop();
       }
-    }, _callee9);
+    }, _callee10);
   }));
   return _displayProjectFiles.apply(this, arguments);
 }
@@ -27147,27 +27148,27 @@ function executeQueryFromJSON(_x2) {
 
 // see https://github.com/jfo8000/ScratchJr-Desktop/blob/master/src/main.js#L898
 function _executeQueryFromJSON() {
-  _executeQueryFromJSON = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(json) {
+  _executeQueryFromJSON = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(json) {
     var stmt, values;
-    return _regeneratorRuntime().wrap(function _callee10$(_context10) {
-      while (1) switch (_context10.prev = _context10.next) {
+    return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+      while (1) switch (_context11.prev = _context11.next) {
         case 0:
           console.log("### WebDB.executeQueryFromJSON", json);
           if (!(db === null)) {
-            _context10.next = 4;
+            _context11.next = 4;
             break;
           }
-          _context10.next = 4;
+          _context11.next = 4;
           return initDB();
         case 4:
           // see Web interface, query()
           stmt = json.stmt, values = json.values;
-          return _context10.abrupt("return", JSON.stringify(db.exec(stmt, values)));
+          return _context11.abrupt("return", JSON.stringify(db.exec(stmt, values)));
         case 6:
         case "end":
-          return _context10.stop();
+          return _context11.stop();
       }
-    }, _callee10);
+    }, _callee11);
   }));
   return _executeQueryFromJSON.apply(this, arguments);
 }
@@ -27175,17 +27176,17 @@ function executeStatementFromJSON(_x3) {
   return _executeStatementFromJSON.apply(this, arguments);
 }
 function _executeStatementFromJSON() {
-  _executeStatementFromJSON = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(json) {
+  _executeStatementFromJSON = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(json) {
     var stmt, values, statement, result, lastRowId;
-    return _regeneratorRuntime().wrap(function _callee11$(_context11) {
-      while (1) switch (_context11.prev = _context11.next) {
+    return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+      while (1) switch (_context12.prev = _context12.next) {
         case 0:
           console.log("### WebDB.executeStatementFromJSON", json);
           if (!(db === null)) {
-            _context11.next = 4;
+            _context12.next = 4;
             break;
           }
-          _context11.next = 4;
+          _context12.next = 4;
           return initDB();
         case 4:
           // see Web interface, stmt()
@@ -27194,12 +27195,12 @@ function _executeStatementFromJSON() {
           while (statement.step()) statement.get();
           result = db.exec("select last_insert_rowid();");
           lastRowId = result[0].values[0][0];
-          return _context11.abrupt("return", lastRowId);
+          return _context12.abrupt("return", lastRowId);
         case 10:
         case "end":
-          return _context11.stop();
+          return _context12.stop();
       }
-    }, _callee11);
+    }, _callee12);
   }));
   return _executeStatementFromJSON.apply(this, arguments);
 }
@@ -27236,24 +27237,24 @@ function clearThumbnails() {
  * @param {string} content
  */
 function _clearThumbnails() {
-  _clearThumbnails = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
+  _clearThumbnails = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
     var result, rows, md5sToDelete, _iterator2, _step2, row, md5, placeholders;
-    return _regeneratorRuntime().wrap(function _callee12$(_context12) {
-      while (1) switch (_context12.prev = _context12.next) {
+    return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+      while (1) switch (_context13.prev = _context13.next) {
         case 0:
-          _context12.t0 = JSON;
-          _context12.next = 3;
+          _context13.t0 = JSON;
+          _context13.next = 3;
           return executeQueryFromJSON({
             stmt: "select * from projectfiles"
           });
         case 3:
-          _context12.t1 = _context12.sent;
-          result = _context12.t0.parse.call(_context12.t0, _context12.t1);
+          _context13.t1 = _context13.sent;
+          result = _context13.t0.parse.call(_context13.t0, _context13.t1);
           if (result.length) {
-            _context12.next = 7;
+            _context13.next = 7;
             break;
           }
-          return _context12.abrupt("return");
+          return _context13.abrupt("return");
         case 7:
           rows = result[0].values;
           md5sToDelete = [];
@@ -27274,16 +27275,16 @@ function _clearThumbnails() {
           placeholders = md5sToDelete.map(function () {
             return "?";
           }).join(", ");
-          _context12.next = 14;
+          _context13.next = 14;
           return executeStatementFromJSON({
             stmt: "delete from projectfiles where md5 in (".concat(placeholders, ");"),
             values: md5sToDelete
           });
         case 14:
         case "end":
-          return _context12.stop();
+          return _context13.stop();
       }
-    }, _callee12);
+    }, _callee13);
   }));
   return _clearThumbnails.apply(this, arguments);
 }
@@ -27293,49 +27294,49 @@ function saveToProjectFiles(_x4, _x5) {
 
 // actually returns SHA-256
 function _saveToProjectFiles() {
-  _saveToProjectFiles = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(fileMD5, content) {
+  _saveToProjectFiles = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(fileMD5, content) {
     var currentContents, queryResult;
-    return _regeneratorRuntime().wrap(function _callee13$(_context13) {
-      while (1) switch (_context13.prev = _context13.next) {
+    return _regeneratorRuntime().wrap(function _callee14$(_context14) {
+      while (1) switch (_context14.prev = _context14.next) {
         case 0:
           console.log("### WebDB.saveToProjectFiles", fileMD5, content);
 
           // query for the current file contents to see if they actually changed
           currentContents = "";
-          _context13.t0 = JSON;
-          _context13.next = 5;
+          _context14.t0 = JSON;
+          _context14.next = 5;
           return executeQueryFromJSON({
             stmt: "select contents from projectfiles where md5 = ?",
             values: [fileMD5]
           });
         case 5:
-          _context13.t1 = _context13.sent;
-          queryResult = _context13.t0.parse.call(_context13.t0, _context13.t1);
+          _context14.t1 = _context14.sent;
+          queryResult = _context14.t0.parse.call(_context14.t0, _context14.t1);
           if (queryResult.length > 0 && queryResult[0].values.length > 0 && queryResult[0].values[0].length > 0) {
             currentContents = queryResult[0].values[0][0];
           }
 
           // if the contents changed, update the db and save
           if (!(content !== currentContents)) {
-            _context13.next = 18;
+            _context14.next = 18;
             break;
           }
           if (!isThumbnail(fileMD5)) {
-            _context13.next = 13;
+            _context14.next = 13;
             break;
           }
-          _context13.next = 12;
+          _context14.next = 12;
           return clearThumbnails();
         case 12:
           latestThumbnail = "data:image/png;base64," + content;
         case 13:
-          _context13.next = 15;
+          _context14.next = 15;
           return executeStatementFromJSON({
             stmt: "insert or replace into projectfiles (md5, contents) values (?, ?);",
             values: [fileMD5, content]
           });
         case 15:
-          _context13.next = 17;
+          _context14.next = 17;
           return executeStatementFromJSON({
             stmt: "vacuum;"
           });
@@ -27343,9 +27344,9 @@ function _saveToProjectFiles() {
           saveDB();
         case 18:
         case "end":
-          return _context13.stop();
+          return _context14.stop();
       }
-    }, _callee13);
+    }, _callee14);
   }));
   return _saveToProjectFiles.apply(this, arguments);
 }
@@ -27355,14 +27356,14 @@ function getMD5(_x6) {
 
 // see https://github.com/jfo8000/ScratchJr-Desktop/blob/master/src/main.js#L822
 function _getMD() {
-  _getMD = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(data) {
+  _getMD = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(data) {
     var utf8;
-    return _regeneratorRuntime().wrap(function _callee14$(_context14) {
-      while (1) switch (_context14.prev = _context14.next) {
+    return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+      while (1) switch (_context15.prev = _context15.next) {
         case 0:
           // return crypto.createHash('md5').update(data).digest('hex');
           utf8 = new TextEncoder().encode(data);
-          return _context14.abrupt("return", crypto.subtle.digest("SHA-256", utf8).then(function (hashBuffer) {
+          return _context15.abrupt("return", crypto.subtle.digest("SHA-256", utf8).then(function (hashBuffer) {
             var hashArray = Array.from(new Uint8Array(hashBuffer));
             var hashHex = hashArray.map(function (bytes) {
               return bytes.toString(16).padStart(2, "0");
@@ -27371,9 +27372,9 @@ function _getMD() {
           }));
         case 2:
         case "end":
-          return _context14.stop();
+          return _context15.stop();
       }
-    }, _callee14);
+    }, _callee15);
   }));
   return _getMD.apply(this, arguments);
 }
@@ -27381,10 +27382,10 @@ function readProjectFile(_x7) {
   return _readProjectFile.apply(this, arguments);
 }
 function _readProjectFile() {
-  _readProjectFile = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(fileMD5) {
+  _readProjectFile = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16(fileMD5) {
     var json, table, rows;
-    return _regeneratorRuntime().wrap(function _callee15$(_context15) {
-      while (1) switch (_context15.prev = _context15.next) {
+    return _regeneratorRuntime().wrap(function _callee16$(_context16) {
+      while (1) switch (_context16.prev = _context16.next) {
         case 0:
           console.log("### WebDB.readProjectFile", fileMD5);
           json = {};
@@ -27393,23 +27394,23 @@ function _readProjectFile() {
           json.values = [fileMD5];
           table = "PROJECTFILES";
           json.stmt = "select ".concat(json.items, " from ").concat(table, " where ").concat(json.cond).concat(json.order ? " order by ".concat(json.order) : "");
-          _context15.next = 9;
+          _context16.next = 9;
           return executeQueryFromJSON(json);
         case 9:
-          rows = _context15.sent;
+          rows = _context16.sent;
           rows = JSON.parse(rows);
           if (!(rows.length > 0)) {
-            _context15.next = 13;
+            _context16.next = 13;
             break;
           }
-          return _context15.abrupt("return", rows[0]["values"][0][0]);
+          return _context16.abrupt("return", rows[0]["values"][0][0]);
         case 13:
-          return _context15.abrupt("return", null);
+          return _context16.abrupt("return", null);
         case 14:
         case "end":
-          return _context15.stop();
+          return _context16.stop();
       }
-    }, _callee15);
+    }, _callee16);
   }));
   return _readProjectFile.apply(this, arguments);
 }
@@ -96441,7 +96442,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("fc61dc7cd02a5f3219bb")
+/******/ 		__webpack_require__.h = () => ("d4b75cd160bf13d39d7b")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
