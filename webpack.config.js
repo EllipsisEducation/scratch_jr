@@ -22,7 +22,8 @@ module.exports = function (env, argv) {
       output: {
         // publicPath: assetBaseURL,
         // path: path.resolve(__dirname, "src/build/bundles"),
-        path: path.resolve(__dirname, "editions/free/src/build/bundles"),
+        // path: path.resolve(__dirname, "editions/free/src/build/bundles"),
+        path: path.resolve(__dirname, "editions/free/src"),
         filename: "[name].bundle.js",
       },
       performance: {
