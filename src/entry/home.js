@@ -15,17 +15,18 @@ export function homeMain() {
 }
 
 function homeGoBack() {
-  const params = new URLSearchParams();
-  if (window.studentAssignmentID) {
-    params.append("student_assignment_id", window.studentAssignmentID);
-  }
-  if (window.itemID) {
-    params.append("item_id", window.itemID);
-  }
+    const params = new URLSearchParams();
+    if (window.studentAssignmentID) {
+        params.append('student_assignment_id', window.studentAssignmentID);
+    }
+    if (window.itemID) {
+        params.append('item_id', window.itemID);
+    }
 
-  // const url = 'index.html?back=yes&' + params.toString();
-  // const url = 'index.html' + params.toString();
-  // window.location.href = url;
+    // const url = 'index.html?back=yes&' + params.toString();
+    // const url = 'index.html' + params.toString();
+    // console.log('####### url:', url);
+    // window.location.href = url;
 }
 
 function homeStrings() {

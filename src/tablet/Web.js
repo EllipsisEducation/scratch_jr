@@ -128,8 +128,9 @@ export default class Web {
     // }
     (async () => {
       const result = await db.executeStatementFromJSON(json);
-      await db.saveDB();
+      console.log("### Web.stmt", json, result);
       if (fcn) fcn(result);
+      db.saveDB();
     })();
   }
 
@@ -141,21 +142,25 @@ export default class Web {
     // }
     (async () => {
       const result = await db.executeQueryFromJSON(json);
+      console.log("### Web.query", json, result);
       if (fcn) fcn(result);
     })();
   }
 
   static setfield(db, id, fieldname, val, fcn) {
+    console.log("setfield");
     if (fcn) fcn();
   }
 
   // IO functions
 
   static cleanassets(ft, fcn) {
+    console.log("cleanassets");
     if (fcn) fcn();
   }
 
   static getmedia(file, fcn) {
+    console.log("getmedia");
     (async () => {
       var content = await db.readProjectFile(file);
       if (fcn) fcn(content);
@@ -163,10 +168,12 @@ export default class Web {
   }
 
   static getmediadata(key, offset, len, fcn) {
+    console.log("getmediadata");
     if (fcn) fcn();
   }
 
   static processdata(key, off, len, oldstr, fcn) {
+    console.log("processdata");
     if (fcn) fcn();
   }
 
@@ -175,10 +182,12 @@ export default class Web {
   }
 
   static getmediadone(file, fcn) {
+    console.log("getmediadone");
     if (fcn) fcn();
   }
 
   static setmedia(content, ext, fcn) {
+    console.log("setmedia");
     (async () => {
       var name = await db.getMD5(content);
       const filename = `${name}.${ext}`;
@@ -190,12 +199,14 @@ export default class Web {
   }
 
   static setmedianame(str, name, ext, fcn) {
+    console.log("setmedianame");
     const filename = `${name}.${ext}`;
     db.saveToProjectFiles(filename, str, { encoding: "base64" });
     if (fcn) fcn(filename);
   }
 
   static getmd5(str, fcn) {
+    console.log("getmd5");
     (async () => {
       var name = await db.getMD5(str);
       if (fcn) fcn(name);
@@ -203,14 +214,17 @@ export default class Web {
   }
 
   static remove(str, fcn) {
+    console.log("remove");
     if (fcn) fcn();
   }
 
   static getfile(str, fcn) {
+    console.log("getfile");
     if (fcn) fcn("");
   }
 
   static setfile(name, str, fcn) {
+    console.log("setfile");
     if (fcn) fcn();
   }
 
@@ -250,6 +264,7 @@ export default class Web {
   }
 
   static stopSound(name, fcn) {
+    console.log("stopSound");
     if (audioSources[name]) {
       audioSources[name].stop();
     }
@@ -259,6 +274,7 @@ export default class Web {
   // Web Wiew delegate call backs
 
   static sndrecord(fcn) {
+    console.log("sndrecord");
     if (audioRecorder === null) {
       console.log("Audio recorder not available");
       if (fcn) fcn(false);
@@ -274,6 +290,7 @@ export default class Web {
   }
 
   static recordstop(fcn) {
+    console.log("recordstop");
     if (audioRecorder === null) {
       console.log("Audio recorder not available");
       if (fcn) fcn(false);
@@ -286,6 +303,7 @@ export default class Web {
   }
 
   static volume(fcn) {
+    console.log("volume");
     if (audioVolumeBuffer === null) {
       console.log("Audio volume not available");
       if (fcn) fcn(0);
@@ -299,16 +317,19 @@ export default class Web {
   }
 
   static startplay(fcn) {
+    console.log("startplay");
     Web.playSound("__recording__");
     if (fcn) fcn(audioBuffers["__recording__"].duration);
   }
 
   static stopplay(fcn) {
+    console.log("stopplay");
     Web.stopSound("__recording__");
     if (fcn) fcn();
   }
 
   static recorddisappear(b, fcn) {
+    console.log("recorddisappear");
     if (fcn) fcn();
   }
 
@@ -320,10 +341,13 @@ export default class Web {
   // camera functions
 
   static hascamera() {
+    console.log("hascamera");
     return videoRecorderAvailable();
   }
 
   static startfeed(data, fcn) {
+    console.log("startfeed");
+
     if (webVideo === null) {
       webVideo = new WebVideo(data);
       webVideo.show();
@@ -333,6 +357,8 @@ export default class Web {
   }
 
   static stopfeed(fcn) {
+    console.log("stopfeed");
+
     if (webVideo !== null) {
       webVideo.hide();
       webVideo = null;
@@ -343,10 +369,13 @@ export default class Web {
 
   static choosecamera(mode, fcn) {
     // This is not needed for the web version
+    console.log("choosecamera");
     if (fcn) fcn();
   }
 
   static captureimage(fcn) {
+    console.log("captureimage");
+
     if (webVideo !== null) {
       // The image is returned as a data URL
       const imgDataURL = webVideo.snapshot();
@@ -361,6 +390,7 @@ export default class Web {
   }
 
   static hidesplash(fcn) {
+    console.log("hidesplash");
     if (fcn) fcn();
   }
 
@@ -383,6 +413,7 @@ export default class Web {
   ///////////////
 
   static createZipForProject(projectData, metadata, name, fcn) {
+    console.log("createZipForProject");
     if (fcn) fcn();
   }
 
@@ -398,6 +429,7 @@ export default class Web {
   }
 
   static registerLibraryAssets(version, assets, fcn) {
+    console.log("registerLibraryAssets");
     if (fcn) fcn();
   }
 
