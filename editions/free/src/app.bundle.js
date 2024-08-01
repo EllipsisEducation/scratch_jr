@@ -248,7 +248,7 @@ var ScratchJr = /*#__PURE__*/function () {
       _ui_Project__WEBPACK_IMPORTED_MODULE_0__["default"].loadIcon = document.createElement('img');
       _ui_Project__WEBPACK_IMPORTED_MODULE_0__["default"].loadIcon.src = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_19__.absoluteURL)('assets/loading.png');
       ScratchJr.log('blocks init', ScratchJr.getTime(), 'sec', _blocks_BlockSpecs__WEBPACK_IMPORTED_MODULE_16__["default"].loadCount);
-      currentProject = '1';
+      currentProject = urlvars.pmd5;
       editmode = urlvars.mode;
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_19__.libInit)();
       _ui_Project__WEBPACK_IMPORTED_MODULE_0__["default"].init();
@@ -3310,7 +3310,6 @@ var Prims = /*#__PURE__*/function () {
     value: function playSound(strip) {
       var b = strip.thisblock;
       var name = b.getSoundName(strip.spr.sounds);
-      //	console.log ('playSound', name);
       if (!strip.audio) {
         var snd = _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_1__["default"].projectSounds[name];
         if (!snd) {
@@ -3319,7 +3318,6 @@ var Prims = /*#__PURE__*/function () {
         }
         strip.audio = snd;
         snd.play();
-        //	console.log ("playSound", snd, strip.audio, snd.source.playbackState);
       }
       if (strip.audio && strip.audio.done()) {
         strip.audio.clear();
@@ -5865,20 +5863,16 @@ var Stage = /*#__PURE__*/function () {
     key: "setEvents",
     value: function setEvents() {
       var me = this;
-      window.setEventHandler('touchmove', function (evt) {
-        console.log('touchmove stage');
+      window.setEventHandler("touchmove", function (evt) {
         me.mouseMove(evt);
       });
-      window.setEventHandler('touchend', function (evt) {
-        console.log('touchend stage');
+      window.setEventHandler("touchend", function (evt) {
         me.mouseUp(evt);
       });
       window.onmousemove = function (evt) {
-        console.log('mousemove stage');
         me.mouseMove(evt);
       };
       window.onmouseup = function (evt) {
-        console.log('mouseup stage');
         me.mouseUp(evt);
       };
     }
@@ -6871,54 +6865,54 @@ var Library = /*#__PURE__*/function () {
   return _createClass(Library, null, [{
     key: "init",
     value: function init() {
-      libFrame = document.getElementById('libframe');
-      libFrame.style.minHeight = Math.max((0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.getDocumentHeight)(), _utils_lib__WEBPACK_IMPORTED_MODULE_8__.frame.offsetHeight) + 'px';
-      var topbar = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'topbar', libFrame);
-      topbar.setAttribute('id', 'topbar');
-      var actions = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'actions', topbar);
-      actions.setAttribute('id', 'libactions');
-      var ascontainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'assetname-container', topbar);
-      var as = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'assetname', ascontainer);
-      var myname = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('p', undefined, as);
-      myname.setAttribute('id', 'assetname');
-      myname.textContent = '';
+      libFrame = document.getElementById("libframe");
+      libFrame.style.minHeight = Math.max((0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.getDocumentHeight)(), _utils_lib__WEBPACK_IMPORTED_MODULE_8__.frame.offsetHeight) + "px";
+      var topbar = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "topbar", libFrame);
+      topbar.setAttribute("id", "topbar");
+      var actions = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "actions", topbar);
+      actions.setAttribute("id", "libactions");
+      var ascontainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "assetname-container", topbar);
+      var as = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "assetname", ascontainer);
+      var myname = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("p", undefined, as);
+      myname.setAttribute("id", "assetname");
+      myname.textContent = "";
       Library.layoutHeader();
     }
   }, {
     key: "createScrollPanel",
     value: function createScrollPanel() {
-      var inner = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'innerlibrary', libFrame);
-      inner.setAttribute('id', 'asssetsview');
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'scrollarea', inner);
-      div.setAttribute('id', 'scrollarea');
+      var inner = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "innerlibrary", libFrame);
+      inner.setAttribute("id", "asssetsview");
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "scrollarea", inner);
+      div.setAttribute("id", "scrollarea");
     }
   }, {
     key: "open",
     value: function open(libType) {
       type = libType;
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('assetname').textContent = '';
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("assetname").textContent = "";
       nativeJr = true;
-      _utils_lib__WEBPACK_IMPORTED_MODULE_8__.frame.style.display = 'none';
-      libFrame.className = 'libframe appear';
+      _utils_lib__WEBPACK_IMPORTED_MODULE_8__.frame.style.display = "none";
+      libFrame.className = "libframe appear";
       libFrame.focus();
       selectedOne = undefined;
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('okbut').onclick = type == 'costumes' ? Library.closeSpriteSelection : Library.closeBkgSelection;
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("okbut").onclick = type == "costumes" ? Library.closeSpriteSelection : Library.closeBkgSelection;
       Library.clean();
       Library.createScrollPanel();
       Library.addThumbnails(type);
-      window.setEventHandler('touchstart', undefined);
-      window.setEventHandler('touchend', undefined);
+      window.setEventHandler("touchstart", undefined);
+      window.setEventHandler("touchend", undefined);
       window.onmousedown = undefined;
       window.onmouseup = undefined;
       document.ontouchmove = undefined;
       document.onmousemove = undefined;
       window.onresize = undefined;
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('library_paintme').style.opacity = 1;
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('library_paintme').onclick = Library.editResource;
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("library_paintme").style.opacity = 1;
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("library_paintme").onclick = Library.editResource;
 
       // Set the back button callback
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].onBackButtonCallback.push(function () {
-        var e = document.createEvent('TouchEvent');
+        var e = document.createEvent("TouchEvent");
         e.initTouchEvent();
         Library.cancelPick(e);
       });
@@ -6926,8 +6920,8 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "clean",
     value: function clean() {
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('scrollarea')) {
-        var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('scrollarea').parentNode;
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("scrollarea")) {
+        var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("scrollarea").parentNode;
         libFrame.removeChild(div);
       }
     }
@@ -6936,24 +6930,24 @@ var Library = /*#__PURE__*/function () {
     value: function close(e) {
       e.preventDefault();
       e.stopPropagation();
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_7__["default"].sndFX('tap.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_7__["default"].sndFX("tap.wav");
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].blur();
-      libFrame.className = 'libframe disappear';
+      libFrame.className = "libframe disappear";
       document.body.scrollTop = 0;
-      _utils_lib__WEBPACK_IMPORTED_MODULE_8__.frame.style.display = 'block';
+      _utils_lib__WEBPACK_IMPORTED_MODULE_8__.frame.style.display = "block";
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].editorEvents();
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].onBackButtonCallback.pop();
     }
   }, {
     key: "layoutHeader",
     value: function layoutHeader() {
-      var buttons = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'bkgbuttons', (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('libactions'));
-      var paintme = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'painticon', buttons);
-      paintme.id = 'library_paintme';
+      var buttons = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "bkgbuttons", (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("libactions"));
+      var paintme = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "painticon", buttons);
+      paintme.id = "library_paintme";
       paintme.onclick = Library.editResource;
-      var okbut = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'okicon', buttons);
-      okbut.setAttribute('id', 'okbut');
-      var cancelbut = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'cancelicon', buttons);
+      var okbut = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "okicon", buttons);
+      okbut.setAttribute("id", "okbut");
+      var cancelbut = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "cancelicon", buttons);
       cancelbut.onclick = Library.cancelPick;
     }
   }, {
@@ -6968,25 +6962,24 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "addThumbnails",
     value: function addThumbnails() {
-      console.log('addThumbnails');
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('scrollarea');
-      Library.addEmptyThumb(div, type == 'costumes' ? 118 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier : 120 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier, type == 'costumes' ? 90 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier : 90 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier);
-      var key = type == 'costumes' ? 'usershapes' : 'userbkgs';
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("scrollarea");
+      Library.addEmptyThumb(div, type == "costumes" ? 118 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier : 120 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier, type == "costumes" ? 90 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier : 90 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier);
+      var key = type == "costumes" ? "usershapes" : "userbkgs";
       // Student' assets
       var json = {};
-      json.cond = 'ext = ? AND version = ?';
-      json.items = type == 'costumes' ? ['md5', 'altmd5', 'name', 'scale', 'width', 'height'] : ['altmd5', 'md5', 'width', 'height'];
-      json.values = ['svg', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].version];
-      json.order = 'ctime desc';
+      json.cond = "ext = ? AND version = ?";
+      json.items = type == "costumes" ? ["md5", "altmd5", "name", "scale", "width", "height"] : ["altmd5", "md5", "width", "height"];
+      json.values = ["svg", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].version];
+      json.order = "ctime desc";
       _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].query(key, json, Library.displayAssets);
     }
   }, {
     key: "skipUserAssets",
     value: function skipUserAssets() {
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('scrollarea');
-      Library.addEmptyThumb(div, type == 'costumes' ? 118 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier : 120 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier, type == 'costumes' ? 90 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier : 90 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier);
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("scrollarea");
+      Library.addEmptyThumb(div, type == "costumes" ? 118 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier : 120 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier, type == "costumes" ? 90 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier : 90 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier);
       Library.addHR(div);
-      Library.displayLibAssets(type == 'costumes' ? _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].sprites : _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].backgrounds);
+      Library.displayLibAssets(type == "costumes" ? _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].sprites : _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].backgrounds);
     }
   }, {
     key: "getpadding",
@@ -7003,20 +6996,19 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "displayAssets",
     value: function displayAssets(str) {
-      console.log('displayAssets');
       nativeJr = true;
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('scrollarea');
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("scrollarea");
       var data = JSON.parse(str);
       if (data.length > 0) {
-        if ('columns' in data[0]) {
+        if ("columns" in data[0]) {
           // reformat array from sql.js to array of objects where keys are column names
           var asset_info = [];
           var _loop = function _loop(i) {
-            asset_info.push(Object.fromEntries(data[0]['columns'].map(function (k, j) {
-              return [k, data[0]['values'][i][j]];
+            asset_info.push(Object.fromEntries(data[0]["columns"].map(function (k, j) {
+              return [k, data[0]["values"][i][j]];
             })));
           };
-          for (var i = 0; i < data[0]['values'].length; i++) {
+          for (var i = 0; i < data[0]["values"].length; i++) {
             _loop(i);
           }
           data = asset_info;
@@ -7027,27 +7019,26 @@ var Library = /*#__PURE__*/function () {
       }
       Library.addHR(div);
       nativeJr = false;
-      data = type == 'costumes' ? _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].sprites : _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].backgrounds;
+      data = type == "costumes" ? _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].sprites : _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].backgrounds;
       Library.displayLibAssets(data);
     }
   }, {
     key: "displayLibAssets",
     value: function displayLibAssets(data) {
-      console.log('displayLibAssets');
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('scrollarea');
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("scrollarea");
       if (data.length < 1) {
         return;
       }
       var order = data[0].order;
-      var key = order ? order.split(',')[1] : '';
+      var key = order ? order.split(",")[1] : "";
       for (var i = 0; i < data.length; i++) {
         order = data[i].order;
-        var key2 = order ? order.split(',')[1] : '';
+        var key2 = order ? order.split(",")[1] : "";
         if (key2 != key) {
           Library.addHR(div);
           key = key2;
         }
-        if ('separator' in data[i]) {
+        if ("separator" in data[i]) {
           Library.addHR(div);
         } else {
           Library.addLocalThumbChoose(div, data[i], 120 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier, 90 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier, Library.selectAsset);
@@ -7058,22 +7049,22 @@ var Library = /*#__PURE__*/function () {
     key: "addAssetThumbChoose",
     value: function addAssetThumbChoose(parent, aa, w, h, fcn) {
       var data = Library.parseAssetData(aa);
-      var tb = document.createElement('div');
+      var tb = document.createElement("div");
       parent.appendChild(tb);
       tb.byme = nativeJr ? 1 : 0;
       var md5 = data.md5;
-      tb.setAttribute('class', 'assetbox off');
-      tb.setAttribute('id', md5);
+      tb.setAttribute("class", "assetbox off");
+      tb.setAttribute("id", md5);
       tb.scale = !data.scale ? 0.5 : data.scale;
       tb.fieldname = data.name;
       tb.w = Number(data.width);
       tb.h = Number(data.height);
       var scale = Math.min(w / tb.w, h / tb.h);
-      var img = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('img', undefined, tb);
-      img.style.left = 9 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier + 'px';
-      img.style.top = 7 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier + 'px';
-      img.style.position = 'relative';
-      img.style.height = data.height * scale + 'px';
+      var img = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("img", undefined, tb);
+      img.style.left = 9 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier + "px";
+      img.style.top = 7 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier + "px";
+      img.style.position = "relative";
+      img.style.height = data.height * scale + "px";
       img.ondragstart = function () {
         return false;
       };
@@ -7083,7 +7074,7 @@ var Library = /*#__PURE__*/function () {
       function drawMe(dataurl) {
         img.src = dataurl;
       }
-      window.setEventHandler('touchstart', function (evt) {
+      window.setEventHandler("touchstart", function (evt) {
         fcn(evt, tb);
       }, tb);
       tb.onmousedown = function (evt) {
@@ -7094,26 +7085,26 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "addLocalThumbChoose",
     value: function addLocalThumbChoose(parent, data, w, h, fcn) {
-      var tb = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'assetbox off', parent);
+      var tb = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "assetbox off", parent);
       var md5 = data.md5;
       tb.byme = nativeJr ? 1 : 0;
-      tb.setAttribute('id', md5);
+      tb.setAttribute("id", md5);
       tb.scale = !data.scale ? 0.5 : data.scale;
       tb.fieldname = data.name;
       tb.w = Number(data.width);
       tb.h = Number(data.height);
-      var img = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('img', undefined, tb);
+      var img = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("img", undefined, tb);
       var scale = Math.min(w / tb.w, h / tb.h);
-      img.style.height = tb.h * scale + 'px';
-      img.style.width = tb.w * scale + 'px';
-      img.style.left = Math.floor((w - scale * tb.w) / 2 + 9 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier) + 'px';
-      img.style.top = Math.floor((h - scale * tb.h) / 2 + 9 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier) + 'px';
-      img.style.position = 'relative';
+      img.style.height = tb.h * scale + "px";
+      img.style.width = tb.w * scale + "px";
+      img.style.left = Math.floor((w - scale * tb.w) / 2 + 9 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier) + "px";
+      img.style.top = Math.floor((h - scale * tb.h) / 2 + 9 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier) + "px";
+      img.style.position = "relative";
 
       // Cached downsized-thumbnails are in pnglibrary
-      var pngPath = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.absoluteURL)(_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].path.replace('svg', 'png'));
-      img.src = pngPath + _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].getFilename(md5) + '.png';
-      window.setEventHandler('touchstart', function (evt) {
+      var pngPath = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.absoluteURL)(_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].path.replace("svg", "png"));
+      img.src = pngPath + _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].getFilename(md5) + ".png";
+      window.setEventHandler("touchstart", function (evt) {
         fcn(evt, tb);
       }, tb);
       tb.onmousedown = function (evt) {
@@ -7125,7 +7116,7 @@ var Library = /*#__PURE__*/function () {
     key: "userAssetThumbnail",
     value: function userAssetThumbnail(img, cnv, sizew, sizeh) {
       var scale = Math.min(sizew / img.width, sizeh / img.height);
-      var currentCtx = cnv.getContext('2d');
+      var currentCtx = cnv.getContext("2d");
       var iw = Math.floor(scale * img.width);
       var ih = Math.floor(scale * img.height);
       var ix = Math.floor((sizew - scale * img.width) / 2);
@@ -7135,19 +7126,19 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "addEmptyThumb",
     value: function addEmptyThumb(parent, w, h) {
-      var tb = document.createElement('div');
-      tb.setAttribute('class', 'assetbox off');
-      tb.setAttribute('id', 'none');
-      tb.fieldname = type == 'costumes' ? _utils_Localization__WEBPACK_IMPORTED_MODULE_6__["default"].localize('LIBRARY_CHARACTER') : _utils_Localization__WEBPACK_IMPORTED_MODULE_6__["default"].localize('LIBRARY_BACKGROUND');
+      var tb = document.createElement("div");
+      tb.setAttribute("class", "assetbox off");
+      tb.setAttribute("id", "none");
+      tb.fieldname = type == "costumes" ? _utils_Localization__WEBPACK_IMPORTED_MODULE_6__["default"].localize("LIBRARY_CHARACTER") : _utils_Localization__WEBPACK_IMPORTED_MODULE_6__["default"].localize("LIBRARY_BACKGROUND");
       tb.byme = 1;
       var cnv = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newCanvas)(tb, 9 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier, 7 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier, w, h, {
-        position: 'relative'
+        position: "relative"
       });
-      var ctx = cnv.getContext('2d');
+      var ctx = cnv.getContext("2d");
       ctx.fillStyle = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stagecolor;
       ctx.fillRect(0, 0, w, h);
       parent.appendChild(tb);
-      window.setEventHandler('touchstart', function (evt) {
+      window.setEventHandler("touchstart", function (evt) {
         Library.selectAsset(evt, tb);
       }, tb);
       tb.onmousedown = function (evt) {
@@ -7157,9 +7148,9 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "addHR",
     value: function addHR(div) {
-      var hr = document.createElement('hr');
+      var hr = document.createElement("hr");
       div.appendChild(hr);
-      hr.setAttribute('class', 'bigdivide');
+      hr.setAttribute("class", "bigdivide");
     }
 
     ///////////////////////////
@@ -7168,16 +7159,16 @@ var Library = /*#__PURE__*/function () {
     key: "selectAsset",
     value: function selectAsset(e, tb) {
       tb.pt = JSON.stringify(_utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].getTargetPoint(e));
-      if (shaking && e.target.className == 'deleteasset') {
+      if (shaking && e.target.className == "deleteasset") {
         Library.removeFromAssetList();
         return;
       } else if (shaking) {
         Library.stopShaking();
       }
-      if (tb.byme && tb.id != 'none') {
+      if (tb.byme && tb.id != "none") {
         holdit(tb);
       }
-      window.setEventHandler('touchend', function (evt) {
+      window.setEventHandler("touchend", function (evt) {
         clickMe(evt, tb);
       }, tb);
       window.onmouseup = function (evt) {
@@ -7188,7 +7179,7 @@ var Library = /*#__PURE__*/function () {
       };
       function holdit() {
         var repeat = function repeat() {
-          window.setEventHandler('touchend', undefined, tb);
+          window.setEventHandler("touchend", undefined, tb);
           window.onmouseup = undefined;
           window.onmousemove = undefined;
           timeoutEvent = undefined;
@@ -7213,7 +7204,7 @@ var Library = /*#__PURE__*/function () {
           Library.unSelect(clickThumb);
         }
         timeoutEvent = undefined;
-        window.setEventHandler('touchend', undefined, tb);
+        window.setEventHandler("touchend", undefined, tb);
         window.onmousemove = undefined;
         window.onmouseup = undefined;
       }
@@ -7223,7 +7214,7 @@ var Library = /*#__PURE__*/function () {
         }
         Library.selectThisAsset(e, tb);
         timeoutEvent = undefined;
-        window.setEventHandler('touchend', undefined, tb);
+        window.setEventHandler("touchend", undefined, tb);
         tb.onmouseup = undefined;
         window.onmousemove = undefined;
         window.onmouseup = undefined;
@@ -7232,8 +7223,8 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "startShaking",
     value: function startShaking(b) {
-      b.className = b.className + ' shakeme';
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)('div', 'deleteasset', b);
+      b.className = b.className + " shakeme";
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.newHTML)("div", "deleteasset", b);
       shaking = b;
     }
   }, {
@@ -7243,9 +7234,9 @@ var Library = /*#__PURE__*/function () {
         return;
       }
       var b = shaking;
-      b.setAttribute('class', 'assetbox off');
+      b.setAttribute("class", "assetbox off");
       var ic = b.childNodes[b.childElementCount - 1];
-      if (ic.getAttribute('class') == 'deleteasset') {
+      if (ic.getAttribute("class") == "deleteasset") {
         b.removeChild(ic);
       }
       shaking = undefined;
@@ -7253,13 +7244,13 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "removeFromAssetList",
     value: function removeFromAssetList() {
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_7__["default"].sndFX('cut.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_7__["default"].sndFX("cut.wav");
       var b = shaking;
       b.parentNode.removeChild(b);
-      var key = type == 'costumes' ? 'usershapes' : 'userbkgs';
+      var key = type == "costumes" ? "usershapes" : "userbkgs";
       var json = {};
-      json.cond = 'md5 = ?';
-      json.items = ['*'];
+      json.cond = "md5 = ?";
+      json.items = ["*"];
       json.values = [b.id];
       _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].query(key, json, Library.removeAssetFromLib);
       clickThumb = undefined;
@@ -7274,12 +7265,12 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "assetThumbnailUnique",
     value: function assetThumbnailUnique(md5, type, callback) {
-      var key = type == 'costumes' ? 'usershapes' : 'userbkgs';
+      var key = type == "costumes" ? "usershapes" : "userbkgs";
       var json = {};
-      json.cond = 'ext = ? AND altmd5 = ?';
-      json.items = ['md5', 'altmd5'];
-      json.values = ['svg', md5];
-      json.order = 'ctime desc';
+      json.cond = "ext = ? AND altmd5 = ?";
+      json.items = ["md5", "altmd5"];
+      json.values = ["svg", md5];
+      json.order = "ctime desc";
       _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].query(key, json, function (results) {
         results = JSON.parse(results);
         callback(results.length <= 1);
@@ -7288,7 +7279,7 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "removeAssetFromLib",
     value: function removeAssetFromLib(str) {
-      var key = type == 'costumes' ? 'usershapes' : 'userbkgs';
+      var key = type == "costumes" ? "usershapes" : "userbkgs";
       var aa = JSON.parse(str)[0];
       var data = Library.parseAssetData(aa);
       if (data.altmd5) {
@@ -7316,7 +7307,7 @@ var Library = /*#__PURE__*/function () {
     key: "selectThisAsset",
     value: function selectThisAsset(e, tb) {
       if (tb.id == selectedOne) {
-        if (type == 'costumes') {
+        if (type == "costumes") {
           Library.closeSpriteSelection(e);
         } else {
           Library.closeBkgSelection(e);
@@ -7327,43 +7318,43 @@ var Library = /*#__PURE__*/function () {
         // Disable paint editor for PNG sprites
         var thumbID = tb.id;
         var thumbType = thumbID.substr(thumbID.length - 3);
-        if (thumbType == 'png') {
-          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('library_paintme').style.opacity = 0;
-          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('library_paintme').onclick = null;
+        if (thumbType == "png") {
+          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("library_paintme").style.opacity = 0;
+          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("library_paintme").onclick = null;
         } else {
-          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('library_paintme').style.opacity = 1;
-          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('library_paintme').onclick = Library.editResource;
+          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("library_paintme").style.opacity = 1;
+          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("library_paintme").onclick = Library.editResource;
         }
-        tb.className = 'assetbox on';
+        tb.className = "assetbox on";
         // to avoid double click
         setTimeout(function () {
           selectedOne = tb.id;
         }, 200);
         clickThumb = tb;
         if (tb.fieldname) {
-          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('assetname').textContent = tb.fieldname;
+          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("assetname").textContent = tb.fieldname;
         }
       }
     }
   }, {
     key: "clearAllSelections",
     value: function clearAllSelections() {
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('scrollarea');
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("scrollarea");
       for (var i = 0; i < div.childElementCount; i++) {
-        if (div.childNodes[i].nodeName == 'DIV') {
-          div.childNodes[i].className = 'assetbox off';
+        if (div.childNodes[i].nodeName == "DIV") {
+          div.childNodes[i].className = "assetbox off";
         }
       }
     }
   }, {
     key: "unSelect",
     value: function unSelect(tb) {
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('assetname').textContent = '';
-      tb.className = 'assetbox off';
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("assetname").textContent = "";
+      tb.className = "assetbox off";
       selectedOne = undefined;
       if (clickThumb) {
         if (tb.byme && clickThumb.childElementCount > 1) {
-          clickThumb.childNodes[clickThumb.childElementCount - 1].style.visibility = 'hidden';
+          clickThumb.childNodes[clickThumb.childElementCount - 1].style.visibility = "hidden";
         }
         clickThumb = undefined;
       }
@@ -7374,9 +7365,9 @@ var Library = /*#__PURE__*/function () {
       var w = Math.min((0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.getDocumentWidth)(), _utils_lib__WEBPACK_IMPORTED_MODULE_8__.frame.offsetWidth);
       var h = Math.max((0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.getDocumentHeight)(), _utils_lib__WEBPACK_IMPORTED_MODULE_8__.frame.offsetHeight);
       var dx = w - 20 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier;
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)('scrollarea').style, {
-        width: dx + 'px',
-        height: h - 120 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier + 'px'
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_8__.gn)("scrollarea").style, {
+        width: dx + "px",
+        height: h - 120 * _utils_lib__WEBPACK_IMPORTED_MODULE_8__.scaleMultiplier + "px"
       });
     }
 
@@ -7387,7 +7378,7 @@ var Library = /*#__PURE__*/function () {
     key: "editResource",
     value: function editResource(e) {
       Library.close(e);
-      if (type != 'costumes') {
+      if (type != "costumes") {
         Library.editBackground(e);
       } else {
         Library.editCostume(e);
@@ -7396,18 +7387,18 @@ var Library = /*#__PURE__*/function () {
   }, {
     key: "editBackground",
     value: function editBackground() {
-      var md5 = selectedOne && selectedOne != 'none' ? selectedOne : undefined;
+      var md5 = selectedOne && selectedOne != "none" ? selectedOne : undefined;
       _painteditor_Paint__WEBPACK_IMPORTED_MODULE_4__["default"].open(true, md5);
     }
   }, {
     key: "editCostume",
     value: function editCostume() {
       var sname = undefined;
-      var cname = selectedOne ? clickThumb.fieldname : _utils_Localization__WEBPACK_IMPORTED_MODULE_6__["default"].localize('LIBRARY_CHARACTER');
-      var scale = selectedOne && selectedOne != 'none' ? clickThumb.scale : 0.5;
-      var md5 = selectedOne && selectedOne != 'none' ? selectedOne : undefined;
-      var w = selectedOne && selectedOne != 'none' ? Math.round(clickThumb.w) : undefined;
-      var h = selectedOne && selectedOne != 'none' ? Math.round(clickThumb.h) : undefined;
+      var cname = selectedOne ? clickThumb.fieldname : _utils_Localization__WEBPACK_IMPORTED_MODULE_6__["default"].localize("LIBRARY_CHARACTER");
+      var scale = selectedOne && selectedOne != "none" ? clickThumb.scale : 0.5;
+      var md5 = selectedOne && selectedOne != "none" ? selectedOne : undefined;
+      var w = selectedOne && selectedOne != "none" ? Math.round(clickThumb.w) : undefined;
+      var h = selectedOne && selectedOne != "none" ? Math.round(clickThumb.h) : undefined;
       _painteditor_Paint__WEBPACK_IMPORTED_MODULE_4__["default"].open(false, md5, sname, cname, scale, w, h);
     }
   }, {
@@ -7415,8 +7406,8 @@ var Library = /*#__PURE__*/function () {
     value: function closeSpriteSelection(e) {
       e.preventDefault();
       e.stopPropagation();
-      var id = selectedOne ? clickThumb.fieldname : _utils_Localization__WEBPACK_IMPORTED_MODULE_6__["default"].localize('LIBRARY_CHARACTER');
-      if (selectedOne && selectedOne != 'none') {
+      var id = selectedOne ? clickThumb.fieldname : _utils_Localization__WEBPACK_IMPORTED_MODULE_6__["default"].localize("LIBRARY_CHARACTER");
+      if (selectedOne && selectedOne != "none") {
         _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.addSprite(clickThumb.scale, selectedOne, id);
       }
 
@@ -7424,9 +7415,9 @@ var Library = /*#__PURE__*/function () {
       if (clickThumb) {
         var analyticsName = clickThumb.id;
         if (!(selectedOne in _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].keys)) {
-          analyticsName = 'user_asset';
+          analyticsName = "user_asset";
         }
-        _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent('editor', 'new_character', analyticsName);
+        _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent("editor", "new_character", analyticsName);
       }
       Library.close(e);
     }
@@ -7441,9 +7432,9 @@ var Library = /*#__PURE__*/function () {
       if (clickThumb) {
         var analyticsName = clickThumb.id;
         if (!(selectedOne in _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"].keys)) {
-          analyticsName = 'user_background';
+          analyticsName = "user_background";
         }
-        _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent('editor', 'choose_background', analyticsName);
+        _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent("editor", "choose_background", analyticsName);
       }
       Library.close(e);
     }
@@ -8223,7 +8214,7 @@ var Project = /*#__PURE__*/function () {
     key: "load",
     value: function load() {
       mediaCountBase = 1;
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('Project load status', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec', _blocks_BlockSpecs__WEBPACK_IMPORTED_MODULE_1__["default"].loadCount);
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("Project load status", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec", _blocks_BlockSpecs__WEBPACK_IMPORTED_MODULE_1__["default"].loadCount);
       if (_blocks_BlockSpecs__WEBPACK_IMPORTED_MODULE_1__["default"].loadCount > 0) {
         setTimeout(function () {
           Project.delayLoad();
@@ -8246,7 +8237,7 @@ var Project = /*#__PURE__*/function () {
   }, {
     key: "startLoad",
     value: function startLoad() {
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('all UI assets recieved - procced to call server', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec');
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("all UI assets recieved - procced to call server", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec");
       Project.setProgress(20);
       _UI__WEBPACK_IMPORTED_MODULE_4__["default"].layout();
       _tablet_IO__WEBPACK_IMPORTED_MODULE_8__["default"].getObject(_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].currentProject, Project.dataRecieved);
@@ -8254,8 +8245,7 @@ var Project = /*#__PURE__*/function () {
   }, {
     key: "dataRecieved",
     value: function dataRecieved(str) {
-      console.log('dataReceived');
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('got project metadata', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec');
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("got project metadata", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec");
       var data = JSON.parse(str)[0];
       metadata = _tablet_IO__WEBPACK_IMPORTED_MODULE_8__["default"].parseProjectData(data);
       mediaCount = -1;
@@ -8263,7 +8253,7 @@ var Project = /*#__PURE__*/function () {
         Project.loadData(metadata.json, doneProjectLoad);
       } else {
         mediaCount = 0;
-        new _engine_Page__WEBPACK_IMPORTED_MODULE_5__["default"]((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.getIdFor)('page'));
+        new _engine_Page__WEBPACK_IMPORTED_MODULE_5__["default"]((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.getIdFor)("page"));
         _Palette__WEBPACK_IMPORTED_MODULE_3__["default"].selectCategory(1);
         // On Android 4.2, this comes up blank the first time, so try again in 100ms.
         setTimeout(function () {
@@ -8273,8 +8263,8 @@ var Project = /*#__PURE__*/function () {
       }
       function doneProjectLoad() {
         // Clear gift flag
-        if ('id' in metadata) {
-          metadata.isgift = '0';
+        if ("id" in metadata) {
+          metadata.isgift = "0";
           _tablet_IO__WEBPACK_IMPORTED_MODULE_8__["default"].setProjectIsGift(metadata);
         }
         _Palette__WEBPACK_IMPORTED_MODULE_3__["default"].selectCategory(1);
@@ -8289,12 +8279,12 @@ var Project = /*#__PURE__*/function () {
         _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].changed = false;
         _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].storyStarted = false;
         _UI__WEBPACK_IMPORTED_MODULE_4__["default"].needsScroll();
-        _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('all thumbnails updated', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec');
+        _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("all thumbnails updated", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec");
 
         // Set to fullscreen mode once project has loaded if parameter is passed in
-        if (new URLSearchParams(window.location.search).get('fullscreen') === 'true') {
+        if (new URLSearchParams(window.location.search).get("fullscreen") === "true") {
           _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].enterFullScreen();
-          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('full').remove();
+          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("full").remove();
         }
         if (_utils_lib__WEBPACK_IMPORTED_MODULE_11__.isAndroid) {
           AndroidInterface.notifyEditorDoneLoading();
@@ -8304,19 +8294,19 @@ var Project = /*#__PURE__*/function () {
   }, {
     key: "init",
     value: function init() {
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('Project init', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec');
-      var bd = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'modal-backdrop fade', _utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame.parentNode);
-      bd.setAttribute('id', 'backdrop');
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('backdrop').style, {
-        display: 'none'
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("Project init", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec");
+      var bd = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "modal-backdrop fade", _utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame.parentNode);
+      bd.setAttribute("id", "backdrop");
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("backdrop").style, {
+        display: "none"
       });
-      var modalOuter = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'modal-outer', _utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame.parentNode);
-      var modalMiddle = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'modal-middle', modalOuter);
-      var modal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'modal hide fade', modalMiddle);
-      modal.setAttribute('id', 'modaldialog');
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('modaldialog').style, {});
-      var body = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'modal-body', modal);
-      body.setAttribute('id', 'modalbody');
+      var modalOuter = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "modal-outer", _utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame.parentNode);
+      var modalMiddle = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "modal-middle", modalOuter);
+      var modal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "modal hide fade", modalMiddle);
+      modal.setAttribute("id", "modaldialog");
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("modaldialog").style, {});
+      var body = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "modal-body", modal);
+      body.setAttribute("id", "modalbody");
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)(body.style, {
         zoom: _utils_lib__WEBPACK_IMPORTED_MODULE_11__.scaleMultiplier
       });
@@ -8332,43 +8322,43 @@ var Project = /*#__PURE__*/function () {
   }, {
     key: "addFeedback",
     value: function addFeedback() {
-      var body = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('modalbody');
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'loadscreenfill', body);
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'topfill', body);
-      var cover = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'loadscreencover', body);
-      cover.setAttribute('id', 'progressbar');
-      var topcover = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'topcover', body);
-      topcover.setAttribute('id', 'topcover');
-      var cover2 = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'progressbar2', body);
-      cover2.setAttribute('id', 'progressbar2');
-      var li = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)('div', 'loadicon', body);
+      var body = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("modalbody");
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "loadscreenfill", body);
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "topfill", body);
+      var cover = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "loadscreencover", body);
+      cover.setAttribute("id", "progressbar");
+      var topcover = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "topcover", body);
+      topcover.setAttribute("id", "topcover");
+      var cover2 = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "progressbar2", body);
+      cover2.setAttribute("id", "progressbar2");
+      var li = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.newHTML)("div", "loadicon", body);
       li.appendChild(loadIcon);
     }
   }, {
     key: "setProgress",
     value: function setProgress(perc) {
-      if (!(0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('progressbar')) {
+      if (!(0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("progressbar")) {
         return;
       }
       var h = projectbarsize - Math.round(projectbarsize * perc / 100);
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('setProgress', perc, h, mediaCount, mediaCountBase);
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('progressbar').style.height = h + 'px';
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("setProgress", perc, h, mediaCount, mediaCountBase);
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("progressbar").style.height = h + "px";
       if (h == 0) {
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('progressbar2').style.height = '0px';
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('topcover').style.background = '#F9A737';
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("progressbar2").style.height = "0px";
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("topcover").style.background = "#F9A737";
       }
     }
   }, {
     key: "drawBlind",
     value: function drawBlind() {
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('backdrop').setAttribute('class', 'modal-backdrop fade in');
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('backdrop').style, {
-        display: 'block'
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("backdrop").setAttribute("class", "modal-backdrop fade in");
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("backdrop").style, {
+        display: "block"
       });
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('modaldialog').style, {
-        display: 'block'
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("modaldialog").style, {
+        display: "block"
       });
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('modaldialog').setAttribute('class', 'modal fade in');
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("modaldialog").setAttribute("class", "modal fade in");
     }
   }, {
     key: "loadwait",
@@ -8410,41 +8400,41 @@ var Project = /*#__PURE__*/function () {
         window.clearInterval(interval);
       }
       interval = null;
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('Project images retrieved from server', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec');
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("Project images retrieved from server", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec");
       Project.setLoadPage(pageid, whenDone);
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('load done', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec', '-- media missing = ', mediaCount);
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("load done", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec", "-- media missing = ", mediaCount);
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.resetPages();
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].runtime.beginTimer();
     }
   }, {
     key: "liftCurtain",
     value: function liftCurtain() {
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('backdrop').setAttribute('class', 'modal-backdrop fade');
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('backdrop').style, {
-        display: 'none'
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("backdrop").setAttribute("class", "modal-backdrop fade");
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("backdrop").style, {
+        display: "none"
       });
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('modaldialog').setAttribute('class', 'modal fade');
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('modaldialog').style, {
-        display: 'none'
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("modaldialog").setAttribute("class", "modal fade");
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("modaldialog").style, {
+        display: "none"
       });
     }
   }, {
     key: "setLoadPage",
     value: function setLoadPage(pageid, whenDone) {
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('setLoadPage', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec');
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("setLoadPage", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec");
       var pages = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.getPagesID();
       if (pages.indexOf(pageid) < 0) {
         _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.pages[0];
       } else {
         _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.getPage(pageid);
       }
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.div.style.visibility = 'visible';
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.div.style.visibility = "visible";
       var list = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.pages;
       for (var i = 0; i < list.length; i++) {
         if (_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage == list[i]) {
-          _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.setPageSprites('visible');
+          _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.setPageSprites("visible");
         } else {
-          list[i].setPageSprites('hidden');
+          list[i].setPageSprites("hidden");
         }
       }
       if (whenDone) {
@@ -8455,18 +8445,18 @@ var Project = /*#__PURE__*/function () {
     key: "loadData",
     value: function loadData(data, fcn) {
       try {
-        data = typeof data === 'string' ? JSON.parse(data) : data;
+        data = typeof data === "string" ? JSON.parse(data) : data;
         mediaCount = 0;
         Project.loadme(data, fcn);
         error = false;
       } catch (e) {
         console.log(e); //eslint-disable-line no-console
-        var errorMessage = 'Error -- project data corrupted.';
+        var errorMessage = "Error -- project data corrupted.";
         if (window.reloadDebug) {
-          document.write(e.message + '\n' + metadata['json']);
+          document.write(e.message + "\n" + metadata["json"]);
           return;
         }
-        _Alert__WEBPACK_IMPORTED_MODULE_2__["default"].open(_utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('flip'), errorMessage, '#ff0000');
+        _Alert__WEBPACK_IMPORTED_MODULE_2__["default"].open(_utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("flip"), errorMessage, "#ff0000");
         if (interval) {
           window.clearInterval(interval);
         }
@@ -8490,15 +8480,15 @@ var Project = /*#__PURE__*/function () {
     key: "getLoadType",
     value: function getLoadType(bkgid, sid, cid) {
       if (bkgid != null) {
-        return 'bkg';
+        return "bkg";
       }
       if (!cid) {
-        return 'none';
+        return "none";
       }
       if (sid && cid) {
-        return 'modify';
+        return "modify";
       }
-      return 'add';
+      return "add";
     }
 
     //////////////////////////////////////////////////
@@ -8507,7 +8497,7 @@ var Project = /*#__PURE__*/function () {
   }, {
     key: "recreate",
     value: function recreate(data) {
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log('Project data structures start loading', _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec');
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log("Project data structures start loading", _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec");
       mediaCount = 0;
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.pages = [];
       var pages = data.pages;
@@ -8521,13 +8511,13 @@ var Project = /*#__PURE__*/function () {
     key: "recreatePage",
     value: function recreatePage(name, data, fcn) {
       var page = new _engine_Page__WEBPACK_IMPORTED_MODULE_5__["default"](name, data, fcn);
-      page.div.style.visibility = 'hidden';
+      page.div.style.visibility = "hidden";
     }
   }, {
     key: "substractCount",
     value: function substractCount() {
       mediaCount--;
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('backdrop').className != 'modal-backdrop fade in' || mediaCountBase == 0) {
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("backdrop").className != "modal-backdrop fade in" || mediaCountBase == 0) {
         return;
       }
       Project.setProgress(Project.getMediaLoadRatio(70));
@@ -8539,15 +8529,15 @@ var Project = /*#__PURE__*/function () {
       //delete data.scripts;
       var spr;
       data.page = page;
-      if (data.type == 'sprite') {
+      if (data.type == "sprite") {
         mediaCount++;
         var fcn = function fcn(spr) {
           spr.setPos(data.xcoor, data.ycoor);
           mediaCount--;
-          if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('backdrop').className == 'modal-backdrop fade in') {
+          if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("backdrop").className == "modal-backdrop fade in") {
             Project.setProgress(Project.getMediaLoadRatio(70));
           }
-          _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log(spr.name, _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), 'sec');
+          _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].log(spr.name, _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getTime(), "sec");
           if (callBack) {
             callBack(spr);
           }
@@ -8557,7 +8547,7 @@ var Project = /*#__PURE__*/function () {
         }
         spr = new _engine_Sprite__WEBPACK_IMPORTED_MODULE_6__["default"](data, fcn);
         // load scripts
-        var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)(name + '_scripts').owner;
+        var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)(name + "_scripts").owner;
         for (var j = 0; j < list.length; j++) {
           sc.recreateStrip(list[j]);
         }
@@ -8580,10 +8570,10 @@ var Project = /*#__PURE__*/function () {
     key: "prepareToSave",
     value: function prepareToSave(id, whenDone) {
       if (saving) {
-        _Alert__WEBPACK_IMPORTED_MODULE_2__["default"].open(_utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('flip'), 'Waiting', '#28A5DA');
+        _Alert__WEBPACK_IMPORTED_MODULE_2__["default"].open(_utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("flip"), "Waiting", "#28A5DA");
         Project.waitUntilSaved(id, whenDone);
       } else {
-        _Alert__WEBPACK_IMPORTED_MODULE_2__["default"].open(_utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)('flip'), 'Saving', '#28A5DA');
+        _Alert__WEBPACK_IMPORTED_MODULE_2__["default"].open(_utils_lib__WEBPACK_IMPORTED_MODULE_11__.frame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.gn)("flip"), "Saving", "#28A5DA");
         Project.save(id, whenDone);
       }
     }
@@ -8605,9 +8595,9 @@ var Project = /*#__PURE__*/function () {
     key: "thumbnailUnique",
     value: function thumbnailUnique(thumbnailMD5, projectID, callback) {
       var json = {};
-      json.cond = 'deleted = ? AND id != ? AND gallery IS NULL';
-      json.items = ['name', 'thumbnail', 'id'];
-      json.values = ['NO', projectID];
+      json.cond = "deleted = ? AND id != ? AND gallery IS NULL";
+      json.items = ["name", "thumbnail", "id"];
+      json.values = ["NO", projectID];
       _tablet_IO__WEBPACK_IMPORTED_MODULE_8__["default"].query(_tablet_OS__WEBPACK_IMPORTED_MODULE_7__["default"].database, json, function (result) {
         var pdata = JSON.parse(result);
         var isUnique = true;
@@ -8615,7 +8605,7 @@ var Project = /*#__PURE__*/function () {
           var thispdata = _tablet_IO__WEBPACK_IMPORTED_MODULE_8__["default"].parseProjectData(pdata[p]);
           var th = thispdata.thumbnail;
           if (th) {
-            var thumb = typeof th == 'string' ? JSON.parse(th) : th;
+            var thumb = typeof th == "string" ? JSON.parse(th) : th;
             if (thumb && thumb.md5) {
               if (thumb.md5 == thumbnailMD5) {
                 isUnique = false;
@@ -8631,10 +8621,10 @@ var Project = /*#__PURE__*/function () {
     value: function save(id, whenDone) {
       saving = true;
       var th = metadata.thumbnail;
-      if (th && _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].editmode != 'storyStarter') {
+      if (th && _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].editmode != "storyStarter") {
         // Don't try to delete the thumbnail in a sample project
-        var thumb = typeof th === 'string' ? JSON.parse(th) : th;
-        if (thumb.md5.indexOf('samples/') < 0) {
+        var thumb = typeof th === "string" ? JSON.parse(th) : th;
+        if (thumb.md5.indexOf("samples/") < 0) {
           // In case we've exited story-starter mode
           Project.thumbnailUnique(thumb.md5, id, function (isUnique) {
             if (isUnique) {
@@ -8647,19 +8637,19 @@ var Project = /*#__PURE__*/function () {
       metadata.json = Project.getProject(_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.pages[0].id);
       Project.getThumbnailPNG(_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.pages[0], 192, 144, getMD5);
       function getMD5(dataurl) {
-        var pngBase64 = dataurl.split(',')[1];
+        var pngBase64 = dataurl.split(",")[1];
         _tablet_OS__WEBPACK_IMPORTED_MODULE_7__["default"].getmd5(pngBase64, function (str) {
           savePNG(str, pngBase64);
         });
       }
       function savePNG(md5, pngBase64) {
-        var filename = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].currentProject + '_' + md5;
-        _tablet_OS__WEBPACK_IMPORTED_MODULE_7__["default"].setmedianame(pngBase64, filename, 'png', doNext);
+        var filename = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].currentProject + "_" + md5;
+        _tablet_OS__WEBPACK_IMPORTED_MODULE_7__["default"].setmedianame(pngBase64, filename, "png", doNext);
       }
       function doNext(md5) {
         metadata.thumbnail = {
-          'pagecount': _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.pages.length,
-          'md5': md5
+          pagecount: _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.pages.length,
+          md5: md5
         };
         metadata.mtime = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.mTime)().toString();
         _tablet_IO__WEBPACK_IMPORTED_MODULE_8__["default"].saveProject(metadata, saveDone);
@@ -8696,9 +8686,9 @@ var Project = /*#__PURE__*/function () {
     key: "encodeStrip",
     value: function encodeStrip(b) {
       var res = [];
-      var hasargs = ['playsnd', 'gotopage', 'playusersnd', 'setcolor', 'onmessage', 'message', 'setspeed'];
-      var loops = ['repeat'];
-      var carets = ['caretcmd', 'caretend', 'caretstart'];
+      var hasargs = ["playsnd", "gotopage", "playusersnd", "setcolor", "onmessage", "message", "setspeed"];
+      var loops = ["repeat"];
+      var carets = ["caretcmd", "caretend", "caretstart"];
       while (b != null) {
         var bt = b.blocktype;
         // Don't encode carets in a strip
@@ -8706,13 +8696,13 @@ var Project = /*#__PURE__*/function () {
           b = b.next;
           continue;
         }
-        if (bt == 'caretrepeat') {
+        if (bt == "caretrepeat") {
           // Convert repeat carets to actual repeats for the encoding
-          bt = 'repeat';
+          bt = "repeat";
         }
         var arg = b.arg != null || hasargs.indexOf(bt) > -1 ? b.getArgValue() : null;
         if (!arg && arg != 0) {
-          arg = 'null';
+          arg = "null";
         }
         var dx = b.div.left / b.scale;
         var dy = b.div.top / b.scale;
@@ -8736,9 +8726,9 @@ var Project = /*#__PURE__*/function () {
       var scale = w / 480;
       var data = {};
       data.pagecount = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.pages.length;
-      var c = document.createElement('canvas');
+      var c = document.createElement("canvas");
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setCanvasSize)(c, w, h);
-      var ctx = c.getContext('2d');
+      var ctx = c.getContext("2d");
       var md5 = page.md5;
       ctx.fillStyle = window.Settings.stageColor;
       ctx.fillRect(0, 0, w, h);
@@ -8746,7 +8736,7 @@ var Project = /*#__PURE__*/function () {
         Project.drawSprites(page, scale, c, w, h, fcn);
       } else {
         var pcnv;
-        if (md5.substr(md5.length - 3) == 'png') {
+        if (md5.substr(md5.length - 3) == "png") {
           var bgimg = page.div.firstElementChild.firstElementChild;
           pcnv = Project.drawPNGInCanvas(bgimg, 480, 360);
         } else {
@@ -8759,18 +8749,18 @@ var Project = /*#__PURE__*/function () {
   }, {
     key: "drawPNGInCanvas",
     value: function drawPNGInCanvas(png, w, h) {
-      var srccnv = document.createElement('canvas');
+      var srccnv = document.createElement("canvas");
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setCanvasSize)(srccnv, w, h);
-      var ctx = srccnv.getContext('2d');
+      var ctx = srccnv.getContext("2d");
       ctx.drawImage(png, 0, 0, w, h);
       return srccnv;
     }
   }, {
     key: "drawSVGinCanvas",
     value: function drawSVGinCanvas(extxml, w, h) {
-      var srccnv = document.createElement('canvas');
+      var srccnv = document.createElement("canvas");
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_11__.setCanvasSize)(srccnv, w, h);
-      var ctx = srccnv.getContext('2d');
+      var ctx = srccnv.getContext("2d");
       for (var i = 0; i < extxml.childElementCount; i++) {
         _utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_10__["default"].drawLayer(extxml.childNodes[i], ctx, _utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_10__["default"].drawLayer);
       }
@@ -8780,8 +8770,8 @@ var Project = /*#__PURE__*/function () {
     key: "maskBorders",
     value: function maskBorders(ctx, w, h) {
       ctx.save();
-      ctx.globalCompositeOperation = 'destination-in';
-      if (window.Settings.edition != 'PBS') {
+      ctx.globalCompositeOperation = "destination-in";
+      if (window.Settings.edition != "PBS") {
         ctx.drawImage(_blocks_BlockSpecs__WEBPACK_IMPORTED_MODULE_1__["default"].projectThumb, 0, 0, w, h);
       }
       ctx.restore();
@@ -8789,12 +8779,12 @@ var Project = /*#__PURE__*/function () {
   }, {
     key: "drawSprites",
     value: function drawSprites(page, scale, c, w, h, fcn) {
-      var ctx = c.getContext('2d');
+      var ctx = c.getContext("2d");
       doNext(1);
       function doNext(n) {
         if (!(n < page.div.childElementCount)) {
-          Project.maskBorders(c.getContext('2d'), w, h);
-          fcn(c.toDataURL('image/png'));
+          Project.maskBorders(c.getContext("2d"), w, h);
+          fcn(c.toDataURL("image/png"));
         } else {
           var spr = page.div.childNodes[n].owner;
           if (!spr || !spr.shown) {
@@ -10089,29 +10079,27 @@ var ScriptsPane = /*#__PURE__*/function () {
   }, {
     key: "createScripts",
     value: function createScripts(parent) {
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.newHTML)('div', 'scripts', parent);
-      div.setAttribute('id', 'scripts');
-      watermark = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.newHTML)('div', 'watermark', div);
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.newHTML)("div", "scripts", parent);
+      div.setAttribute("id", "scripts");
+      watermark = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.newHTML)("div", "watermark", div);
       var h = Math.max((0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.getDocumentHeight)(), _utils_lib__WEBPACK_IMPORTED_MODULE_9__.frame.offsetHeight);
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.setCanvasSize)(div, div.offsetWidth, h - div.offsetTop);
-      scroll = new _Scroll__WEBPACK_IMPORTED_MODULE_6__["default"](div, 'scriptscontainer', div.offsetWidth, h - div.offsetTop, _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getActiveScript, _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getBlocks);
+      scroll = new _Scroll__WEBPACK_IMPORTED_MODULE_6__["default"](div, "scriptscontainer", div.offsetWidth, h - div.offsetTop, _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getActiveScript, _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getBlocks);
     }
   }, {
     key: "setActiveScript",
     value: function setActiveScript(sprname) {
-      var currentsc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(sprname + '_scripts');
+      var currentsc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(sprname + "_scripts");
       if (!currentsc) {
         // Sprite not found
         return;
       }
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.setCurrentSprite((0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(sprname).owner);
       currentsc.owner.activate();
-      window.setEventHandler('touchstart', function (evt) {
-        console.log('touchstart script block');
+      window.setEventHandler("touchstart", function (evt) {
         currentsc.owner.scriptsMouseDown(evt);
       }, currentsc.parentNode);
       currentsc.parentNode.onmousedown = function (evt) {
-        console.log('mousedown script block');
         currentsc.owner.scriptsMouseDown(evt);
       };
       scroll.update();
@@ -10127,7 +10115,7 @@ var ScriptsPane = /*#__PURE__*/function () {
         return;
       }
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].runtime.addRunScript(_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getSprite(), b);
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].startCurrentPageStrips(['ontouch']);
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].startCurrentPageStrips(["ontouch"]);
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].userStart = true;
     }
   }, {
@@ -10162,7 +10150,7 @@ var ScriptsPane = /*#__PURE__*/function () {
       my -= sy;
       mx -= sx;
       _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas = _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragthumbnail;
-      _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas.origin = 'scripts';
+      _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas.origin = "scripts";
       _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas.startx = mtx.m41;
       _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas.starty = mtx.m42;
       if (!_utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas.isReporter && _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas.parentNode) {
@@ -10195,7 +10183,6 @@ var ScriptsPane = /*#__PURE__*/function () {
   }, {
     key: "draggingBlock",
     value: function draggingBlock(e) {
-      console.log('dragging script block');
       e.preventDefault();
       var pt = _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].getTargetPoint(e);
       var dx = pt.x - _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragmousex;
@@ -10207,7 +10194,7 @@ var ScriptsPane = /*#__PURE__*/function () {
     key: "blockFeedback",
     value: function blockFeedback(dx, dy, e) {
       var script = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getActiveScript().owner;
-      var limit = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)('palette').parentNode.offsetTop + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)('palette').parentNode.offsetHeight;
+      var limit = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)("palette").parentNode.offsetTop + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)("palette").parentNode.offsetHeight;
       var ycor = dy + _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas.offsetHeight;
       if (ycor < limit) {
         script.removeCaret();
@@ -10217,16 +10204,16 @@ var ScriptsPane = /*#__PURE__*/function () {
       }
       var thumb;
       switch (_Palette__WEBPACK_IMPORTED_MODULE_3__["default"].getLandingPlace(script.dragList[0].div, e)) {
-        case 'library':
-          thumb = _Palette__WEBPACK_IMPORTED_MODULE_3__["default"].getHittedThumb(script.dragList[0].div, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)('spritecc'));
+        case "library":
+          thumb = _Palette__WEBPACK_IMPORTED_MODULE_3__["default"].getHittedThumb(script.dragList[0].div, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)("spritecc"));
           if (thumb && (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(thumb.owner).owner.type == _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getSprite().type) {
             _Thumbs__WEBPACK_IMPORTED_MODULE_2__["default"].quickHighlight(thumb);
           } else {
             thumb = undefined;
           }
-          for (var i = 0; i < (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)('spritecc').childElementCount; i++) {
-            var spr = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)('spritecc').childNodes[i];
-            if (spr.nodeName == 'FORM') {
+          for (var i = 0; i < (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)("spritecc").childElementCount; i++) {
+            var spr = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)("spritecc").childNodes[i];
+            if (spr.nodeName == "FORM") {
               continue;
             }
             if (thumb && thumb.id != spr.id) {
@@ -10247,29 +10234,28 @@ var ScriptsPane = /*#__PURE__*/function () {
     key: "dropBlock",
     value: function dropBlock(e, el) {
       e.preventDefault();
-      console.log('dropping script block');
       var sc = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getActiveScript();
       var spr = sc.owner.spr.id;
       var page = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage;
       switch (_Palette__WEBPACK_IMPORTED_MODULE_3__["default"].getLandingPlace(el, e)) {
-        case 'scripts':
+        case "scripts":
           var dx = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.localx)(sc, el.left);
           var dy = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.localy)(sc, el.top);
           ScriptsPane.blockDropped(sc, dx, dy);
           // Start the story if scripts is changed.
-          _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].storyStart('ScriptsPane.changed');
+          _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].storyStart("ScriptsPane.changed");
           break;
-        case 'library':
-          var thumb = _Palette__WEBPACK_IMPORTED_MODULE_3__["default"].getHittedThumb(el, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)('spritecc'));
+        case "library":
+          var thumb = _Palette__WEBPACK_IMPORTED_MODULE_3__["default"].getHittedThumb(el, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)("spritecc"));
           ScriptsPane.blockDropped(_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getActiveScript(), el.startx, el.starty);
           if (thumb && (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(thumb.owner).owner.type == (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(page.currentSpriteName).owner.type) {
-            _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].storyStart('ScriptsPane.dropBlock:library');
-            _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_8__["default"].sndFX('copy.wav');
+            _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].storyStart("ScriptsPane.dropBlock:library");
+            _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_8__["default"].sndFX("copy.wav");
             _Thumbs__WEBPACK_IMPORTED_MODULE_2__["default"].quickHighlight(thumb);
             setTimeout(function () {
               _Thumbs__WEBPACK_IMPORTED_MODULE_2__["default"].quickRestore(thumb);
             }, 300);
-            sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(thumb.owner + '_scripts').owner;
+            sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(thumb.owner + "_scripts").owner;
             var strip = _Project__WEBPACK_IMPORTED_MODULE_1__["default"].encodeStrip(el.owner);
             var firstblock = strip[0];
             var delta = sc.gettopblocks().length * 3;
@@ -10287,7 +10273,7 @@ var ScriptsPane = /*#__PURE__*/function () {
           break;
       }
       _Undo__WEBPACK_IMPORTED_MODULE_4__["default"].record({
-        action: 'scripts',
+        action: "scripts",
         where: page.id,
         who: spr
       });
@@ -10296,7 +10282,7 @@ var ScriptsPane = /*#__PURE__*/function () {
   }, {
     key: "blockDropped",
     value: function blockDropped(sc, dx, dy) {
-      _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas.style.zIndex = '';
+      _utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas.style.zIndex = "";
       var script = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getActiveScript().owner;
       ScriptsPane.cleanCarets();
       script.addBlockToScripts(_utils_Events__WEBPACK_IMPORTED_MODULE_5__["default"].dragcanvas, dx, dy);
@@ -10316,9 +10302,9 @@ var ScriptsPane = /*#__PURE__*/function () {
   }, {
     key: "removeLibCaret",
     value: function removeLibCaret() {
-      for (var i = 0; i < (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)('spritecc').childElementCount; i++) {
-        var spr = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)('spritecc').childNodes[i];
-        if (spr.nodeName == 'FORM') {
+      for (var i = 0; i < (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)("spritecc").childElementCount; i++) {
+        var spr = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)("spritecc").childNodes[i];
+        if (spr.nodeName == "FORM") {
           continue;
         }
         _Thumbs__WEBPACK_IMPORTED_MODULE_2__["default"].quickRestore(spr);
@@ -10367,20 +10353,16 @@ var ScriptsPane = /*#__PURE__*/function () {
       //     };
       // }
       // Now, set both touch and mouse events
-      window.setEventHandler('touchmove', function (evt) {
-        console.log('touchmove scripts bg');
+      window.setEventHandler("touchmove", function (evt) {
         fcnmove(evt);
       });
-      window.setEventHandler('touchend', function (evt) {
-        console.log('touchend scripts bg');
+      window.setEventHandler("touchend", function (evt) {
         fcnup(evt);
       });
       window.onmousemove = function (evt) {
-        console.log('mousemove scripts bg');
         fcnmove(evt);
       };
       window.onmouseup = function (evt) {
-        console.log('mouseup scripts bg');
         fcnup(evt);
       };
     }
@@ -10416,10 +10398,10 @@ var ScriptsPane = /*#__PURE__*/function () {
     key: "updateScriptsPageBlocks",
     value: function updateScriptsPageBlocks(list) {
       for (var j = 0; j < list.length; j++) {
-        if (!(0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(list[j] + '_scripts')) {
+        if (!(0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(list[j] + "_scripts")) {
           continue;
         }
-        var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(list[j] + '_scripts').owner;
+        var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_9__.gn)(list[j] + "_scripts").owner;
         if (!sc) {
           continue;
         }
@@ -12971,22 +12953,22 @@ var Undo = /*#__PURE__*/function () {
   }, {
     key: "setup",
     value: function setup(p) {
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)('div', 'controlundo', p);
-      div.setAttribute('id', 'undocontrols');
-      var lib = [['undo', Undo.prevStep], ['redo', Undo.nextStep]];
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)("div", "controlundo", p);
+      div.setAttribute("id", "undocontrols");
+      var lib = [["undo", Undo.prevStep], ["redo", Undo.nextStep]];
       for (var i = 0; i < lib.length; i++) {
-        Undo.newToggleClicky(div, 'id_', lib[i][0], lib[i][1]);
+        Undo.newToggleClicky(div, "id_", lib[i][0], lib[i][1]);
       }
       Undo.update();
     }
   }, {
     key: "newToggleClicky",
     value: function newToggleClicky(p, prefix, key, fcn) {
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)('div', key + 'button', p);
-      div.setAttribute('type', 'toggleclicky');
-      div.setAttribute('id', prefix + key);
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)("div", key + "button", p);
+      div.setAttribute("type", "toggleclicky");
+      div.setAttribute("id", prefix + key);
       if (fcn) {
-        window.setEventHandler('touchstart', function (evt) {
+        window.setEventHandler("touchstart", function (evt) {
           fcn(evt);
         }, div);
         div.onmousedown = function (evt) {
@@ -12998,7 +12980,6 @@ var Undo = /*#__PURE__*/function () {
   }, {
     key: "record",
     value: function record(obj) {
-      //console.log ("record", index, JSON.stringify(obj));
       if (_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getActiveScript()) {
         _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getActiveScript().owner.removeCaret();
       }
@@ -13036,12 +13017,12 @@ var Undo = /*#__PURE__*/function () {
         index--;
       }
       index--;
-      var snd = index < 0 ? 'boing.wav' : 'tap.wav';
+      var snd = index < 0 ? "boing.wav" : "tap.wav";
       _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_5__["default"].sndFX(snd);
       if (index < 0) {
         index = 0;
       } else {
-        Undo.smartRecreate('prev', buffer[index + 1], buffer[index]);
+        Undo.smartRecreate("prev", buffer[index + 1], buffer[index]);
       }
     }
   }, {
@@ -13055,12 +13036,12 @@ var Undo = /*#__PURE__*/function () {
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].unfocus();
       _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].time = e.timeStamp;
       index++;
-      var snd = index > buffer.length - 1 ? 'boing.wav' : 'tap.wav';
+      var snd = index > buffer.length - 1 ? "boing.wav" : "tap.wav";
       _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_5__["default"].sndFX(snd);
       if (index > buffer.length - 1) {
         index = buffer.length - 1;
       } else {
-        Undo.smartRecreate('next', buffer[index], buffer[index]);
+        Undo.smartRecreate("next", buffer[index], buffer[index]);
       }
     }
   }, {
@@ -13070,9 +13051,8 @@ var Undo = /*#__PURE__*/function () {
       var action = elem.action;
       var page = elem.where;
       var spr = elem.who;
-      //  console.log (action, page, spr);
       switch (action) {
-        case 'pageorder':
+        case "pageorder":
           _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.pages = Undo.getPageOrder(data);
           Undo.recreateAllScripts(data);
           _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.setPage((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(data.currentPage).owner, false);
@@ -13080,13 +13060,13 @@ var Undo = /*#__PURE__*/function () {
             _Palette__WEBPACK_IMPORTED_MODULE_3__["default"].selectCategory(5);
           }
           break;
-        case 'changepage':
+        case "changepage":
           _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.setPage((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(data.currentPage).owner, false);
           break;
-        case 'changebkg':
+        case "changebkg":
           (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(page).owner.redoChangeBkg(data);
           break;
-        case 'scripts':
+        case "scripts":
           Undo.redoScripts(data, page, spr);
           if (spr && (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr)) {
             (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(page).owner.setCurrentSprite((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr).owner); // sets the variables
@@ -13094,23 +13074,23 @@ var Undo = /*#__PURE__*/function () {
             _UI__WEBPACK_IMPORTED_MODULE_4__["default"].resetSpriteLibrary();
           }
           break;
-        case 'deletepage':
-        case 'addpage':
+        case "deletepage":
+        case "addpage":
           if (data[page]) {
             Undo.copyPage(data, page);
           } else {
             Undo.removePage(data, page);
           }
           break;
-        case 'deletesprite':
-        case 'copy':
+        case "deletesprite":
+        case "copy":
           if (data[page][spr]) {
             Undo.copySprite(data, page, spr);
           } else {
             Undo.removeSprite(data, page, spr);
           }
           break;
-        case 'deletesound':
+        case "deletesound":
           var sounds = data[page][spr].sounds.concat();
           (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr).owner.sounds = sounds;
           Undo.redoScripts(data, page, spr);
@@ -13118,7 +13098,7 @@ var Undo = /*#__PURE__*/function () {
             _Palette__WEBPACK_IMPORTED_MODULE_3__["default"].selectCategory(3);
           }
           break;
-        case 'recordsound':
+        case "recordsound":
           spr = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(data[page][spr].id).owner;
           if (elem.sound && spr.sounds.indexOf(elem.sound) > -1) {
             var indx = spr.sounds.indexOf(elem.sound);
@@ -13132,8 +13112,8 @@ var Undo = /*#__PURE__*/function () {
             _Palette__WEBPACK_IMPORTED_MODULE_3__["default"].selectCategory(3);
           }
           break;
-        case 'edittext': // sprite delete or add
-        case 'modify':
+        case "edittext": // sprite delete or add
+        case "modify":
           Undo.removeSprite(data, page, spr);
           if (data[page][spr]) {
             Undo.copySprite(data, page, spr);
@@ -13149,7 +13129,7 @@ var Undo = /*#__PURE__*/function () {
   }, {
     key: "copyPage",
     value: function copyPage(obj, page) {
-      var sc = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getSprite() ? (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.currentSpriteName + '_scripts') : undefined;
+      var sc = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].getSprite() ? (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.currentSpriteName + "_scripts") : undefined;
       if (sc) {
         sc.owner.deactivate();
       }
@@ -13191,10 +13171,10 @@ var Undo = /*#__PURE__*/function () {
           if (!spr) {
             continue;
           }
-          if (spr.type != 'sprite') {
+          if (spr.type != "sprite") {
             continue;
           }
-          var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr.id + '_scripts');
+          var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr.id + "_scripts");
           if (!sc) {
             continue;
           }
@@ -13226,7 +13206,7 @@ var Undo = /*#__PURE__*/function () {
   }, {
     key: "redoScripts",
     value: function redoScripts(data, page, spr) {
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr + '_scripts');
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr + "_scripts");
       while (div.childElementCount > 0) {
         div.removeChild(div.childNodes[0]);
       }
@@ -13241,9 +13221,9 @@ var Undo = /*#__PURE__*/function () {
     value: function copySprite(data, page, spr) {
       var obj = data[page][spr];
       var fcn = function fcn(spr) {
-        if (spr.type == 'sprite') {
+        if (spr.type == "sprite") {
           if (page == _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.id) {
-            spr.div.style.visibility = 'visible';
+            spr.div.style.visibility = "visible";
           }
           Undo.setSprite(page, data);
         } else {
@@ -13290,11 +13270,11 @@ var Undo = /*#__PURE__*/function () {
       list.splice(n, 1);
       pageobj.sprites = JSON.stringify(list);
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr).parentNode.removeChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr));
-      if (!(0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr + '_scripts')) {
+      if (!(0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr + "_scripts")) {
         _Thumbs__WEBPACK_IMPORTED_MODULE_1__["default"].updatePages();
         return;
       }
-      var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr + '_scripts');
+      var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(spr + "_scripts");
       if (sc) {
         sc.parentNode.removeChild(sc);
       }
@@ -13326,8 +13306,8 @@ var Undo = /*#__PURE__*/function () {
       } else {
         _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage = _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.getPage(pageid);
       }
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.div.style.visibility = 'visible';
-      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.setPageSprites('visible');
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.div.style.visibility = "visible";
+      _ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.setPageSprites("visible");
       tryCounter = 100;
       if (_Project__WEBPACK_IMPORTED_MODULE_2__["default"].mediaCount > 0) {
         setTimeout(function () {
@@ -13353,7 +13333,7 @@ var Undo = /*#__PURE__*/function () {
   }, {
     key: "flashIcon",
     value: function flashIcon(div, press) {
-      div.setAttribute('class', press);
+      div.setAttribute("class", press);
       setTimeout(function () {
         Undo.update();
       }, 1000);
@@ -13367,34 +13347,34 @@ var Undo = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update() {
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('id_undo')) {
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("id_undo")) {
         if (buffer.length == 1) {
-          Undo.tunOffButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('id_undo'));
+          Undo.tunOffButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("id_undo"));
         } else {
           if (index < 1) {
-            Undo.tunOffButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('id_undo'));
+            Undo.tunOffButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("id_undo"));
           } else {
-            Undo.tunOnButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('id_undo'));
+            Undo.tunOnButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("id_undo"));
           }
         }
         if (index >= buffer.length - 1) {
-          Undo.tunOffButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('id_redo'));
+          Undo.tunOffButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("id_redo"));
         } else {
-          Undo.tunOnButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('id_redo'));
+          Undo.tunOnButton((0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("id_redo"));
         }
       }
     }
   }, {
     key: "tunOnButton",
     value: function tunOnButton(kid) {
-      var kclass = kid.getAttribute('class').split(' ')[0];
-      kid.setAttribute('class', kclass + ' enable');
+      var kclass = kid.getAttribute("class").split(" ")[0];
+      kid.setAttribute("class", kclass + " enable");
     }
   }, {
     key: "tunOffButton",
     value: function tunOffButton(kid) {
-      var kclass = kid.getAttribute('class').split(' ')[0];
-      kid.setAttribute('class', kclass + ' disable');
+      var kclass = kid.getAttribute("class").split(" ")[0];
+      kid.setAttribute("class", kclass + " disable");
     }
   }]);
 }();
@@ -13495,20 +13475,20 @@ window.onload = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime
         // are asynchronously loaded. This is overwritten per HTML page below.
         entryFunction = function entryFunction() {}; // Root directory for includes. Needed in case we are in the inapp-help
         // directory (and root becomes '../')
-        root = './'; // scratchJrPage is defined in the HTML pages
+        root = "./"; // scratchJrPage is defined in the HTML pages
         page = window.scratchJrPage;
         params = new URLSearchParams(window.location.search);
         if (!window.studentAssignmentID) {
-          window.studentAssignmentID = params.get('student_assignment_id', null);
+          window.studentAssignmentID = params.get("student_assignment_id", null);
         }
         if (!window.itemID) {
-          window.itemID = params.get('item_id', null);
+          window.itemID = params.get("item_id", null);
         }
         if (window.setupTimeTracking && window.setActive) {
           window.setupTimeTracking();
-          window.addEventListener('mousemove', window.setActive);
-          window.addEventListener('touchstart', window.setActive);
-          window.addEventListener('keydown', window.setActive);
+          window.addEventListener("mousemove", window.setActive);
+          window.addEventListener("touchstart", window.setActive);
+          window.addEventListener("keydown", window.setActive);
         }
         _context.next = 9;
         return _tablet_WebDB_js__WEBPACK_IMPORTED_MODULE_6__.initDB();
@@ -13553,16 +13533,18 @@ window.onload = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime
         (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/librarymodal.css");
         (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.preprocessAndLoadCss)("css", "css/paintlook.css");
         entryFunction = function entryFunction() {
-          return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(function () {
-            if (shouldCreateNewProject) {
-              var obj = {};
-              obj.name = _utils_Localization__WEBPACK_IMPORTED_MODULE_1__["default"].localize("NEW_PROJECT_PREFIX") + " " + 1;
-              obj.version = window.Settings.scratchJrVersion;
-              obj.mtime = new Date().getTime().toString();
-              _tablet_IO__WEBPACK_IMPORTED_MODULE_4__["default"].createProject(obj, _editor__WEBPACK_IMPORTED_MODULE_9__.editorMain);
-            } else (0,_editor__WEBPACK_IMPORTED_MODULE_9__.editorMain)();
-          });
+          return _tablet_OS__WEBPACK_IMPORTED_MODULE_3__["default"].waitForInterface(_editor__WEBPACK_IMPORTED_MODULE_9__.editorMain);
         };
+        // entryFunction = () =>
+        //   OS.waitForInterface(() => {
+        //     if (shouldCreateNewProject) {
+        //       var obj = {};
+        //       obj.name = Localization.localize("NEW_PROJECT_PREFIX") + " " + 1;
+        //       obj.version = window.Settings.scratchJrVersion;
+        //       obj.mtime = new Date().getTime().toString();
+        //       IO.createProject(obj, editorMain);
+        //     } else editorMain();
+        //   });
         return _context.abrupt("break", 65);
       case 36:
         // Getting started video page
@@ -13783,15 +13765,14 @@ function homeMain() {
 function homeGoBack() {
   var params = new URLSearchParams();
   if (window.studentAssignmentID) {
-    params.append('student_assignment_id', window.studentAssignmentID);
+    params.append("student_assignment_id", window.studentAssignmentID);
   }
   if (window.itemID) {
-    params.append('item_id', window.itemID);
+    params.append("item_id", window.itemID);
   }
 
   // const url = 'index.html?back=yes&' + params.toString();
   // const url = 'index.html' + params.toString();
-  // console.log('####### url:', url);
   // window.location.href = url;
 }
 function homeStrings() {
@@ -14786,10 +14767,10 @@ var Home = /*#__PURE__*/function () {
       version = _Lobby__WEBPACK_IMPORTED_MODULE_0__["default"].version;
       // Home.gotoEditor(1);
 
-      frame = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('htmlcontents');
-      var inner = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'inner', frame);
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'scrollarea', inner);
-      div.setAttribute('id', 'scrollarea');
+      frame = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)("htmlcontents");
+      var inner = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "inner", frame);
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "scrollarea", inner);
+      div.setAttribute("id", "scrollarea");
       frame.ontouchstart = Home.handleTouchStart;
       frame.ontouchend = Home.handleTouchEnd;
       frame.onmousedown = Home.handleTouchStart;
@@ -14843,9 +14824,9 @@ var Home = /*#__PURE__*/function () {
   }, {
     key: "emptyProjectThumbnail",
     value: function emptyProjectThumbnail(parent) {
-      var tb = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'projectthumb', parent);
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'aproject empty', tb);
-      tb.id = 'newproject';
+      var tb = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "projectthumb", parent);
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "aproject empty", tb);
+      tb.id = "newproject";
     }
 
     //////////////////////////
@@ -14870,7 +14851,7 @@ var Home = /*#__PURE__*/function () {
       // if ((t.nodeName == "INPUT") || (t.nodeName == "FORM")) return;
       var mytarget = Home.getMouseTarget(e);
       if (mytarget != Home.actionTarget && Home.actionTarget && Home.actionTarget.childElementCount > 2) {
-        Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility = 'hidden';
+        Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility = "hidden";
       }
       Home.actionTarget = mytarget;
       Home.initialPt = Events.getTargetPoint(e);
@@ -14878,11 +14859,11 @@ var Home = /*#__PURE__*/function () {
         holdit(Home.actionTarget);
       }
       function holdit() {
-        window.setEventHandler('touchmove', Home.handleMove, frame);
+        window.setEventHandler("touchmove", Home.handleMove, frame);
         frame.onmousemove = Home.handleMove;
         var repeat = function repeat() {
           if (Home.actionTarget && Home.actionTarget.childElementCount > 2) {
-            Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility = 'visible';
+            Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility = "visible";
             Home.holding = true;
           }
         };
@@ -14916,7 +14897,7 @@ var Home = /*#__PURE__*/function () {
       if (t.parentNode && !t.parentNode.tagName) {
         return null;
       }
-      while (t.parentNode && t.parentNode != frame && t.parentNode.getAttribute('class') != 'scrollarea') {
+      while (t.parentNode && t.parentNode != frame && t.parentNode.getAttribute("class") != "scrollarea") {
         t = t.parentNode;
       }
       return !t.parentNode || t.parentNode == frame ? null : t;
@@ -14929,7 +14910,7 @@ var Home = /*#__PURE__*/function () {
       if (e.touches && e.touches.length > 1) {
         return;
       }
-      window.setEventHandler('touchmove', undefined, frame);
+      window.setEventHandler("touchmove", undefined, frame);
       frame.onmousemove = undefined;
       if (timeoutEvent) {
         clearTimeout(timeoutEvent);
@@ -14953,51 +14934,56 @@ var Home = /*#__PURE__*/function () {
       }
       var md5 = Home.actionTarget.id;
       switch (Home.getAction(e)) {
-        case 'project':
-          _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_5__["default"].sndFX('keydown.wav');
-          if (md5 && md5 == 'newproject') {
+        case "project":
+          _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_5__["default"].sndFX("keydown.wav");
+          if (md5 && md5 == "newproject") {
             Home.createNewProject();
           } else if (md5) {
-            _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].setfile('homescroll.sjr', (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('wrapc').scrollTop, function () {
-              doNext(md5);
-            });
+            // OS.setfile(
+            //         'homescroll.sjr',
+            //         gn('wrapc').scrollTop,
+            //         function () {
+            //             doNext(md5);
+            //         }
+            //     );
+            Home.gotoEditor(md5);
           }
           break;
-        case 'delete':
-          _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_5__["default"].sndFX('cut.wav');
+        case "delete":
+          _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_5__["default"].sndFX("cut.wav");
           _editor_ui_Project__WEBPACK_IMPORTED_MODULE_3__["default"].thumbnailUnique(Home.actionTarget.thumb, Home.actionTarget.id, function (isUnique) {
             if (isUnique) {
               _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].remove(Home.actionTarget.thumb, _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].trace);
             }
           });
-          _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].setfield(_tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].database, Home.actionTarget.id, 'deleted', 'YES', Home.removeProjThumb);
+          _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].setfield(_tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].database, Home.actionTarget.id, "deleted", "YES", Home.removeProjThumb);
           break;
         default:
           if (Home.actionTarget && Home.actionTarget.childElementCount > 2) {
-            Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility = 'hidden';
+            Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility = "hidden";
           }
           break;
       }
       function doNext() {
-        _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent('lobby', 'existing_project_edited');
+        _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent("lobby", "existing_project_edited");
         var params = new URLSearchParams();
         if (window.studentAssignmentID) {
-          params.append('student_assignment_id', window.studentAssignmentID);
+          params.append("student_assignment_id", window.studentAssignmentID);
         }
         if (window.itemID) {
-          params.append('item_id', window.itemID);
+          params.append("item_id", window.itemID);
         }
-        var url = 'editor.html?pmd5=' + md5 + '&mode=edit&' + params.toString();
+        var url = "editor.html?pmd5=" + md5 + "&mode=edit&" + params.toString();
         // window.location.href = url;
       }
     }
   }, {
     key: "createNewProject",
     value: function createNewProject() {
-      _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent('lobby', 'project_created');
+      _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent("lobby", "project_created");
       var obj = {};
       // XXX: for localization, the new project name should likely be refactored
-      obj.name = Home.getNextName(_utils_Localization__WEBPACK_IMPORTED_MODULE_4__["default"].localize('NEW_PROJECT_PREFIX'));
+      obj.name = Home.getNextName(_utils_Localization__WEBPACK_IMPORTED_MODULE_4__["default"].localize("NEW_PROJECT_PREFIX"));
       obj.version = version;
       obj.mtime = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.mTime)().toString();
       _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].createProject(obj, Home.gotoEditor);
@@ -15005,20 +14991,18 @@ var Home = /*#__PURE__*/function () {
   }, {
     key: "gotoEditor",
     value: function gotoEditor(md5) {
-      console.log(md5);
-      _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].setfile('homescroll.sjr', (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('wrapc').scrollTop, function () {
+      _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].setfile("homescroll.sjr", (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)("wrapc").scrollTop, function () {
         doNext(md5);
       });
       function doNext(md5) {
         var params = new URLSearchParams();
         if (window.studentAssignmentID) {
-          params.append('student_assignment_id', window.studentAssignmentID);
+          params.append("student_assignment_id", window.studentAssignmentID);
         }
         if (window.itemID) {
-          params.append('item_id', window.itemID);
+          params.append("item_id", window.itemID);
         }
-        var url = 'editor.html?pmd5=' + md5 + '&mode=edit&' + params.toString();
-        console.log('### gotoEditor url:', url);
+        var url = "editor.html?pmd5=" + md5 + "&mode=edit&" + params.toString();
         window.location.href = url;
       }
     }
@@ -15029,18 +15013,18 @@ var Home = /*#__PURE__*/function () {
     value: function getNextName(name) {
       // Just use 1, we are not using multiple projects right now
       var pn = [];
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('scrollarea');
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)("scrollarea");
       for (var i = 0; i < div.childElementCount; i++) {
-        if (div.childNodes[i].id == 'newproject') {
+        if (div.childNodes[i].id == "newproject") {
           continue;
         }
         pn.push(div.childNodes[i].childNodes[1].childNodes[0].textContent);
       }
       var n = 1;
-      while (pn.indexOf(name + ' ' + n) > -1) {
+      while (pn.indexOf(name + " " + n) > -1) {
         n++;
       }
-      return name + ' ' + n;
+      return name + " " + n;
     }
   }, {
     key: "removeProjThumb",
@@ -15054,9 +15038,9 @@ var Home = /*#__PURE__*/function () {
     key: "getAction",
     value: function getAction(e) {
       if (!Home.actionTarget) {
-        return 'none';
+        return "none";
       }
-      var shown = Home.actionTarget.childElementCount > 2 ? Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility == 'visible' : false;
+      var shown = Home.actionTarget.childElementCount > 2 ? Home.actionTarget.childNodes[Home.actionTarget.childElementCount - 1].style.visibility == "visible" : false;
       if (e && shown) {
         var t;
         if (window.event) {
@@ -15064,11 +15048,11 @@ var Home = /*#__PURE__*/function () {
         } else {
           t = e.target;
         }
-        if (t.getAttribute('class') == 'closex') {
-          return 'delete';
+        if (t.getAttribute("class") == "closex") {
+          return "delete";
         }
       }
-      return 'project';
+      return "project";
     }
 
     //////////////////////////
@@ -15077,36 +15061,42 @@ var Home = /*#__PURE__*/function () {
   }, {
     key: "displayYourProjects",
     value: function displayYourProjects() {
-      _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].getfile('homescroll.sjr', gotScrollsState);
+      _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].getfile("homescroll.sjr", gotScrollsState);
       function gotScrollsState(str) {
         var num = Number(atob(str));
-        scrollvalue = num.toString() == 'NaN' ? 0 : num;
+        scrollvalue = num.toString() == "NaN" ? 0 : num;
         var json = {};
-        json.cond = 'deleted = ? AND version = ? AND gallery IS NULL';
-        json.items = ['name', 'thumbnail', 'id', 'isgift'];
-        json.values = ['NO', version];
-        json.order = 'ctime desc';
+        json.cond = "deleted = ? AND version = ? AND gallery IS NULL";
+        json.items = ["id", "name", "thumbnail", "isgift"];
+        json.values = ["NO", version];
+        json.order = "ctime desc";
         _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].query(_tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].database, json, Home.displayProjects);
       }
     }
   }, {
     key: "displayProjects",
     value: function displayProjects(str) {
-      console.log('### Home.displayProjects str', str);
-      var data = JSON.parse(str);
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('scrollarea');
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)("scrollarea");
       while (div.childElementCount > 0) {
         div.removeChild(div.childNodes[0]);
       }
       Home.emptyProjectThumbnail(div);
-      for (var i = 0; i < data.length; i++) {
-        Home.addProjectLink(div, data[i]);
+      var data = JSON.parse(str);
+      if (data.length == 0) {
+        return;
+      }
+      var projectData = data[0].values;
+      for (var i = 0; i < projectData.length; i++) {
+        Home.addProjectLink(div, {
+          columns: data[0].columns,
+          values: [projectData[i]]
+        });
       }
       setTimeout(function () {
         _Lobby__WEBPACK_IMPORTED_MODULE_0__["default"].busy = false;
       }, 1000);
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('wrapc')) {
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)('wrapc').scrollTop = scrollvalue;
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)("wrapc")) {
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.gn)("wrapc").scrollTop = scrollvalue;
       }
     }
   }, {
@@ -15118,33 +15108,33 @@ var Home = /*#__PURE__*/function () {
       if (!th) {
         return;
       }
-      var thumb = typeof th === 'string' ? JSON.parse(th) : th;
+      var thumb = typeof th === "string" ? JSON.parse(th) : th;
       var pc = thumb.pagecount ? thumb.pagecount : 1;
-      var tb = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'projectthumb', parent);
-      tb.setAttribute('id', id);
-      tb.type = 'projectthumb';
+      var tb = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "projectthumb", parent);
+      tb.setAttribute("id", id);
+      tb.type = "projectthumb";
       tb.thumb = thumb.md5;
-      var mt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'aproject p' + pc, tb);
+      var mt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "aproject p" + pc, tb);
       Home.insertThumbnail(mt, 192, 144, thumb);
-      var label = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'projecttitle', tb);
-      var txt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('h4', undefined, label);
+      var label = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "projecttitle", tb);
+      var txt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("h4", undefined, label);
       txt.textContent = data.name;
-      var bow = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'share', tb);
-      var ribbonHorizontal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'ribbonHorizontal', tb);
-      var ribbonVertical = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'ribbonVertical', tb);
-      if (data.isgift != '0') {
+      var bow = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "share", tb);
+      var ribbonHorizontal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "ribbonHorizontal", tb);
+      var ribbonVertical = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "ribbonVertical", tb);
+      if (data.isgift != "0") {
         // If it's a gift, show the bow and ribbon
-        bow.style.visibility = 'visible';
-        ribbonHorizontal.style.visibility = 'visible';
-        ribbonVertical.style.visibility = 'visible';
+        bow.style.visibility = "visible";
+        ribbonHorizontal.style.visibility = "visible";
+        ribbonVertical.style.visibility = "visible";
       }
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('div', 'closex', tb);
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "closex", tb);
     }
   }, {
     key: "insertThumbnail",
     value: function insertThumbnail(p, w, h, data) {
       var md5 = data.md5;
-      var img = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)('img', undefined, p);
+      var img = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("img", undefined, p);
       if (md5) {
         _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].getAsset(md5, drawMe);
       }
@@ -15644,12 +15634,12 @@ var Samples = /*#__PURE__*/function () {
   return _createClass(Samples, null, [{
     key: "init",
     value: function init() {
-      frame = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('htmlcontents');
-      window.setEventHandler('touchstart', Samples.playHowTo, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('tabicon'));
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('tabicon').onclick = Samples.playHowTo;
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)('div', 'samples off', frame);
-      div.setAttribute('id', 'samples');
-      Samples.display('samples');
+      frame = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("htmlcontents");
+      window.setEventHandler("touchstart", Samples.playHowTo, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("tabicon"));
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("tabicon").onclick = Samples.playHowTo;
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)("div", "samples off", frame);
+      div.setAttribute("id", "samples");
+      Samples.display("samples");
     }
 
     ////////////////////////////
@@ -15660,15 +15650,15 @@ var Samples = /*#__PURE__*/function () {
     value: function playHowTo(e) {
       e.preventDefault();
       e.stopPropagation();
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_4__["default"].sndFX('tap.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_4__["default"].sndFX("tap.wav");
       var params = new URLSearchParams();
       if (window.studentAssignmentID) {
-        params.append('student_assignment_id', window.studentAssignmentID);
+        params.append("student_assignment_id", window.studentAssignmentID);
       }
       if (window.itemID) {
-        params.append('item_id', window.itemID);
+        params.append("item_id", window.itemID);
       }
-      var url = 'gettingstarted.html?place=help&' + params.toString();
+      var url = "gettingstarted.html?place=help&" + params.toString();
       window.location.href = url;
     }
 
@@ -15678,17 +15668,14 @@ var Samples = /*#__PURE__*/function () {
   }, {
     key: "display",
     value: function display(key) {
-      console.log('### Samples.display', key);
       var files = _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_3__["default"][key];
-      console.log('### Sample.display files', files);
       var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)(key);
       for (var i = 0; i < files.length; i++) {
         Samples.addLink(div, i, files[i]);
         Samples.requestFromServer(i, files[i], displayThumb);
       }
       function displayThumb(pos, str) {
-        console.log('### Samples.displayThumb', pos, str);
-        var mt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('sample-' + pos);
+        var mt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("sample-" + pos);
         var data = _tablet_IO__WEBPACK_IMPORTED_MODULE_2__["default"].parseProjectData(JSON.parse(str)[0]);
         var name = mt.childNodes[1];
 
@@ -15707,16 +15694,15 @@ var Samples = /*#__PURE__*/function () {
     value: function show() {
       _Lobby__WEBPACK_IMPORTED_MODULE_0__["default"].busy = false;
       frame.parentNode.scrollTop = 0;
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)('samples').className = 'samples on';
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.gn)("samples").className = "samples on";
     }
   }, {
     key: "loadMe",
     value: function loadMe(e, mt) {
-      console.log('### Samples.loadMe', e, mt);
       e.preventDefault();
       e.stopPropagation();
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_4__["default"].sndFX('tap.wav');
-      _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent('samples', 'sample_opened', mt.textContent);
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_4__["default"].sndFX("tap.wav");
+      _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].analyticsEvent("samples", "sample_opened", mt.textContent);
       var md5 = mt.md5;
       // const params = new URLSearchParams();
       // if (window.studentAssignmentID) {
@@ -15726,11 +15712,10 @@ var Samples = /*#__PURE__*/function () {
       //     params.append('item_id', window.itemID);
       // }
 
-      var url = 'editor.html?pmd5=' + md5 + '&mode=' + (window.Settings.useStoryStarters ? 'storyStarter' : 'look');
+      var url = "editor.html?pmd5=" + md5 + "&mode=" + (window.Settings.useStoryStarters ? "storyStarter" : "look");
       // '&' +
       // params.toString();
 
-      console.log('### Samples.loadMe url', url);
       window.location.href = url;
     }
   }, {
@@ -15738,36 +15723,35 @@ var Samples = /*#__PURE__*/function () {
     value: function insertThumbnail(img, data) {
       var md5 = data.md5;
       if (md5) {
-        img.style.backgroundImage = 'url(\'' + md5 + '\')';
+        img.style.backgroundImage = "url('" + md5 + "')";
       }
     }
   }, {
     key: "addLink",
     value: function addLink(parent, pos, md5) {
-      var tb = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)('div', 'samplethumb', parent);
-      tb.setAttribute('id', 'sample-' + pos);
+      var tb = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)("div", "samplethumb", parent);
+      tb.setAttribute("id", "sample-" + pos);
       tb.md5 = md5;
-      tb.type = 'samplethumb';
-      var mt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)('div', 'thumb pos' + pos, tb);
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)('div', 'woodframe', mt);
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)('div', 'sampleicon', mt);
-      var name = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)('p', undefined, tb);
-      name.textContent = 'Sample ' + pos;
+      tb.type = "samplethumb";
+      var mt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)("div", "thumb pos" + pos, tb);
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)("div", "woodframe", mt);
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)("div", "sampleicon", mt);
+      var name = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.newHTML)("p", undefined, tb);
+      name.textContent = "Sample " + pos;
     }
   }, {
     key: "requestFromServer",
     value: function requestFromServer(pos, url, whenDone) {
-      console.log('### Samples.requestFromServer', pos, url);
       url = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_6__.absoluteURL)(url);
       var xmlrequest = new XMLHttpRequest();
-      xmlrequest.addEventListener('error', transferFailed, false);
+      xmlrequest.addEventListener("error", transferFailed, false);
       xmlrequest.onreadystatechange = function () {
         if (xmlrequest.readyState == 4) {
-          console.log('### Samples.requestFromServer', pos, xmlrequest.responseText);
+          console.log("### Samples.requestFromServer", pos, xmlrequest.responseText);
           whenDone(pos, xmlrequest.responseText);
         }
       };
-      xmlrequest.open('GET', url, true);
+      xmlrequest.open("GET", url, true);
       xmlrequest.send(null);
       function transferFailed(e) {
         e.preventDefault();
@@ -17194,19 +17178,15 @@ var deltaPoint = {
   y: 0
 };
 function onTouchPinchStart(e) {
-  console.log('touchmove paint pinch');
   Paint.gestureStart(e);
 }
 function onMousePinchStart(e) {
-  console.log('mousemove paint pinch');
   Paint.gestureStart(e);
 }
 function onTouchMoveScroll(e) {
-  console.log('touchmove paint bg');
   Paint.dragBackground(e);
 }
 function onTouchEndScroll(e) {
-  console.log('touchend paint bg');
   Paint.bounceBack();
   Paint.setCanvasTransform(currentZoom);
   _PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].clearEvents();
@@ -17315,13 +17295,13 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "init",
     value: function init(w, h) {
-      paintFrame = document.getElementById('paintframe');
-      paintFrame.style.width = w + 'px';
-      paintFrame.style.height = h + 'px';
+      paintFrame = document.getElementById("paintframe");
+      paintFrame.style.width = w + "px";
+      paintFrame.style.height = h + "px";
       _editor_blocks_BlockSpecs__WEBPACK_IMPORTED_MODULE_1__["default"].loadCount++;
-      _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].requestFromServer('assets/paint/splash.svg', Paint.setSplash);
+      _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].requestFromServer("assets/paint/splash.svg", Paint.setSplash);
       _editor_blocks_BlockSpecs__WEBPACK_IMPORTED_MODULE_1__["default"].loadCount++;
-      _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].requestFromServer('assets/paint/splashshade.svg', Paint.setSplashShade);
+      _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].requestFromServer("assets/paint/splashshade.svg", Paint.setSplashShade);
     }
   }, {
     key: "setSplash",
@@ -17333,29 +17313,28 @@ var Paint = /*#__PURE__*/function () {
     key: "setSplashShade",
     value: function setSplashShade(str) {
       _editor_blocks_BlockSpecs__WEBPACK_IMPORTED_MODULE_1__["default"].loadCount--;
-      splashshade = 'data:image/svg+xml;base64,' + btoa(str);
+      splashshade = "data:image/svg+xml;base64," + btoa(str);
     }
   }, {
     key: "open",
     value: function open(bkg, md5, sname, cname, cscale, sw, sh) {
-      console.log('open (function)');
-      var action = '';
-      var label = '';
+      var action = "";
+      var label = "";
       // Analytics:
       // * md3: name of the asset, an md5 hash for user generated, filename for library items
       // * sname: is not set for a new character (ignored for backgrounds)
       // log two events:
       // * paint editor is opened
       // * type of edit (edit_background, edit_character, new_character)
-      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].analyticsEvent('paint_editor', 'paint_editor_open');
+      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].analyticsEvent("paint_editor", "paint_editor_open");
       if (bkg) {
-        action = 'edit_background';
-        label = md5 in _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_7__["default"].keys ? md5 : 'user_background';
+        action = "edit_background";
+        label = md5 in _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_7__["default"].keys ? md5 : "user_background";
       } else {
-        action = sname ? 'edit_character' : 'new_character';
-        label = md5 in _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_7__["default"].keys ? md5 : 'user_character';
+        action = sname ? "edit_character" : "new_character";
+        label = md5 in _tablet_MediaLib__WEBPACK_IMPORTED_MODULE_7__["default"].keys ? md5 : "user_character";
       }
-      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].analyticsEvent('paint_editor', action, label);
+      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].analyticsEvent("paint_editor", action, label);
       _PaintUndo__WEBPACK_IMPORTED_MODULE_13__["default"].buffer = [];
       _PaintUndo__WEBPACK_IMPORTED_MODULE_13__["default"].index = 0;
       maxZoom = 5;
@@ -17363,8 +17342,8 @@ var Paint = /*#__PURE__*/function () {
       workspaceWidth = 432;
       workspaceHeight = 384;
       Paint.clearWorkspace();
-      _utils_lib__WEBPACK_IMPORTED_MODULE_18__.frame.style.display = 'none';
-      paintFrame.className = 'paintframe appear';
+      _utils_lib__WEBPACK_IMPORTED_MODULE_18__.frame.style.display = "none";
+      paintFrame.className = "paintframe appear";
       currentMd5 = md5;
       isBkg = bkg;
       spriteId = sname;
@@ -17377,13 +17356,13 @@ var Paint = /*#__PURE__*/function () {
       } else {
         Paint.initSprite(sw, sh);
       }
-      window.addEventListener('touchstart', Paint.detectGesture);
-      window.addEventListener('mousedown', Paint.detectGesture);
+      window.addEventListener("touchstart", Paint.detectGesture);
+      window.addEventListener("mousedown", Paint.detectGesture);
       window.ondevicemotion = undefined;
 
       // Set the back button callback
       _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].onBackButtonCallback.push(function () {
-        var e = document.createEvent('TouchEvent');
+        var e = document.createEvent("TouchEvent");
         e.initTouchEvent();
         Paint.backToProject(e);
       });
@@ -17419,8 +17398,8 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "clearEvents",
     value: function clearEvents(e) {
-      window.setEventHandler('touchmove', undefined);
-      window.setEventHandler('touchend', undefined);
+      window.setEventHandler("touchmove", undefined);
+      window.setEventHandler("touchend", undefined);
       window.onmousemove = undefined;
       window.onmouseup = undefined;
       if (_PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].currentshape) {
@@ -17446,14 +17425,12 @@ var Paint = /*#__PURE__*/function () {
       }
       _Ghost__WEBPACK_IMPORTED_MODULE_4__["default"].clearLayer();
       initialPoint = _PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].getScreenPt(e);
-      window.addEventListener('touchmove', onTouchMoveScroll);
-      window.addEventListener('touchend', onTouchEndScroll);
+      window.addEventListener("touchmove", onTouchMoveScroll);
+      window.addEventListener("touchend", onTouchEndScroll);
       window.onmousemove = function (evt) {
-        console.log('mousemove paint bg');
         Paint.dragBackground(evt);
       };
       window.onmouseup = function () {
-        console.log('mouseup paint bg');
         Paint.bounceBack();
         Paint.setCanvasTransform(currentZoom);
         _PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].clearEvents();
@@ -17467,15 +17444,15 @@ var Paint = /*#__PURE__*/function () {
       if (_PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].currentshape) {
         return;
       }
-      window.addEventListener('touchmove', onTouchPinchStart);
+      window.addEventListener("touchmove", onTouchPinchStart);
       window.onmousemove = onMousePinchStart;
     }
   }, {
     key: "gestureStart",
     value: function gestureStart(e) {
-      window.setEventHandler('touchmove', undefined);
-      window.setEventHandler('mousemove', undefined);
-      var skipmodes = ['path', 'ellipse', 'rect'];
+      window.setEventHandler("touchmove", undefined);
+      window.setEventHandler("mousemove", undefined);
+      var skipmodes = ["path", "ellipse", "rect"];
       if (skipmodes.indexOf(mode) > -1) {
         if (_PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].currentshape && _PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].currentshape.parentNode) {
           _PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].currentshape.parentNode.removeChild(_PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].currentshape);
@@ -17487,8 +17464,8 @@ var Paint = /*#__PURE__*/function () {
       initialPoint = _PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].zoomPt(_utils_Events__WEBPACK_IMPORTED_MODULE_15__["default"].pinchcenter);
       _utils_Events__WEBPACK_IMPORTED_MODULE_15__["default"].clearEvents();
       _utils_Events__WEBPACK_IMPORTED_MODULE_15__["default"].clearDragAndDrop();
-      window.addEventListener('touchmove', Paint.gestureChange);
-      window.addEventListener('touchend', Paint.gestureEnd);
+      window.addEventListener("touchmove", Paint.gestureChange);
+      window.addEventListener("touchend", Paint.gestureEnd);
       window.onmousemove = Paint.gestureChange;
       window.onmouseup = Paint.gestureEnd;
     }
@@ -17496,10 +17473,9 @@ var Paint = /*#__PURE__*/function () {
     key: "gestureChange",
     value: function gestureChange(e) {
       e.preventDefault();
-      console.log('gestureChange');
       var scale = Math.min(maxZoom, _utils_Events__WEBPACK_IMPORTED_MODULE_15__["default"].scaleStartsAt * _utils_Events__WEBPACK_IMPORTED_MODULE_15__["default"].zoomScale(e));
       scale = Math.max(minZoom, scale);
-      var mc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas');
+      var mc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas");
       var w = mc.offsetWidth * scale;
       var h = mc.offsetHeight * scale;
       var size = Math.min(w, h);
@@ -17515,9 +17491,8 @@ var Paint = /*#__PURE__*/function () {
     key: "gestureEnd",
     value: function gestureEnd(e) {
       e.preventDefault();
-      console.log('gestureChange');
-      window.removeEventListener('touchmove', Paint.gestureChange);
-      window.removeEventListener('touchend', Paint.gestureEnd);
+      window.removeEventListener("touchmove", Paint.gestureChange);
+      window.removeEventListener("touchend", Paint.gestureEnd);
       var scale = Math.min(maxZoom, _utils_Events__WEBPACK_IMPORTED_MODULE_15__["default"].scaleStartsAt * _utils_Events__WEBPACK_IMPORTED_MODULE_15__["default"].zoomScale(e));
       scale = Math.max(minZoom, scale);
       Paint.updateZoomScale(scale);
@@ -17533,7 +17508,7 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "canvasFits",
     value: function canvasFits() {
-      return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').offsetWidth * currentZoom <= (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('workspacebkg').offsetWidth && (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').offsetHeight * currentZoom <= (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('workspacebkg').offsetHeight;
+      return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").offsetWidth * currentZoom <= (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("workspacebkg").offsetWidth && (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").offsetHeight * currentZoom <= (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("workspacebkg").offsetHeight;
     }
   }, {
     key: "mouseDown",
@@ -17541,10 +17516,8 @@ var Paint = /*#__PURE__*/function () {
       if (e.target.ontouchstart) {
         return;
       }
-      console.log('Paint.mouseDown');
-      console.log(e);
       var pt = _utils_Events__WEBPACK_IMPORTED_MODULE_15__["default"].getTargetPoint(e);
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.hitRect)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('donecheck'), pt)) {
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.hitRect)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("donecheck"), pt)) {
         Paint.backToProject(e);
       } else {
         _PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].mouseDown(e);
@@ -17558,15 +17531,15 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "close",
     value: function close() {
-      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].analyticsEvent('paint_editor', 'paint_editor_close');
+      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].analyticsEvent("paint_editor", "paint_editor_close");
       saving = true;
-      paintFrame.className = 'paintframe disappear';
-      _utils_lib__WEBPACK_IMPORTED_MODULE_18__.frame.style.display = 'block';
+      paintFrame.className = "paintframe disappear";
+      _utils_lib__WEBPACK_IMPORTED_MODULE_18__.frame.style.display = "block";
       _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].editorEvents();
-      window.removeEventListener('touchstart', Paint.detectGesture);
-      window.removeEventListener('mousedown', Paint.detectGesture);
-      window.setEventHandler('touchmove', undefined);
-      window.setEventHandler('touchend', undefined);
+      window.removeEventListener("touchstart", Paint.detectGesture);
+      window.removeEventListener("mousedown", Paint.detectGesture);
+      window.setEventHandler("touchmove", undefined);
+      window.setEventHandler("touchend", undefined);
       window.onmousemove = undefined;
       window.onmouseup = undefined;
       _editor_ui_Alert__WEBPACK_IMPORTED_MODULE_9__["default"].close();
@@ -17581,7 +17554,6 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "backToProject",
     value: function backToProject(e) {
-      console.log('back to project');
       e.preventDefault();
       e.stopPropagation();
       if (saving) {
@@ -17597,7 +17569,7 @@ var Paint = /*#__PURE__*/function () {
       _Camera__WEBPACK_IMPORTED_MODULE_14__["default"].close();
       _PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].clearDragGroup();
       _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].unfocus();
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX('tap.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX("tap.wav");
       if (spriteId == null && currentName == null) {
         Paint.savePageImage(Paint.changePage);
       } else {
@@ -17610,7 +17582,7 @@ var Paint = /*#__PURE__*/function () {
     value: function saveEditState() {
       _Camera__WEBPACK_IMPORTED_MODULE_14__["default"].close();
       _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].unfocus();
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX('tap.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX("tap.wav");
       if (spriteId == null && currentName == null) {
         Paint.savePageImage();
       } else {
@@ -17639,24 +17611,24 @@ var Paint = /*#__PURE__*/function () {
       }
       _Path__WEBPACK_IMPORTED_MODULE_12__["default"].quitEditMode();
       if (_Camera__WEBPACK_IMPORTED_MODULE_14__["default"].active) {
-        _Camera__WEBPACK_IMPORTED_MODULE_14__["default"].doAction(t.getAttribute('key'));
+        _Camera__WEBPACK_IMPORTED_MODULE_14__["default"].doAction(t.getAttribute("key"));
       } else {
-        var tools = ['select', 'rotate', 'stamper', 'scissors', 'camera', 'paintbucket'];
-        if (tools.indexOf(t.getAttribute('key')) > -1) {
-          _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX('tap.wav');
+        var tools = ["select", "rotate", "stamper", "scissors", "camera", "paintbucket"];
+        if (tools.indexOf(t.getAttribute("key")) > -1) {
+          _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX("tap.wav");
         }
-        Paint.selectButton(t.getAttribute('key'));
+        Paint.selectButton(t.getAttribute("key"));
       }
     }
   }, {
     key: "selectButton",
     value: function selectButton(str) {
-      Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('painttools'), str);
-      Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('selectortools'), str);
-      Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('edittools'), str);
-      Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('filltools'), str);
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('stamps')) {
-        Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('stamps'), str);
+      Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("painttools"), str);
+      Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("selectortools"), str);
+      Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("edittools"), str);
+      Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("filltools"), str);
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("stamps")) {
+        Paint.selectButtonFromDiv((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("stamps"), str);
       }
       mode = str;
       Paint.selectPenSize(pensizes.indexOf(strokewidth));
@@ -17666,15 +17638,15 @@ var Paint = /*#__PURE__*/function () {
     value: function selectButtonFromDiv(p, str) {
       for (var i = 0; i < p.childElementCount; i++) {
         var elem = p.childNodes[i];
-        if (elem.childNodes[0].getAttribute('key') == str) {
-          elem.setAttribute('class', Paint.getClass(elem, 'on'));
-          if (elem.childNodes[0].getAttribute('class')) {
-            elem.childNodes[0].setAttribute('class', Paint.getClass(elem.childNodes[0], 'on'));
+        if (elem.childNodes[0].getAttribute("key") == str) {
+          elem.setAttribute("class", Paint.getClass(elem, "on"));
+          if (elem.childNodes[0].getAttribute("class")) {
+            elem.childNodes[0].setAttribute("class", Paint.getClass(elem.childNodes[0], "on"));
           }
         } else {
-          elem.setAttribute('class', Paint.getClass(elem, 'off'));
-          if (elem.childNodes[0].getAttribute('class')) {
-            elem.childNodes[0].setAttribute('class', Paint.getClass(elem.childNodes[0], 'off'));
+          elem.setAttribute("class", Paint.getClass(elem, "off"));
+          if (elem.childNodes[0].getAttribute("class")) {
+            elem.childNodes[0].setAttribute("class", Paint.getClass(elem.childNodes[0], "off"));
           }
         }
       }
@@ -17682,10 +17654,10 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "getClass",
     value: function getClass(elem, state) {
-      var list = elem.getAttribute('class').split(' ');
+      var list = elem.getAttribute("class").split(" ");
       list.pop();
       list.push(state);
-      return list.join(' ');
+      return list.join(" ");
     }
 
     //Zoom Management
@@ -17709,60 +17681,60 @@ var Paint = /*#__PURE__*/function () {
     value: function setCanvasTransform(value) {
       if (_utils_lib__WEBPACK_IMPORTED_MODULE_18__.isAndroid) {
         // Use 3D translate to increase speed
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').style.webkitTransform = 'translate3d(' + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dx + 'px,' + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dy + 'px, 0px) scale(' + value + ',' + value + ')';
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").style.webkitTransform = "translate3d(" + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dx + "px," + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dy + "px, 0px) scale(" + value + "," + value + ")";
       } else {
         // Use 2D translate to maintain sharpness
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').style.webkitTransform = 'translate(' + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dx + 'px,' + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dy + 'px) scale(' + value + ',' + value + ')';
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").style.webkitTransform = "translate(" + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dx + "px," + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dy + "px) scale(" + value + "," + value + ")";
       }
     }
   }, {
     key: "adjustPos",
     value: function adjustPos(delta) {
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dx += delta.x;
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dy += delta.y;
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dx += delta.x;
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dy += delta.y;
       Paint.setCanvasTransform(currentZoom);
     }
   }, {
     key: "bounceBack",
     value: function bounceBack() {
-      var mx = Math.floor(((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('workspacebkg').offsetWidth - workspaceWidth) / 2);
-      var my = Math.floor(((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('workspacebkg').offsetHeight - workspaceHeight) / 2);
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dx = Paint.canvasFits() ? mx : Paint.getCoorx(20, mx);
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dy = Paint.canvasFits() ? my : Paint.getCoory(20, my);
+      var mx = Math.floor(((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("workspacebkg").offsetWidth - workspaceWidth) / 2);
+      var my = Math.floor(((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("workspacebkg").offsetHeight - workspaceHeight) / 2);
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dx = Paint.canvasFits() ? mx : Paint.getCoorx(20, mx);
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dy = Paint.canvasFits() ? my : Paint.getCoory(20, my);
     }
   }, {
     key: "getCoorx",
     value: function getCoorx(indent, val) {
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').offsetWidth * currentZoom <= (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('workspacebkg').offsetWidth) {
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").offsetWidth * currentZoom <= (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("workspacebkg").offsetWidth) {
         return val;
       }
-      var dx = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dx + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').cx - (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').cx * currentZoom;
+      var dx = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dx + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").cx - (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").cx * currentZoom;
       if (dx > indent) {
-        return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dx + (indent - dx);
+        return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dx + (indent - dx);
       }
-      val = (dx / currentZoom + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').offsetWidth) * currentZoom;
-      var edge = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('workspacebkg').offsetWidth - indent;
+      val = (dx / currentZoom + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").offsetWidth) * currentZoom;
+      var edge = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("workspacebkg").offsetWidth - indent;
       if (val < edge) {
-        return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dx + (edge - val);
+        return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dx + (edge - val);
       }
-      return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dx;
+      return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dx;
     }
   }, {
     key: "getCoory",
     value: function getCoory(indent, val) {
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').offsetHeight * currentZoom <= (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('workspacebkg').offsetHeight) {
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").offsetHeight * currentZoom <= (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("workspacebkg").offsetHeight) {
         return val;
       }
-      var dy = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dy + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').cy - (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').cy * currentZoom;
+      var dy = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dy + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").cy - (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").cy * currentZoom;
       if (dy > indent) {
-        return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dy + (indent - dy);
+        return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dy + (indent - dy);
       }
-      val = (dy / currentZoom + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').offsetHeight) * currentZoom;
-      var edge = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('workspacebkg').offsetHeight - indent;
+      val = (dy / currentZoom + (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").offsetHeight) * currentZoom;
+      var edge = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("workspacebkg").offsetHeight - indent;
       if (val < edge) {
-        return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dy + (edge - val);
+        return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dy + (edge - val);
       }
-      return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas').dy;
+      return (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas").dy;
     }
   }, {
     key: "scaleToFit",
@@ -17794,14 +17766,14 @@ var Paint = /*#__PURE__*/function () {
     key: "layout",
     value: function layout() {
       Paint.topbar();
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'innerpaint', paintFrame);
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "innerpaint", paintFrame);
       Paint.leftPalette(div);
-      var workspaceContainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'workspacebkg-container', div);
-      var workspace = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'workspacebkg', workspaceContainer);
-      workspace.setAttribute('id', 'workspacebkg');
+      var workspaceContainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "workspacebkg-container", div);
+      var workspace = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "workspacebkg", workspaceContainer);
+      workspace.setAttribute("id", "workspacebkg");
       Paint.rightPalette(div);
       Paint.colorPalette(paintFrame);
-      Paint.selectButton('path');
+      Paint.selectButton("path");
       Paint.createSVGeditor(workspace);
     }
 
@@ -17811,7 +17783,7 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "topbar",
     value: function topbar() {
-      var pt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'paintop', paintFrame);
+      var pt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "paintop", paintFrame);
       Paint.checkMark(pt);
       _PaintUndo__WEBPACK_IMPORTED_MODULE_13__["default"].setup(pt); // plug here the undo
       Paint.nameOfcostume(pt);
@@ -17819,20 +17791,20 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "checkMark",
     value: function checkMark(pt) {
-      var clicky = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'paintdone', pt);
-      clicky.id = 'donecheck';
-      clicky.addEventListener('touchstart', Paint.backToProject);
-      clicky.addEventListener('mousedown', Paint.backToProject);
+      var clicky = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "paintdone", pt);
+      clicky.id = "donecheck";
+      clicky.addEventListener("touchstart", Paint.backToProject);
+      clicky.addEventListener("mousedown", Paint.backToProject);
     }
   }, {
     key: "nameOfcostume",
     value: function nameOfcostume(p) {
-      var sform = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('form', 'spriteform', p);
-      sform.name = 'spriteform';
-      var ti = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('input', undefined, sform);
+      var sform = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("form", "spriteform", p);
+      sform.name = "spriteform";
+      var ti = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("input", undefined, sform);
       ti.autocomplete = false;
       ti.autocorrect = false;
-      ti.name = 'name';
+      ti.name = "name";
       ti.maxLength = 25;
       ti.firstTime = true;
       ti.ontouchstart = function () {};
@@ -17873,7 +17845,7 @@ var Paint = /*#__PURE__*/function () {
       var ti = e.target;
       var val = _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].validate(ti.value, spr.name);
       ti.value = val.substring(0, ti.maxLength);
-      _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].storyStart('Paint.nameBlur');
+      _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].storyStart("Paint.nameBlur");
     }
   }, {
     key: "handleNamePress",
@@ -17885,10 +17857,10 @@ var Paint = /*#__PURE__*/function () {
         var ti = e.target;
         if (ti.firstTime) {
           ti.firstTime = false;
-          ti.value = '';
+          ti.value = "";
         }
         if (ti.value.length == 25) {
-          _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX('boing.wav');
+          _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX("boing.wav");
         }
       }
     }
@@ -17902,7 +17874,7 @@ var Paint = /*#__PURE__*/function () {
       }
       if (ti.firstTime) {
         ti.firstTime = false;
-        ti.value = '';
+        ti.value = "";
       }
     }
 
@@ -17912,34 +17884,34 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "leftPalette",
     value: function leftPalette(div) {
-      var leftpal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'side up', div);
-      var pal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'paintpalette', leftpal);
-      pal.setAttribute('id', 'paintpalette');
+      var leftpal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "side up", div);
+      var pal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "paintpalette", leftpal);
+      pal.setAttribute("id", "paintpalette");
       Paint.setupEditPalette(pal);
       Paint.createSizeSelector(pal);
     }
   }, {
     key: "setupEditPalette",
     value: function setupEditPalette(pal) {
-      var section = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'section', pal);
-      section.setAttribute('id', 'painttools');
-      var list = ['path', 'ellipse', 'rect', 'tri'];
+      var section = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "section", pal);
+      section.setAttribute("id", "painttools");
+      var list = ["path", "ellipse", "rect", "tri"];
       var i = 0;
       for (i = 0; i < list.length; i++) {
-        var but = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'element off', section);
-        var icon = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'tool ' + list[i] + ' off', but);
-        icon.setAttribute('key', list[i]);
-        icon.addEventListener('touchstart', Paint.setMode);
-        icon.addEventListener('mousedown', Paint.setMode);
+        var but = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "element off", section);
+        var icon = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "tool " + list[i] + " off", but);
+        icon.setAttribute("key", list[i]);
+        icon.addEventListener("touchstart", Paint.setMode);
+        icon.addEventListener("mousedown", Paint.setMode);
       }
     }
   }, {
     key: "createSizeSelector",
     value: function createSizeSelector(pal) {
-      var section = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'section space', pal);
-      section.setAttribute('id', 'sizeSelector');
+      var section = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "section space", pal);
+      section.setAttribute("id", "sizeSelector");
       for (var i = 0; i < pensizes.length; i++) {
-        var ps = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'pensizeholder', section);
+        var ps = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "pensizeholder", section);
         ps.key = i;
         var setSize = function setSize(e) {
           e.preventDefault();
@@ -17948,9 +17920,9 @@ var Paint = /*#__PURE__*/function () {
           strokewidth = pensizes[Number(this.key)];
           Paint.selectPenSize(n);
         };
-        ps.addEventListener('touchstart', setSize);
-        ps.addEventListener('mousedown', setSize);
-        var c = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'line t' + i, ps);
+        ps.addEventListener("touchstart", setSize);
+        ps.addEventListener("mousedown", setSize);
+        var c = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "line t" + i, ps);
         Paint.drawPenSizeInColor(c);
       }
       strokewidth = pensizes[1];
@@ -17968,7 +17940,7 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "updateStrokes",
     value: function updateStrokes() {
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('sizeSelector');
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("sizeSelector");
       if (!div) {
         return;
       }
@@ -17980,13 +17952,13 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "selectPenSize",
     value: function selectPenSize(str) {
-      var p = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('sizeSelector');
+      var p = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("sizeSelector");
       for (var i = 0; i < p.childElementCount; i++) {
         var elem = p.childNodes[i];
         if (elem.key == str) {
-          elem.setAttribute('class', 'pensizeholder on');
+          elem.setAttribute("class", "pensizeholder on");
         } else {
-          elem.setAttribute('class', 'pensizeholder off');
+          elem.setAttribute("class", "pensizeholder off");
         }
       }
     }
@@ -17997,79 +17969,79 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "rightPalette",
     value: function rightPalette(div) {
-      var rightpal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'side', div);
-      Paint.addSidePalette(rightpal, 'selectortools', ['select', 'rotate']);
-      Paint.addSidePalette(rightpal, 'edittools', ['stamper', 'scissors']);
-      Paint.addSidePalette(rightpal, 'filltools', _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].camera == '1' && _Camera__WEBPACK_IMPORTED_MODULE_14__["default"].available ? ['camera', 'paintbucket'] : ['paintbucket']);
+      var rightpal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "side", div);
+      Paint.addSidePalette(rightpal, "selectortools", ["select", "rotate"]);
+      Paint.addSidePalette(rightpal, "edittools", ["stamper", "scissors"]);
+      Paint.addSidePalette(rightpal, "filltools", _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].camera == "1" && _Camera__WEBPACK_IMPORTED_MODULE_14__["default"].available ? ["camera", "paintbucket"] : ["paintbucket"]);
     }
   }, {
     key: "addSidePalette",
     value: function addSidePalette(p, id, list) {
-      var pal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'paintpalette short', p);
-      pal.setAttribute('id', id);
+      var pal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "paintpalette short", p);
+      pal.setAttribute("id", id);
       for (var i = 0; i < list.length; i++) {
-        var but = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'element off', pal);
-        var icon = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'tool ' + list[i] + ' off', but);
-        icon.setAttribute('key', list[i]);
-        icon.addEventListener('touchstart', Paint.setMode);
-        icon.addEventListener('mousedown', Paint.setMode);
+        var but = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "element off", pal);
+        var icon = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "tool " + list[i] + " off", but);
+        icon.setAttribute("key", list[i]);
+        icon.addEventListener("touchstart", Paint.setMode);
+        icon.addEventListener("mousedown", Paint.setMode);
       }
     }
   }, {
     key: "cameraToolsOn",
     value: function cameraToolsOn() {
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('backdrop').setAttribute('class', 'modal-backdrop fade dark');
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('backdrop').style, {
-        display: 'block'
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("backdrop").setAttribute("class", "modal-backdrop fade dark");
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("backdrop").style, {
+        display: "block"
       });
-      var topbar = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'phototopbar', (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('backdrop'));
-      topbar.setAttribute('id', 'photocontrols');
+      var topbar = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "phototopbar", (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("backdrop"));
+      topbar.setAttribute("id", "photocontrols");
       //  var actions = newHTML("div",'actions', topbar);
       //  var buttons = newHTML('div', 'photobuttons', actions);
-      var fc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'flipcamera', topbar);
-      fc.setAttribute('id', 'cameraflip');
-      fc.setAttribute('key', 'cameraflip');
+      var fc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "flipcamera", topbar);
+      fc.setAttribute("id", "cameraflip");
+      fc.setAttribute("key", "cameraflip");
       if (_utils_lib__WEBPACK_IMPORTED_MODULE_18__.isAndroid && !AndroidInterface.scratchjr_has_multiple_cameras()) {
-        fc.style.display = 'none';
+        fc.style.display = "none";
       }
-      fc.addEventListener('touchstart', Paint.setMode);
-      fc.addEventListener('mousedown', Paint.setMode);
-      var captureContainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'snapshot-container', (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('backdrop'));
-      captureContainer.setAttribute('id', 'capture-container');
-      var capture = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'snapshot', captureContainer);
-      capture.setAttribute('id', 'capture');
-      capture.setAttribute('key', 'camerasnap');
-      capture.addEventListener('touchstart', Paint.setMode);
-      capture.addEventListener('mousedown', Paint.setMode);
-      var cc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'cameraclose', topbar);
-      cc.setAttribute('id', 'cameraclose');
-      cc.addEventListener('touchstart', Paint.closeCameraMode);
-      cc.addEventListener('mousedown', Paint.closeCameraMode);
+      fc.addEventListener("touchstart", Paint.setMode);
+      fc.addEventListener("mousedown", Paint.setMode);
+      var captureContainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "snapshot-container", (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("backdrop"));
+      captureContainer.setAttribute("id", "capture-container");
+      var capture = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "snapshot", captureContainer);
+      capture.setAttribute("id", "capture");
+      capture.setAttribute("key", "camerasnap");
+      capture.addEventListener("touchstart", Paint.setMode);
+      capture.addEventListener("mousedown", Paint.setMode);
+      var cc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "cameraclose", topbar);
+      cc.setAttribute("id", "cameraclose");
+      cc.addEventListener("touchstart", Paint.closeCameraMode);
+      cc.addEventListener("mousedown", Paint.closeCameraMode);
     }
   }, {
     key: "closeCameraMode",
     value: function closeCameraMode(evt) {
       evt.preventDefault();
       evt.stopPropagation();
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX('exittap.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX("exittap.wav");
       _Camera__WEBPACK_IMPORTED_MODULE_14__["default"].close();
-      Paint.selectButton('select');
+      Paint.selectButton("select");
     }
   }, {
     key: "cameraToolsOff",
     value: function cameraToolsOff() {
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('backdrop').setAttribute('class', 'modal-backdrop fade');
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('backdrop').style, {
-        display: 'none'
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("backdrop").setAttribute("class", "modal-backdrop fade");
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.setProps)((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("backdrop").style, {
+        display: "none"
       });
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('photocontrols')) {
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('photocontrols').parentNode.removeChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('photocontrols'));
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("photocontrols")) {
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("photocontrols").parentNode.removeChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("photocontrols"));
       }
-      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('capture')) {
-        var captureContainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('capture').parentNode;
+      if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("capture")) {
+        var captureContainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("capture").parentNode;
         var captureContainerParent = captureContainer.parentNode;
-        captureContainer.removeChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('capture'));
-        captureContainerParent.removeChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('capture-container'));
+        captureContainer.removeChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("capture"));
+        captureContainerParent.removeChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("capture-container"));
       }
     }
 
@@ -18079,23 +18051,23 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "setUpCanvasArea",
     value: function setUpCanvasArea() {
-      var workspace = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('workspacebkg');
+      var workspace = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("workspacebkg");
       var dx = Math.floor((workspace.offsetWidth - workspaceWidth) / 2);
       var dy = Math.floor((workspace.offsetHeight - workspaceHeight) / 2);
       var w = workspaceWidth;
       var h = workspaceHeight;
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('maincanvas');
-      div.style.background = '#F5F2F7';
-      div.style.top = '0px';
-      div.style.left = '0px';
-      div.style.width = w + 'px';
-      div.style.height = h + 'px';
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("maincanvas");
+      div.style.background = "#F5F2F7";
+      div.style.top = "0px";
+      div.style.left = "0px";
+      div.style.width = w + "px";
+      div.style.height = h + "px";
       div.cx = div.offsetWidth / 2;
       div.cy = div.offsetHeight / 2;
       div.dx = dx;
       div.dy = dy;
-      root.setAttributeNS(null, 'width', w);
-      root.setAttributeNS(null, 'height', h);
+      root.setAttributeNS(null, "width", w);
+      root.setAttributeNS(null, "height", h);
       Paint.drawGrid(w, h);
       _PaintAction__WEBPACK_IMPORTED_MODULE_10__["default"].clearEvents();
     }
@@ -18107,36 +18079,36 @@ var Paint = /*#__PURE__*/function () {
     key: "colorPalette",
     value: function colorPalette(div) {
       var swatchlist = Paint.initSwatchList();
-      var spalContainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'swatchpalette-container', div);
-      var spal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'swatchpalette', spalContainer);
-      spal.setAttribute('id', 'swatches');
+      var spalContainer = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "swatchpalette-container", div);
+      var spal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "swatchpalette", spalContainer);
+      spal.setAttribute("id", "swatches");
       for (var i = 0; i < swatchlist.length; i++) {
-        var colour = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'swatchbucket', spal);
+        var colour = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "swatchbucket", spal);
         // bucket
-        var sf = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'swatchframe', colour);
-        var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'swatchcolor', sf);
+        var sf = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "swatchframe", colour);
+        var sc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "swatchcolor", sf);
         sc.style.background = swatchlist[i];
         //
-        sf = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'splasharea off', colour);
+        sf = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "splasharea off", colour);
         Paint.setSplashColor(sf, splash, swatchlist[i]);
         Paint.addImageUrl(sf, splashshade);
-        colour.addEventListener('touchstart', Paint.selectSwatch);
-        colour.addEventListener('mousedown', Paint.selectSwatch);
+        colour.addEventListener("touchstart", Paint.selectSwatch);
+        colour.addEventListener("mousedown", Paint.selectSwatch);
       }
-      Paint.setSwatchColor((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('swatches').childNodes[swatchlist.indexOf('#1C1C1C')]);
+      Paint.setSwatchColor((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("swatches").childNodes[swatchlist.indexOf("#1C1C1C")]);
     }
   }, {
     key: "setSplashColor",
     value: function setSplashColor(p, str, color) {
-      var dataurl = 'data:image/svg+xml;base64,' + btoa(str.replace(/#662D91/g, color));
+      var dataurl = "data:image/svg+xml;base64," + btoa(str.replace(/#662D91/g, color));
       Paint.addImageUrl(p, dataurl);
     }
   }, {
     key: "addImageUrl",
     value: function addImageUrl(p, url) {
-      var img = document.createElement('img');
+      var img = document.createElement("img");
       img.src = url;
-      img.style.position = 'absolute';
+      img.style.position = "absolute";
       p.appendChild(img);
     }
   }, {
@@ -18156,31 +18128,31 @@ var Paint = /*#__PURE__*/function () {
       } else {
         t = e.target;
       }
-      var b = 'swatchbucket' != t.className;
+      var b = "swatchbucket" != t.className;
       while (b) {
         t = t.parentNode;
-        b = t && 'swatchbucket' != t.className;
+        b = t && "swatchbucket" != t.className;
       }
       if (!t) {
         return;
       }
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX('splash.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_11__["default"].sndFX("splash.wav");
       Paint.setSwatchColor(t);
     }
   }, {
     key: "setSwatchColor",
     value: function setSwatchColor(t) {
-      var tools = ['select', 'wand', 'stamper', 'scissors', 'rotate'];
+      var tools = ["select", "wand", "stamper", "scissors", "rotate"];
       if (t && tools.indexOf(mode) > -1) {
-        Paint.selectButton('paintbucket');
+        Paint.selectButton("paintbucket");
       }
       var c = t.childNodes[0].childNodes[0].style.backgroundColor;
-      for (var i = 0; i < (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('swatches').childElementCount; i++) {
-        var mycolor = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('swatches').childNodes[i].childNodes[0].childNodes[0].style.backgroundColor;
+      for (var i = 0; i < (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("swatches").childElementCount; i++) {
+        var mycolor = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("swatches").childNodes[i].childNodes[0].childNodes[0].style.backgroundColor;
         if (c == mycolor) {
-          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('swatches').childNodes[i].childNodes[1].setAttribute('class', 'splasharea on');
+          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("swatches").childNodes[i].childNodes[1].setAttribute("class", "splasharea on");
         } else {
-          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('swatches').childNodes[i].childNodes[1].setAttribute('class', 'splasharea off');
+          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("swatches").childNodes[i].childNodes[1].setAttribute("class", "splasharea off");
         }
       }
       fillcolor = c;
@@ -18192,35 +18164,35 @@ var Paint = /*#__PURE__*/function () {
     value: function initSwatchList() {
       return [
       //	"#FF5500", // new orange
-      '#FFD2F2', '#FF99D6', '#FF4583',
+      "#FFD2F2", "#FF99D6", "#FF4583",
       // red pinks
-      '#C30001', '#FF0023', '#FF8300', '#FFB200', '#FFF42E', '#FFF9C2',
+      "#C30001", "#FF0023", "#FF8300", "#FFB200", "#FFF42E", "#FFF9C2",
       // pale yellow
-      '#E2FFBD',
+      "#E2FFBD",
       //  pale green
-      '#CFF500',
+      "#CFF500",
       // lime green
-      '#50D823',
+      "#50D823",
       // problematic
       //          "#2BFC49", // less problematic
-      '#29C130',
+      "#29C130",
       //          "#56C43B",  // ERROR?
-      '#2BBF8A',
+      "#2BBF8A",
       // new green
-      '#027607', '#114D24',
+      "#027607", "#114D24",
       //greens
-      '#FFFFFF', '#CCDDE7', '#61787C', '#1C1C1C',
+      "#FFFFFF", "#CCDDE7", "#61787C", "#1C1C1C",
       // grays
       // '#D830A3', // sarah's pink shoes border
-      '#FF64E9',
+      "#FF64E9",
       // purple pinks
-      '#D999FF', ' #A159D3',
+      "#D999FF", " #A159D3",
       // vilote
-      '#722696',
+      "#722696",
       // sarah's violet
-      '#141463', '#003399', '#1D40ED', '#0079D3', '#009EFF', '#76C8FF', '#ACE0FD', '#11B7BC', '#21F9F3', '#C3FCFC',
+      "#141463", "#003399", "#1D40ED", "#0079D3", "#009EFF", "#76C8FF", "#ACE0FD", "#11B7BC", "#21F9F3", "#C3FCFC",
       // '#54311E', '#8E572A', '#E4B69D', '#FFCDA4', '#FFEDD7' // skin colors
-      '#FDDBB4', '#E4B681', '#BF8C5C', '#955D31', '#6B3D1F', '#482D18' // new skin colors
+      "#FDDBB4", "#E4B681", "#BF8C5C", "#955D31", "#6B3D1F", "#482D18" // new skin colors
       ];
     }
 
@@ -18230,22 +18202,22 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "createSVGeditor",
     value: function createSVGeditor(container) {
-      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)('div', 'maincanvas', container);
-      div.setAttribute('id', 'maincanvas');
-      div.style.background = '#F5F2F7';
-      div.style.top = '0px';
-      div.style.left = '0px';
+      var div = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.newHTML)("div", "maincanvas", container);
+      div.setAttribute("id", "maincanvas");
+      div.style.background = "#F5F2F7";
+      div.style.top = "0px";
+      div.style.left = "0px";
       window.onmousemove = undefined;
       window.onmouseup = undefined;
       root = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].create(div);
-      root.setAttribute('class', 'active3d');
+      root.setAttribute("class", "active3d");
       window.xform = _Transform__WEBPACK_IMPORTED_MODULE_16__["default"].getTranslateTransform();
       window.selxform = _Transform__WEBPACK_IMPORTED_MODULE_16__["default"].getTranslateTransform();
-      var layer = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].createGroup(root, 'layer1');
-      layer.setAttribute('style', 'pointer-events:visiblePainted');
-      _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].createGroup(root, 'draglayer');
-      _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].createGroup(root, 'paintgrid');
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('paintgrid').setAttribute('opacity', 0.5);
+      var layer = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].createGroup(root, "layer1");
+      layer.setAttribute("style", "pointer-events:visiblePainted");
+      _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].createGroup(root, "draglayer");
+      _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].createGroup(root, "paintgrid");
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("paintgrid").setAttribute("opacity", 0.5);
     }
   }, {
     key: "clearWorkspace",
@@ -18255,9 +18227,9 @@ var Paint = /*#__PURE__*/function () {
           div.removeChild(div.childNodes[0]);
         }
       };
-      fcn((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1'));
-      fcn((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('paintgrid'));
-      fcn((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('draglayer'));
+      fcn((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1"));
+      fcn((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("paintgrid"));
+      fcn((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("draglayer"));
       _Path__WEBPACK_IMPORTED_MODULE_12__["default"].quitEditMode();
     }
   }, {
@@ -18267,42 +18239,42 @@ var Paint = /*#__PURE__*/function () {
       if (!isBkg) {
         attr = {
           d: Paint.getGridPath(w, h, 12),
-          id: (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.getIdFor)('gridpath'),
+          id: (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.getIdFor)("gridpath"),
           opacity: 1,
-          stroke: '#dcddde',
-          fill: 'none',
-          'stroke-width': 0.5
+          stroke: "#dcddde",
+          fill: "none",
+          "stroke-width": 0.5
         };
-        path = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].addChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('paintgrid'), 'path', attr);
-        path.setAttribute('style', 'pointer-events:none;');
+        path = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].addChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("paintgrid"), "path", attr);
+        path.setAttribute("style", "pointer-events:none;");
       }
       attr = {
         d: Paint.getGridPath(w, h, isBkg ? 24 : 48),
-        id: (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.getIdFor)('gridpath'),
+        id: (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.getIdFor)("gridpath"),
         opacity: 1,
-        stroke: '#c1c2c3',
-        fill: 'none',
-        'stroke-width': 0.5
+        stroke: "#c1c2c3",
+        fill: "none",
+        "stroke-width": 0.5
       };
-      path = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].addChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('paintgrid'), 'path', attr);
-      path.setAttribute('style', 'pointer-events:none;');
+      path = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].addChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("paintgrid"), "path", attr);
+      path.setAttribute("style", "pointer-events:none;");
     }
   }, {
     key: "getGridPath",
     value: function getGridPath(w, h, gridsize) {
-      var str = '';
+      var str = "";
       var dx = gridsize;
       // vertical
       var cmd;
       for (var i = 0; i < w / gridsize; i++) {
-        cmd = 'M' + dx + ',' + 0 + 'L' + dx + ',' + h;
+        cmd = "M" + dx + "," + 0 + "L" + dx + "," + h;
         str += cmd;
         dx += gridsize;
       }
       var dy = gridsize;
       // horizontal
       for (i = 0; i < h / gridsize; i++) {
-        cmd = 'M' + 0 + ',' + dy + 'L' + w + ',' + dy;
+        cmd = "M" + 0 + "," + dy + "L" + w + "," + dy;
         str += cmd;
         dy += gridsize;
       }
@@ -18323,19 +18295,19 @@ var Paint = /*#__PURE__*/function () {
       var dh = root.parentNode.parentNode.offsetHeight / (workspaceHeight + 10);
       var dw = root.parentNode.parentNode.offsetWidth / (workspaceWidth + 10);
       Paint.setZoomTo(Math.min(dw, dh));
-      document.forms.spriteform.style.visibility = 'hidden';
+      document.forms.spriteform.style.visibility = "hidden";
       if (currentMd5) {
         Paint.loadBackground(currentMd5);
       } else {
         var attr = {
-          id: 'staticbkg',
+          id: "staticbkg",
           opacity: 1,
-          fixed: 'yes',
+          fixed: "yes",
           fill: _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stagecolor
         };
-        var cmds = [['M', 0, 0], ['L', 480, 0], ['L', 480, 360], ['L', 0, 360], ['L', 0, 0]];
+        var cmds = [["M", 0, 0], ["L", 480, 0], ["L", 480, 360], ["L", 0, 360], ["L", 0, 0]];
         attr.d = _utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_3__["default"].arrayToString(cmds);
-        _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].addChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1'), 'path', attr);
+        _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].addChild((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1"), "path", attr);
         _Ghost__WEBPACK_IMPORTED_MODULE_4__["default"].drawOffscreen();
         _PaintUndo__WEBPACK_IMPORTED_MODULE_13__["default"].record(true);
       }
@@ -18343,7 +18315,7 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "loadBackground",
     value: function loadBackground(md5) {
-      if (md5.indexOf('samples/') >= 0) {
+      if (md5.indexOf("samples/") >= 0) {
         // Load sample asset
         Paint.loadChar(md5);
       } else if (!_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_7__["default"].keys[md5]) {
@@ -18370,7 +18342,7 @@ var Paint = /*#__PURE__*/function () {
           Paint.createBkgFromXML(xmlrequest.responseText);
         }
       };
-      xmlrequest.open('GET', url, true);
+      xmlrequest.open("GET", url, true);
       xmlrequest.send(null);
     }
   }, {
@@ -18381,22 +18353,21 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "createBkgFromXML",
     value: function createBkgFromXML(str) {
-      nativeJr = str.indexOf('Scratch Jr') > -1;
-      str = str.replace(/>\s*</g, '><');
-      console.log(str);
-      var xmlDoc = new DOMParser().parseFromString(str, 'text/xml');
+      nativeJr = str.indexOf("Scratch Jr") > -1;
+      str = str.replace(/>\s*</g, "><");
+      var xmlDoc = new DOMParser().parseFromString(str, "text/xml");
       var extxml = document.importNode(xmlDoc.documentElement, true);
       var flat = Paint.skipUnwantedElements(extxml, []);
       for (var i = 0; i < flat.length; i++) {
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1').appendChild(flat[i]);
-        if (flat[i].getAttribute('id') == 'fixed') {
-          flat[i].setAttribute('fixed', 'yes');
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1").appendChild(flat[i]);
+        if (flat[i].getAttribute("id") == "fixed") {
+          flat[i].setAttribute("fixed", "yes");
         }
-        flat[i].setAttribute('file', 'yes');
+        flat[i].setAttribute("file", "yes");
       }
-      Paint.doAbsolute((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1'));
+      Paint.doAbsolute((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1"));
       if (!nativeJr) {
-        Paint.reassingIds((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1'));
+        Paint.reassingIds((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1"));
       } // make sure there are unique mask names
       //	gn("layer1").childNodes[0].setAttribute('id', "staticbkg");
       var dh = root.parentNode.parentNode.offsetHeight / (workspaceHeight + 10);
@@ -18404,15 +18375,14 @@ var Paint = /*#__PURE__*/function () {
       Paint.setZoomTo(Math.min(dw, dh));
       _PaintUndo__WEBPACK_IMPORTED_MODULE_13__["default"].record(true);
       if (!nativeJr) {
-        Paint.selectButton('paintbucket');
+        Paint.selectButton("paintbucket");
       }
     }
   }, {
     key: "initSprite",
     value: function initSprite(ow, oh) {
-      // console.log('initSprite');
       nativeJr = true;
-      document.forms.spriteform.style.visibility = 'visible';
+      document.forms.spriteform.style.visibility = "visible";
       document.forms.spriteform.name.value = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)(currentName) ? (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)(currentName).owner.name : currentName;
       if (ow) {
         workspaceWidth = ow;
@@ -18424,7 +18394,7 @@ var Paint = /*#__PURE__*/function () {
         Paint.loadCharacter(currentMd5);
       } else {
         Paint.setUpCanvasArea();
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.setCanvasSize)(_Ghost__WEBPACK_IMPORTED_MODULE_4__["default"].maskCanvas, Math.round(Number(root.getAttribute('width')) * currentZoom), Math.round(Number(root.getAttribute('height')) * currentZoom));
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.setCanvasSize)(_Ghost__WEBPACK_IMPORTED_MODULE_4__["default"].maskCanvas, Math.round(Number(root.getAttribute("width")) * currentZoom), Math.round(Number(root.getAttribute("height")) * currentZoom));
         var dh = root.parentNode.parentNode.offsetHeight / (workspaceHeight + 10);
         var dw = root.parentNode.parentNode.offsetWidth / (workspaceWidth + 10);
         Paint.setZoomTo(Math.min(dw, dh));
@@ -18434,8 +18404,7 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "loadCharacter",
     value: function loadCharacter(md5) {
-      // console.log('loadCharacter');
-      if (md5.indexOf('samples/') >= 0) {
+      if (md5.indexOf("samples/") >= 0) {
         // Load sample asset
         Paint.loadChar(md5);
       } else if (!_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_7__["default"].keys[md5]) {
@@ -18446,7 +18415,6 @@ var Paint = /*#__PURE__*/function () {
         Paint.loadChar(_tablet_MediaLib__WEBPACK_IMPORTED_MODULE_7__["default"].path + md5);
       }
       function nextStep(base64) {
-        // console.log('nextStep');
         var str = atob(base64);
         _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].getImagesInSVG(str, function () {
           Paint.loadSprite(str);
@@ -18468,14 +18436,14 @@ var Paint = /*#__PURE__*/function () {
           Paint.createCharFromXML(xmlrequest.responseText, currentName);
         }
       };
-      xmlrequest.open('GET', url, true);
+      xmlrequest.open("GET", url, true);
       xmlrequest.send(null);
     }
   }, {
     key: "adjustShapePosition",
     value: function adjustShapePosition(dx, dy) {
       window.xform.setTranslate(dx, dy);
-      _Transform__WEBPACK_IMPORTED_MODULE_16__["default"].translateTo((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1'), window.xform);
+      _Transform__WEBPACK_IMPORTED_MODULE_16__["default"].translateTo((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1"), window.xform);
     }
 
     ///////////////////////////////////
@@ -18484,18 +18452,17 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "savePageImage",
     value: function savePageImage(fcn) {
-      console.log('savePageImage');
-      var worthsaving = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1').childElementCount > 0;
+      var worthsaving = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1").childElementCount > 0;
       if (!worthsaving) {
         Paint.close();
       } else {
         saving = true;
         if (fcn) {
-          _editor_ui_Alert__WEBPACK_IMPORTED_MODULE_9__["default"].open(paintFrame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('donecheck'), _utils_Localization__WEBPACK_IMPORTED_MODULE_8__["default"].localize('ALERT_SAVING'), '#28A5DA');
+          _editor_ui_Alert__WEBPACK_IMPORTED_MODULE_9__["default"].open(paintFrame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("donecheck"), _utils_Localization__WEBPACK_IMPORTED_MODULE_8__["default"].localize("ALERT_SAVING"), "#28A5DA");
           _editor_ui_Alert__WEBPACK_IMPORTED_MODULE_9__["default"].balloon.style.zIndex = 12000;
         }
-        svgdata = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].saveBackground((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1'), workspaceWidth, workspaceHeight);
-        _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].setMedia(svgdata, 'svg', function (str) {
+        svgdata = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].saveBackground((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1"), workspaceWidth, workspaceHeight);
+        _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].setMedia(svgdata, "svg", function (str) {
           Paint.changeBackground(str, fcn);
         });
       }
@@ -18504,10 +18471,10 @@ var Paint = /*#__PURE__*/function () {
     key: "changeBackground",
     value: function changeBackground(md5, fcn) {
       saveMD5 = md5;
-      var type = 'userbkgs';
+      var type = "userbkgs";
       var mobj = {};
-      mobj.cond = 'md5 = ? AND version = ?';
-      mobj.items = ['*'];
+      mobj.cond = "md5 = ? AND version = ?";
+      mobj.items = ["*"];
       mobj.values = [saveMD5, _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].version];
       _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].query(type, mobj, function (str) {
         Paint.checkDuplicateBkg(str, fcn);
@@ -18519,7 +18486,7 @@ var Paint = /*#__PURE__*/function () {
       var list = JSON.parse(str);
       if (list.length > 0) {
         if (fcn) {
-          fcn('duplicate');
+          fcn("duplicate");
         }
       } else {
         Paint.addToBkgLib(fcn);
@@ -18530,25 +18497,25 @@ var Paint = /*#__PURE__*/function () {
     // userbkgs:  stores backgrounds
     /////////////////////////////////////
     /*
-        [version] =>
-        [md5] =>
-        [altmd5] =>  //for PNG option
-        [ext] => png / svg
-       	[width] =>
-       	[height] =>
-    */
+          [version] =>
+          [md5] =>
+          [altmd5] =>  //for PNG option
+          [ext] => png / svg
+         	[width] =>
+         	[height] =>
+      */
   }, {
     key: "addToBkgLib",
     value: function addToBkgLib(fcn) {
       var dataurl = _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].getThumbnail(svgdata, 480, 360, 120, 90);
-      var pngBase64 = dataurl.split(',')[1];
-      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].setmedia(pngBase64, 'png', setBkgRecord);
+      var pngBase64 = dataurl.split(",")[1];
+      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].setmedia(pngBase64, "png", setBkgRecord);
       function setBkgRecord(pngmd5) {
         var json = {};
-        var keylist = ['md5', 'altmd5', 'version', 'width', 'height', 'ext'];
-        var values = '?,?,?,?,?,?';
-        json.values = [saveMD5, pngmd5, _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].version, '480', '360', 'svg'];
-        json.stmt = 'insert into userbkgs (' + keylist.toString() + ') values (' + values + ')';
+        var keylist = ["md5", "altmd5", "version", "width", "height", "ext"];
+        var values = "?,?,?,?,?,?";
+        json.values = [saveMD5, pngmd5, _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].version, "480", "360", "svg"];
+        json.stmt = "insert into userbkgs (" + keylist.toString() + ") values (" + values + ")";
         _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].stmt(json, fcn);
       }
     }
@@ -18561,26 +18528,25 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "saveSprite",
     value: function saveSprite(fcn) {
-      console.log('saveSprite');
       var cname = document.forms.spriteform.name.value;
-      var worthsaving = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1').childElementCount > 0 && _PaintUndo__WEBPACK_IMPORTED_MODULE_13__["default"].index > 0;
+      var worthsaving = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1").childElementCount > 0 && _PaintUndo__WEBPACK_IMPORTED_MODULE_13__["default"].index > 0;
       // Paint.close();
       if (worthsaving) {
         saving = true;
         if (fcn) {
-          _editor_ui_Alert__WEBPACK_IMPORTED_MODULE_9__["default"].open(paintFrame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('donecheck'), 'Saving...', '#28A5DA');
+          _editor_ui_Alert__WEBPACK_IMPORTED_MODULE_9__["default"].open(paintFrame, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("donecheck"), "Saving...", "#28A5DA");
           _editor_ui_Alert__WEBPACK_IMPORTED_MODULE_9__["default"].balloon.style.zIndex = 12000;
         }
-        svgdata = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].saveShape((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1'), workspaceWidth, workspaceHeight);
-        _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].setMedia(svgdata, 'svg', function (str) {
+        svgdata = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].saveShape((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1"), workspaceWidth, workspaceHeight);
+        _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].setMedia(svgdata, "svg", function (str) {
           Paint.addOrModifySprite(str, fcn);
         });
         // Paint.close();
       } else {
         var type = Paint.getLoadType(spriteId, cname);
-        if (cname != currentName && type == 'modify') {
+        if (cname != currentName && type == "modify") {
           _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.modifySpriteName(cname, spriteId);
-        } else if (currentMd5 && type == 'add') {
+        } else if (currentMd5 && type == "add") {
           _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.addSprite(costumeScale, currentMd5, cname);
         }
         Paint.close();
@@ -18589,24 +18555,22 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "addOrModifySprite",
     value: function addOrModifySprite(str, fcn) {
-      // console.log('addOrModifySprite');
       saveMD5 = str;
       var mobj = {};
-      mobj.cond = 'md5 = ? AND version = ?';
-      mobj.items = ['*'];
+      mobj.cond = "md5 = ? AND version = ?";
+      mobj.items = ["*"];
       mobj.values = [saveMD5, _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].version];
-      _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].query('usershapes', mobj, function (str) {
+      _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].query("usershapes", mobj, function (str) {
         Paint.checkDuplicate(str, fcn);
       });
     }
   }, {
     key: "checkDuplicate",
     value: function checkDuplicate(str, fcn) {
-      // console.log('checkDuplicate');
       var list = JSON.parse(str);
       if (list.length > 0) {
         if (fcn) {
-          fcn('duplicate');
+          fcn("duplicate");
         }
       } else {
         Paint.addToLib(fcn);
@@ -18617,35 +18581,34 @@ var Paint = /*#__PURE__*/function () {
     // usershapes:  stores costumes
     /////////////////////////////////////
     /* current data
-        [md5] =>
-        [altmd5] =>  // for PNG  -- not used
-        [version] =>
-    		[scale] =>
-        [ext] => png / svg
-       	[width] =>
-       	[height] =>
-        [name] =>
-     */
+          [md5] =>
+          [altmd5] =>  // for PNG  -- not used
+          [version] =>
+      		[scale] =>
+          [ext] => png / svg
+         	[width] =>
+         	[height] =>
+          [name] =>
+       */
   }, {
     key: "addToLib",
     value: function addToLib(fcn) {
-      console.log('addToLib');
-      var scale = '0.5'; // always saves with 1/2 the size
+      var scale = "0.5"; // always saves with 1/2 the size
       var cname = document.forms.spriteform.name.value;
-      cname = unescape(cname).replace(/[0-9]/g, '').replace(/\s*/g, '');
-      var box = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].getBox((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1')).rounded();
+      cname = unescape(cname).replace(/[0-9]/g, "").replace(/\s*/g, "");
+      var box = _SVGTools__WEBPACK_IMPORTED_MODULE_2__["default"].getBox((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1")).rounded();
       box = box.expandBy(20);
       var w = box.width.toString();
       var h = box.height.toString();
       var dataurl = _tablet_IO__WEBPACK_IMPORTED_MODULE_6__["default"].getThumbnail(svgdata, w, h, 120, 90);
-      var pngBase64 = dataurl.split(',')[1];
-      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].setmedia(pngBase64, 'png', setCostumeRecord);
+      var pngBase64 = dataurl.split(",")[1];
+      _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].setmedia(pngBase64, "png", setCostumeRecord);
       function setCostumeRecord(pngmd5) {
         var json = {};
-        var keylist = ['scale', 'md5', 'altmd5', 'version', 'width', 'height', 'ext', 'name'];
-        var values = '?,?,?,?,?,?,?,?';
-        json.values = [scale, saveMD5, pngmd5, _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].version, w, h, 'svg', cname];
-        json.stmt = 'insert into usershapes (' + keylist.toString() + ') values (' + values + ')';
+        var keylist = ["scale", "md5", "altmd5", "version", "width", "height", "ext", "name"];
+        var values = "?,?,?,?,?,?,?,?";
+        json.values = [scale, saveMD5, pngmd5, _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].version, w, h, "svg", cname];
+        json.stmt = "insert into usershapes (" + keylist.toString() + ") values (" + values + ")";
         _tablet_OS__WEBPACK_IMPORTED_MODULE_5__["default"].stmt(json, fcn);
       }
     }
@@ -18657,10 +18620,10 @@ var Paint = /*#__PURE__*/function () {
       var cname = document.forms.spriteform.name.value;
       var type = Paint.getLoadType(spriteId, cname);
       switch (type) {
-        case 'modify':
+        case "modify":
           _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.modifySprite(saveMD5, cname, spriteId);
           break;
-        case 'add':
+        case "add":
           _editor_ScratchJr__WEBPACK_IMPORTED_MODULE_0__["default"].stage.currentPage.addSprite(costumeScale, saveMD5, cname);
           break;
         default:
@@ -18672,12 +18635,12 @@ var Paint = /*#__PURE__*/function () {
     key: "getLoadType",
     value: function getLoadType(sid, cid) {
       if (!cid) {
-        return 'none';
+        return "none";
       }
       if (sid && cid) {
-        return 'modify';
+        return "modify";
       }
-      return 'add';
+      return "add";
     }
 
     ///////////////////////////
@@ -18688,22 +18651,22 @@ var Paint = /*#__PURE__*/function () {
     value: function skipUnwantedElements(p, res) {
       for (var i = 0; i < p.childNodes.length; i++) {
         var elem = p.childNodes[i];
-        if (elem.nodeName == 'metadata') {
+        if (elem.nodeName == "metadata") {
           continue;
         }
-        if (elem.nodeName == 'defs') {
+        if (elem.nodeName == "defs") {
           continue;
         }
-        if (elem.nodeName == 'sodipodi:namedview') {
+        if (elem.nodeName == "sodipodi:namedview") {
           continue;
         }
-        if (elem.nodeName == '#comment') {
+        if (elem.nodeName == "#comment") {
           continue;
         }
-        if (elem.nodeName == 'g' && elem.id == 'layer1') {
+        if (elem.nodeName == "g" && elem.id == "layer1") {
           Paint.skipUnwantedElements(elem, res);
-          if (elem.removeAttribute('id')) {
-            elem.removeAttribute('id');
+          if (elem.removeAttribute("id")) {
+            elem.removeAttribute("id");
           }
         } else {
           res.push(elem);
@@ -18716,14 +18679,14 @@ var Paint = /*#__PURE__*/function () {
     value: function reassingIds(p) {
       for (var i = 0; i < p.childNodes.length; i++) {
         var elem = p.childNodes[i];
-        if (elem.parentNode.getAttribute('fixed') == 'yes') {
-          elem.setAttribute('fixed', 'yes');
+        if (elem.parentNode.getAttribute("fixed") == "yes") {
+          elem.setAttribute("fixed", "yes");
         }
-        var id = elem.getAttribute('id');
+        var id = elem.getAttribute("id");
         if (!id) {
-          elem.setAttribute('id', (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.getIdFor)(elem.nodeName));
+          elem.setAttribute("id", (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.getIdFor)(elem.nodeName));
         }
-        if (elem.nodeName == 'g') {
+        if (elem.nodeName == "g") {
           Paint.reassingIds(elem);
         }
       }
@@ -18731,7 +18694,7 @@ var Paint = /*#__PURE__*/function () {
   }, {
     key: "createCharFromXML",
     value: function createCharFromXML(str) {
-      nativeJr = str.indexOf('Scratch Jr') > -1;
+      nativeJr = str.indexOf("Scratch Jr") > -1;
       var dx = workspaceWidth < 432 ? Math.floor((432 - workspaceWidth) / 2) : 0;
       var dy = workspaceHeight < 384 ? Math.floor((384 - workspaceHeight) / 2) : 0;
       if (workspaceWidth < 432) {
@@ -18741,17 +18704,17 @@ var Paint = /*#__PURE__*/function () {
         workspaceHeight = 384;
       }
       Paint.setUpCanvasArea();
-      str = str.replace(/>\s*</g, '><');
-      var xmlDoc = new DOMParser().parseFromString(str, 'text/xml');
+      str = str.replace(/>\s*</g, "><");
+      var xmlDoc = new DOMParser().parseFromString(str, "text/xml");
       var extxml = document.importNode(xmlDoc.documentElement, true);
       var flat = Paint.skipUnwantedElements(extxml, []);
       for (var i = 0; i < flat.length; i++) {
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1').appendChild(flat[i]);
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1").appendChild(flat[i]);
       }
-      Paint.doAbsolute((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1'));
+      Paint.doAbsolute((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1"));
       Paint.adjustShapePosition(dx, dy);
       if (!nativeJr) {
-        Paint.reassingIds((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)('layer1'));
+        Paint.reassingIds((0,_utils_lib__WEBPACK_IMPORTED_MODULE_18__.gn)("layer1"));
       } // make sure there are unique mask names
       Paint.scaleToFit();
       minZoom = currentZoom < 1 ? currentZoom / 2 : 1;
@@ -18763,7 +18726,7 @@ var Paint = /*#__PURE__*/function () {
       }
       _PaintUndo__WEBPACK_IMPORTED_MODULE_13__["default"].record(true);
       if (!nativeJr) {
-        Paint.selectButton('paintbucket');
+        Paint.selectButton("paintbucket");
       }
     }
   }, {
@@ -18771,10 +18734,10 @@ var Paint = /*#__PURE__*/function () {
     value: function doAbsolute(div) {
       for (var i = 0; i < div.childElementCount; i++) {
         var elem = div.childNodes[i];
-        if (elem.tagName == 'path') {
+        if (elem.tagName == "path") {
           _utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_3__["default"].setAbsolutePath(elem);
         }
-        if (elem.tagName == 'g') {
+        if (elem.tagName == "g") {
           Paint.doAbsolute(div.childNodes[i]);
         }
       }
@@ -18784,22 +18747,22 @@ var Paint = /*#__PURE__*/function () {
     value: function getComponents(p, res) {
       for (var i = 0; i < p.childNodes.length; i++) {
         var elem = p.childNodes[i];
-        if (elem.nodeName == 'metadata') {
+        if (elem.nodeName == "metadata") {
           continue;
         }
-        if (elem.nodeName == 'defs') {
+        if (elem.nodeName == "defs") {
           continue;
         }
-        if (elem.nodeName == 'sodipodi:namedview') {
+        if (elem.nodeName == "sodipodi:namedview") {
           continue;
         }
-        if (elem.nodeName == '#comment') {
+        if (elem.nodeName == "#comment") {
           continue;
         }
-        if (elem.nodeName == 'g') {
+        if (elem.nodeName == "g") {
           Paint.getComponents(elem, res);
-          if (elem.getAttribute('id')) {
-            elem.removeAttribute('id');
+          if (elem.getAttribute("id")) {
+            elem.removeAttribute("id");
           }
         } else {
           res.push(elem);
@@ -18895,24 +18858,19 @@ var dragging = false;
 var timeoutEvent;
 var mindist = 10;
 function onTouchMove(evt) {
-  console.log('touchmove paint');
   PaintAction.mouseMove(evt);
 }
 function onTouchEnd(evt) {
-  console.log('touchend paint');
   PaintAction.mouseUp(evt);
 }
 function onTouchCancel(evt) {
-  console.log('touchcancel paint');
   PaintAction.mouseMove(evt);
   PaintAction.mouseUp(evt);
 }
 function onMouseMove(evt) {
-  console.log('mousemove paint');
   PaintAction.mouseMove(evt);
 }
 function onMouseUp(evt) {
-  console.log('mouseup paint');
   PaintAction.mouseUp(evt);
 }
 
@@ -18938,27 +18896,27 @@ var PaintAction = /*#__PURE__*/function () {
     key: "mouseDown",
     value: function mouseDown(evt) {
       target = undefined;
-      if (!(0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1')) {
+      if (!(0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1")) {
         return;
       }
       // if (evt.touches && (evt.touches.length > 1)) {
       //     return;
       // }
-      console.log('mousedown paint', evt);
+      console.log("mousedown paint", evt);
       PaintAction.clearDragGroup();
       dragging = false;
       var mt = PaintAction.getMouseTarget(evt);
       if (!mt) {
         return;
       }
-      if (mt.tagName.toLowerCase() != 'div' && mt.tagName.toLowerCase() != 'svg') {
+      if (mt.tagName.toLowerCase() != "div" && mt.tagName.toLowerCase() != "svg") {
         target = mt;
       }
       evt.preventDefault();
       _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint = PaintAction.getScreenPt(evt);
       _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].deltaPoint = PaintAction.getScreenPt(evt);
       if (_Path__WEBPACK_IMPORTED_MODULE_5__["default"].hitDot(evt)) {
-        _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode = 'grab';
+        _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode = "grab";
       }
       currentShape = undefined;
       PaintAction.clearEvents();
@@ -18968,8 +18926,8 @@ var PaintAction = /*#__PURE__*/function () {
   }, {
     key: "clearDragGroup",
     value: function clearDragGroup() {
-      for (var j = 0; j < (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1').childElementCount; j++) {
-        var kid = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1').childNodes[j];
+      for (var j = 0; j < (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1").childElementCount; j++) {
+        var kid = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1").childNodes[j];
         var erot = _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].getRotation(kid);
         if (erot.angle == 0) {
           continue;
@@ -18984,35 +18942,35 @@ var PaintAction = /*#__PURE__*/function () {
           res.push(elem);
         }
         for (i = 0; i < kid.childElementCount; i++) {
-          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1').appendChild(res[i]);
+          (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1").appendChild(res[i]);
         }
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1').removeChild(kid);
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1").removeChild(kid);
       }
     }
   }, {
     key: "clearEvents",
     value: function clearEvents() {
       currentShape = undefined;
-      window.removeEventListener('touchmove', onTouchMove);
-      window.removeEventListener('touchend', onTouchEnd);
-      window.removeEventListener('touchcancel', onTouchCancel);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchCancel);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
     }
   }, {
     key: "stopAction",
     value: function stopAction(e) {
-      var list = ['path', 'ellipse', 'rect', 'tri'];
+      var list = ["path", "ellipse", "rect", "tri"];
       var isCreator = list.indexOf(_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode) > -1;
       if (currentShape && currentShape.parentNode && isCreator) {
         PaintAction.removeShape(null);
       } else {
         // olnly select, grab and rotate need special treatment
-        var othertools = ['select', 'grab', 'rotate'];
+        var othertools = ["select", "grab", "rotate"];
         if (othertools.indexOf(_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode) < 0) {
           return;
         }
-        if (_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode == 'select') {
+        if (_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode == "select") {
           if (timeoutEvent) {
             clearTimeout(timeoutEvent);
           }
@@ -19020,7 +18978,7 @@ var PaintAction = /*#__PURE__*/function () {
             PaintAction.stopDrag();
           }
         }
-        if (_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode == 'grab' || _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode == 'rotate') {
+        if (_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode == "grab" || _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode == "rotate") {
           cmdForMouseUp[_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode](e);
         }
         _Ghost__WEBPACK_IMPORTED_MODULE_7__["default"].clearLayer();
@@ -19034,11 +18992,11 @@ var PaintAction = /*#__PURE__*/function () {
   }, {
     key: "setEvents",
     value: function setEvents() {
-      window.addEventListener('touchmove', onTouchMove);
-      window.addEventListener('touchend', onTouchEnd);
-      window.addEventListener('touchcancel', onTouchCancel);
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('mouseup', onMouseUp);
+      window.addEventListener("touchmove", onTouchMove);
+      window.addEventListener("touchend", onTouchEnd);
+      window.addEventListener("touchcancel", onTouchCancel);
+      window.addEventListener("mousemove", onMouseMove);
+      window.addEventListener("mouseup", onMouseUp);
     }
   }, {
     key: "mouseMove",
@@ -19061,8 +19019,8 @@ var PaintAction = /*#__PURE__*/function () {
       } else if (target || currentShape) {
         _PaintUndo__WEBPACK_IMPORTED_MODULE_2__["default"].record();
       }
-      if (_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode == 'grab') {
-        _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode = 'select';
+      if (_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode == "grab") {
+        _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].mode = "select";
       }
       var oldshape = currentShape;
       currentShape = undefined;
@@ -19079,7 +19037,7 @@ var PaintAction = /*#__PURE__*/function () {
     value: function selectMouseDown(evt) {
       PaintAction.fingerDown(evt);
       if (currentShape) {
-        currentShape = currentShape.getAttribute('stencil') == 'yes' ? null : currentShape;
+        currentShape = currentShape.getAttribute("stencil") == "yes" ? null : currentShape;
       }
       var holdit = getValidHold();
       if (holdit) {
@@ -19089,7 +19047,7 @@ var PaintAction = /*#__PURE__*/function () {
         if (!currentShape) {
           return false;
         }
-        if (currentShape.getAttribute('stencil') == 'yes') {
+        if (currentShape.getAttribute("stencil") == "yes") {
           return false;
         }
         return true;
@@ -19113,12 +19071,10 @@ var PaintAction = /*#__PURE__*/function () {
   }, {
     key: "startHold",
     value: function startHold() {
-      //  console.log ("startHold", currentShape);
       if (!currentShape) {
         return;
       }
       var repeat = function repeat() {
-        //	console.log ("callback", currentShape);
         _Layer__WEBPACK_IMPORTED_MODULE_9__["default"].bringToFront(currentShape);
         timeoutEvent = null;
       };
@@ -19129,24 +19085,24 @@ var PaintAction = /*#__PURE__*/function () {
     value: function cloneMouseDown(evt) {
       PaintAction.fingerDown(evt);
       PaintAction.selectTarget();
-      if (currentShape && currentShape.id == 'staticbkg') {
+      if (currentShape && currentShape.id == "staticbkg") {
         currentShape = null;
       }
     }
   }, {
     key: "pathMouseDown",
     value: function pathMouseDown() {
-      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addPolyline((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
-      var mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint, currentShape, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance());
+      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addPolyline((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
+      var mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint, currentShape, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance());
       if (!mt) {
         return;
       }
-      var s = currentShape.getAttribute('stroke');
-      var sw = currentShape.getAttribute('stroke-width');
-      if (s != mt.getAttribute('stroke') || sw != mt.getAttribute('stroke-width')) {
+      var s = currentShape.getAttribute("stroke");
+      var sw = currentShape.getAttribute("stroke-width");
+      if (s != mt.getAttribute("stroke") || sw != mt.getAttribute("stroke-width")) {
         return;
       }
-      var g = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].createGroup((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('draglayer'), 'cusorstate');
+      var g = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].createGroup((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("draglayer"), "cusorstate");
       _Ghost__WEBPACK_IMPORTED_MODULE_7__["default"].getKid(g, mt, 0.7);
       target = mt;
     }
@@ -19156,15 +19112,15 @@ var PaintAction = /*#__PURE__*/function () {
       if (!currentShape) {
         return;
       }
-      while (currentShape.parentNode.tagName == 'g' && currentShape.parentNode.id != 'layer1') {
+      while (currentShape.parentNode.tagName == "g" && currentShape.parentNode.id != "layer1") {
         currentShape = currentShape.parentNode;
       }
     }
   }, {
     key: "makeAgroup",
     value: function makeAgroup(group) {
-      var p = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1');
-      var g = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].createGroup(p, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.getIdFor)('group'));
+      var p = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1");
+      var g = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].createGroup(p, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.getIdFor)("group"));
       for (var i = 0; i < group.length; i++) {
         p.removeChild(group[i]);
         g.appendChild(group[i]);
@@ -19174,24 +19130,24 @@ var PaintAction = /*#__PURE__*/function () {
   }, {
     key: "ellipseMouseDown",
     value: function ellipseMouseDown() {
-      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addEllipse((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
+      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addEllipse((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
     }
   }, {
     key: "rectMouseDown",
     value: function rectMouseDown() {
-      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addRect((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
+      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addRect((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
     }
   }, {
     key: "triMouseDown",
     value: function triMouseDown() {
-      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addTriangle((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
+      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addTriangle((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
     }
   }, {
     key: "grabMouseDown",
     value: function grabMouseDown() {
       currentShape = target;
-      currentShape.setAttributeNS(null, 'fill', _Path__WEBPACK_IMPORTED_MODULE_5__["default"].selectedDotColor);
-      currentShape.setAttributeNS(null, 'r', currentShape.getAttribute('r') * 1.5);
+      currentShape.setAttributeNS(null, "fill", _Path__WEBPACK_IMPORTED_MODULE_5__["default"].selectedDotColor);
+      currentShape.setAttributeNS(null, "r", currentShape.getAttribute("r") * 1.5);
     }
 
     //Calls from the Mouse Move
@@ -19226,7 +19182,7 @@ var PaintAction = /*#__PURE__*/function () {
       for (var i = 0; i < dragGroup.length; i++) {
         _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].extract(dragGroup[i], 2).setTranslate(delta.x, delta.y);
       }
-      _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].extract((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('ghostgroup'), 2).setTranslate(delta.x, delta.y);
+      _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].extract((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("ghostgroup"), 2).setTranslate(delta.x, delta.y);
     }
   }, {
     key: "onBackground",
@@ -19234,7 +19190,7 @@ var PaintAction = /*#__PURE__*/function () {
       if (!currentShape) {
         return true;
       }
-      if (target.id.indexOf('staticbkg') > -1 || currentShape.getAttribute('stencil') == 'yes') {
+      if (target.id.indexOf("staticbkg") > -1 || currentShape.getAttribute("stencil") == "yes") {
         return true;
       }
       return false;
@@ -19276,13 +19232,13 @@ var PaintAction = /*#__PURE__*/function () {
       dragGroup = _Layer__WEBPACK_IMPORTED_MODULE_9__["default"].findGroup(currentShape);
       for (var i = 0; i < dragGroup.length; i++) {
         _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].eleminateTranslates(dragGroup[i]);
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1').appendChild(dragGroup[i]);
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1").appendChild(dragGroup[i]);
       }
       _Ghost__WEBPACK_IMPORTED_MODULE_7__["default"].highlight(dragGroup);
       for (var j = 0; j < dragGroup.length; j++) {
         _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].appendForMove(dragGroup[j], _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].getTranslateTransform());
       }
-      _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].appendForMove((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('ghostgroup'), _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].getTranslateTransform());
+      _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].appendForMove((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("ghostgroup"), _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].getTranslateTransform());
       dragging = true;
     }
   }, {
@@ -19303,7 +19259,7 @@ var PaintAction = /*#__PURE__*/function () {
         return;
       }
       PaintAction.rotateFromMouse(evt, currentShape);
-      PaintAction.rotateFromMouse(evt, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('ghostgroup'));
+      PaintAction.rotateFromMouse(evt, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("ghostgroup"));
     }
   }, {
     key: "startRotateShape",
@@ -19312,7 +19268,7 @@ var PaintAction = /*#__PURE__*/function () {
       if (!currentShape) {
         return;
       }
-      if (currentShape && currentShape.tagName.toLowerCase() == 'svg') {
+      if (currentShape && currentShape.tagName.toLowerCase() == "svg") {
         currentShape = undefined;
       }
       if (PaintAction.onBackground()) {
@@ -19381,10 +19337,10 @@ var PaintAction = /*#__PURE__*/function () {
         new_y = Math.min(_Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y, pt.y);
       }
       var attr = {
-        'width': w,
-        'height': h,
-        'x': new_x,
-        'y': new_y
+        width: w,
+        height: h,
+        x: new_x,
+        y: new_y
       };
       for (var val in attr) {
         currentShape.setAttributeNS(null, val, attr[val]);
@@ -19405,9 +19361,9 @@ var PaintAction = /*#__PURE__*/function () {
       var h = delta.y;
       var x = _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x;
       var y = _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y;
-      var cmds = [['M', x, y + h], ['L', x + w * 0.5, y], ['L', x + w, y + h], ['L', x, y + h], ['z']];
+      var cmds = [["M", x, y + h], ["L", x + w * 0.5, y], ["L", x + w, y + h], ["L", x, y + h], ["z"]];
       var d = _utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_10__["default"].arrayToString(cmds);
-      currentShape.setAttribute('d', d);
+      currentShape.setAttribute("d", d);
     }
   }, {
     key: "pathMouseMove",
@@ -19420,10 +19376,10 @@ var PaintAction = /*#__PURE__*/function () {
       if (!dragging) {
         return;
       }
-      var place = ' ' + pt.x + ',' + pt.y + ' ';
-      var d = currentShape.getAttribute('points');
+      var place = " " + pt.x + "," + pt.y + " ";
+      var d = currentShape.getAttribute("points");
       d += place;
-      currentShape.setAttributeNS(null, 'points', d);
+      currentShape.setAttributeNS(null, "points", d);
     }
   }, {
     key: "ellipseMouseMove",
@@ -19452,10 +19408,10 @@ var PaintAction = /*#__PURE__*/function () {
       var ry = h / 2;
       var cy = new_y + ry;
       var attr = {
-        'cx': cx,
-        'cy': cy,
-        'rx': rx,
-        'ry': ry
+        cx: cx,
+        cy: cy,
+        rx: rx,
+        ry: ry
       };
       for (var val in attr) {
         currentShape.setAttributeNS(null, val, attr[val]);
@@ -19468,7 +19424,7 @@ var PaintAction = /*#__PURE__*/function () {
       var delta = _geom_Vector__WEBPACK_IMPORTED_MODULE_8__["default"].diff(pt, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].deltaPoint);
       PaintAction.movePointByDrag(delta.x, delta.y);
       dragging = true;
-      var elem = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)(currentShape.getAttribute('parentid'));
+      var elem = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)(currentShape.getAttribute("parentid"));
       var state = _utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_10__["default"].isCloseDPath(elem);
       _Path__WEBPACK_IMPORTED_MODULE_5__["default"].reshape(elem);
       var newstate = _utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_10__["default"].isCloseDPath(elem);
@@ -19482,38 +19438,38 @@ var PaintAction = /*#__PURE__*/function () {
         return;
       }
       _Ghost__WEBPACK_IMPORTED_MODULE_7__["default"].clearLayer();
-      var mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(pt, elem, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance());
+      var mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(pt, elem, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance());
       if (!mt) {
         return;
       }
-      var g = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].createGroup((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('draglayer'), 'cusorstate');
+      var g = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].createGroup((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("draglayer"), "cusorstate");
       _Ghost__WEBPACK_IMPORTED_MODULE_7__["default"].getKid(g, mt, 0.7);
       target = mt;
     }
   }, {
     key: "playSnapSound",
     value: function playSnapSound(state) {
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX(state ? 'cut.wav' : 'snap.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX(state ? "cut.wav" : "snap.wav");
     }
   }, {
     key: "movePointByDrag",
     value: function movePointByDrag(dx, dy) {
-      var cx = currentShape.getAttribute('cx');
-      var cy = currentShape.getAttribute('cy');
+      var cx = currentShape.getAttribute("cx");
+      var cy = currentShape.getAttribute("cy");
       var newcx = Number(cx) + dx;
       var newcy = Number(cy) + dy;
-      currentShape.setAttributeNS(null, 'cx', newcx);
-      currentShape.setAttributeNS(null, 'cy', newcy);
+      currentShape.setAttributeNS(null, "cx", newcx);
+      currentShape.setAttributeNS(null, "cy", newcy);
     }
 
     //Calls from the Mouse Up
   }, {
     key: "rectMouseUp",
     value: function rectMouseUp(evt) {
-      var w = Number(currentShape.getAttribute('width'));
-      var h = Number(currentShape.getAttribute('height'));
-      var x = Number(currentShape.getAttribute('x'));
-      var y = Number(currentShape.getAttribute('y'));
+      var w = Number(currentShape.getAttribute("width"));
+      var h = Number(currentShape.getAttribute("height"));
+      var x = Number(currentShape.getAttribute("x"));
+      var y = Number(currentShape.getAttribute("y"));
       var pl = [{
         x: x,
         y: y
@@ -19567,12 +19523,12 @@ var PaintAction = /*#__PURE__*/function () {
       PaintAction.rotateFromMouse(evt, currentShape);
       var erot = _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].getRotation(currentShape);
       for (var i = 0; i < dragGroup.length; i++) {
-        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1').appendChild(dragGroup[i]);
+        (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1").appendChild(dragGroup[i]);
         if (erot.angle != 0) {
           _Transform__WEBPACK_IMPORTED_MODULE_6__["default"].rotateFromPoint(erot, dragGroup[i]);
         }
       }
-      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1').removeChild(currentShape);
+      (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1").removeChild(currentShape);
       currentShape = target;
     }
   }, {
@@ -19587,17 +19543,17 @@ var PaintAction = /*#__PURE__*/function () {
         } else if (!_utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_10__["default"].isCloseDPath(currentShape)) {
           // check if it is a join issue
           var pt = PaintAction.getScreenPt(evt);
-          var mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(pt, currentShape, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance()); // check the end
+          var mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(pt, currentShape, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance()); // check the end
           if (!mt) {
-            pt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getCommands(currentShape.getAttribute('d'))[0].pt;
-            mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(pt, currentShape, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance()); // check the start
+            pt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getCommands(currentShape.getAttribute("d"))[0].pt;
+            mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(pt, currentShape, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance()); // check the start
           }
-          var s = currentShape.getAttribute('stroke');
-          var sw = currentShape.getAttribute('stroke-width');
-          if (mt && s == mt.getAttribute('stroke') && sw == mt.getAttribute('stroke-width')) {
+          var s = currentShape.getAttribute("stroke");
+          var sw = currentShape.getAttribute("stroke-width");
+          if (mt && s == mt.getAttribute("stroke") && sw == mt.getAttribute("stroke-width")) {
             currentShape = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].join(currentShape, mt, pt);
           }
-          if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('staticbkg')) {
+          if ((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("staticbkg")) {
             _Path__WEBPACK_IMPORTED_MODULE_5__["default"].checkBackgroundCrop(currentShape);
           }
         }
@@ -19632,20 +19588,20 @@ var PaintAction = /*#__PURE__*/function () {
     value: function scissorsMouseUp(evt) {
       PaintAction.fingerUp(evt);
       PaintAction.selectTarget();
-      if (currentShape && currentShape.id == 'fixed') {
+      if (currentShape && currentShape.id == "fixed") {
         currentShape = null;
       }
       if (!currentShape) {
         return;
       }
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX('cut.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX("cut.wav");
       var mtimage = _SVGImage__WEBPACK_IMPORTED_MODULE_11__["default"].getImage(currentShape);
       var p = currentShape.parentNode;
       var res = [];
       for (var i = 0; i < p.childElementCount; i++) {
         // remove compound paths extras
         var kid = p.childNodes[i];
-        if (kid.getAttribute('relatedto') == currentShape.id) {
+        if (kid.getAttribute("relatedto") == currentShape.id) {
           res.push(kid);
         }
       }
@@ -19657,7 +19613,7 @@ var PaintAction = /*#__PURE__*/function () {
       } else if (currentShape.parentNode) {
         currentShape.parentNode.removeChild(currentShape);
       }
-      _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].cleanup((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'));
+      _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].cleanup((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"));
       _PaintUndo__WEBPACK_IMPORTED_MODULE_2__["default"].record();
     }
   }, {
@@ -19679,13 +19635,13 @@ var PaintAction = /*#__PURE__*/function () {
     value: function cloneMouseUp(evt) {
       PaintAction.fingerUp(evt);
       PaintAction.selectTarget();
-      if (currentShape && currentShape.id == 'staticbkg') {
+      if (currentShape && currentShape.id == "staticbkg") {
         currentShape = null;
       }
       if (!currentShape) {
         return;
       }
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX('copy.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX("copy.wav");
       _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].cloneSVGelement(currentShape);
       _Ghost__WEBPACK_IMPORTED_MODULE_7__["default"].clearLayer();
       _PaintUndo__WEBPACK_IMPORTED_MODULE_2__["default"].record();
@@ -19697,18 +19653,18 @@ var PaintAction = /*#__PURE__*/function () {
       if (!currentShape) {
         return;
       }
-      if (currentShape.getAttribute('stroke') == _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor && currentShape.getAttribute('stroke-width') == _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].strokewidth) {
+      if (currentShape.getAttribute("stroke") == _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor && currentShape.getAttribute("stroke-width") == _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].strokewidth) {
         return;
       }
-      var stroke = currentShape.getAttribute('stroke');
+      var stroke = currentShape.getAttribute("stroke");
       if (!stroke) {
-        currentShape = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)(currentShape.id + 'Border') ? (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)(currentShape.id + 'Border') : currentShape;
-        if (currentShape.id.indexOf('Border') > -1) {
-          currentShape.setAttribute('fill', _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor);
+        currentShape = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)(currentShape.id + "Border") ? (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)(currentShape.id + "Border") : currentShape;
+        if (currentShape.id.indexOf("Border") > -1) {
+          currentShape.setAttribute("fill", _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor);
         }
       } else {
-        currentShape.setAttribute('stroke', _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor);
-        currentShape.setAttribute('stroke-width', _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].strokewidth);
+        currentShape.setAttribute("stroke", _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor);
+        currentShape.setAttribute("stroke-width", _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].strokewidth);
       }
       _PaintUndo__WEBPACK_IMPORTED_MODULE_2__["default"].record();
     }
@@ -19724,28 +19680,28 @@ var PaintAction = /*#__PURE__*/function () {
   }, {
     key: "paintRegion",
     value: function paintRegion() {
-      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX('splash.wav');
+      _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX("splash.wav");
       switch (PaintAction.getPaintType()) {
-        case 'paths':
+        case "paths":
           _Path__WEBPACK_IMPORTED_MODULE_5__["default"].setData(currentShape);
           break;
-        case 'image':
+        case "image":
           var mt = _SVGImage__WEBPACK_IMPORTED_MODULE_11__["default"].getImage(currentShape);
           _SVGImage__WEBPACK_IMPORTED_MODULE_11__["default"].paint(mt);
           break;
         // if the stroke and fill are the same and they are "relatedto" paths stokes needs to be changed too.
-        case 'check':
+        case "check":
           var group = _Layer__WEBPACK_IMPORTED_MODULE_9__["default"].findGroup(currentShape);
           for (var i = 0; i < group.length; i++) {
-            if (group[i].id == currentShape.id || group[i].getAttribute('relatedto') == currentShape.id) {
-              group[i].setAttribute('stroke', _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor);
+            if (group[i].id == currentShape.id || group[i].getAttribute("relatedto") == currentShape.id) {
+              group[i].setAttribute("stroke", _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor);
             }
           }
           break;
         default:
           break;
       }
-      currentShape.setAttribute('fill', _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor);
+      currentShape.setAttribute("fill", _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].fillcolor);
       _PaintUndo__WEBPACK_IMPORTED_MODULE_2__["default"].record();
     }
   }, {
@@ -19753,30 +19709,30 @@ var PaintAction = /*#__PURE__*/function () {
     value: function getPaintType() {
       var mtimage = _SVGImage__WEBPACK_IMPORTED_MODULE_11__["default"].getImage(currentShape);
       if (mtimage) {
-        return 'image';
+        return "image";
       }
       if (!PaintAction.justPaint(currentShape)) {
-        return 'paths';
+        return "paths";
       }
-      if (currentShape.getAttribute('fill') == null && currentShape.getAttribute('stroke') == null) {
-        return 'paths';
+      if (currentShape.getAttribute("fill") == null && currentShape.getAttribute("stroke") == null) {
+        return "paths";
       }
-      if (currentShape.getAttribute('fill') == currentShape.getAttribute('stroke')) {
-        return 'check';
+      if (currentShape.getAttribute("fill") == currentShape.getAttribute("stroke")) {
+        return "check";
       }
-      return 'none';
+      return "none";
     }
   }, {
     key: "justPaint",
     value: function justPaint(mt) {
       //only compound the ones created with this tool
-      if (mt.tagName != 'path') {
+      if (mt.tagName != "path") {
         return true;
       }
       if (_utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_10__["default"].isCompoundPath(mt)) {
         return true;
       }
-      return mt.getAttribute('fill') != 'none' || mt.getAttribute('fill') != null;
+      return mt.getAttribute("fill") != "none" || mt.getAttribute("fill") != null;
     }
   }, {
     key: "stopDrag",
@@ -19801,7 +19757,7 @@ var PaintAction = /*#__PURE__*/function () {
         box1 = box1.union(_SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].getTransformedBox(dragGroup[j]).expandBy(_SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].getPenWidthForm(dragGroup[j])));
       }
       if (!box1.intersects(box2)) {
-        _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX('boing.wav');
+        _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_3__["default"].sndFX("boing.wav");
         var delta = {
           x: 0,
           y: 0
@@ -19831,14 +19787,14 @@ var PaintAction = /*#__PURE__*/function () {
   }, {
     key: "backToSelect",
     value: function backToSelect() {
-      _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].selectButton('select');
+      _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].selectButton("select");
     }
   }, {
     key: "grabMouseUp",
     value: function grabMouseUp(evt) {
-      var elem = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)(currentShape.getAttribute('parentid'));
-      currentShape.setAttributeNS(null, 'fill', _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getDotColor(elem, currentShape));
-      currentShape.setAttributeNS(null, 'r', currentShape.getAttribute('r') / 1.5);
+      var elem = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)(currentShape.getAttribute("parentid"));
+      currentShape.setAttributeNS(null, "fill", _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getDotColor(elem, currentShape));
+      currentShape.setAttributeNS(null, "r", currentShape.getAttribute("r") / 1.5);
       var pt = PaintAction.getScreenPt(evt);
       if (!dragging) {
         _Path__WEBPACK_IMPORTED_MODULE_5__["default"].deleteDot(currentShape, elem);
@@ -19847,7 +19803,7 @@ var PaintAction = /*#__PURE__*/function () {
         PaintAction.movePointByDrag(delta.x, delta.y);
         _Path__WEBPACK_IMPORTED_MODULE_5__["default"].reshape(elem);
         if (_Path__WEBPACK_IMPORTED_MODULE_5__["default"].isTip(currentShape) && !_utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_10__["default"].isCloseDPath(elem)) {
-          var mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(pt, elem, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance());
+          var mt = _Path__WEBPACK_IMPORTED_MODULE_5__["default"].getClosestPath(pt, elem, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Path__WEBPACK_IMPORTED_MODULE_5__["default"].maxDistance());
           if (!mt) {
             return;
           }
@@ -19877,19 +19833,19 @@ var PaintAction = /*#__PURE__*/function () {
         return;
       }
       PaintAction.removeShape(evt);
-      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addRect((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
-      var c = currentShape.getAttribute('stroke');
+      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addRect((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
+      var c = currentShape.getAttribute("stroke");
       var attr = {
-        'width': 16 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom,
-        'height': 16 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom
+        width: 16 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom,
+        height: 16 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom
       };
       for (var val in attr) {
         currentShape.setAttribute(val, attr[val]);
       }
       PaintAction.rectMouseUp(evt);
       attr = {
-        'fill': c,
-        'stroke-width': 4
+        fill: c,
+        "stroke-width": 4
       };
       for (var vl in attr) {
         currentShape.setAttribute(vl, attr[vl]);
@@ -19903,19 +19859,19 @@ var PaintAction = /*#__PURE__*/function () {
         return;
       }
       PaintAction.removeShape(evt);
-      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addEllipse((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
-      var c = currentShape.getAttribute('stroke');
+      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addEllipse((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
+      var c = currentShape.getAttribute("stroke");
       var attr = {
-        'rx': 8 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom,
-        'ry': 8 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom
+        rx: 8 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom,
+        ry: 8 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom
       };
       for (var val in attr) {
         currentShape.setAttribute(val, attr[val]);
       }
       PaintAction.ellipseMouseUp(evt);
       attr = {
-        'fill': c,
-        'stroke-width': 4
+        fill: c,
+        "stroke-width": 4
       };
       for (var vl in attr) {
         currentShape.setAttribute(vl, attr[vl]);
@@ -19929,7 +19885,7 @@ var PaintAction = /*#__PURE__*/function () {
       if (!currentShape) {
         return;
       }
-      if (currentShape.getAttribute('fixed') != 'yes') {
+      if (currentShape.getAttribute("fixed") != "yes") {
         PaintAction.setStrokeSizeAndColor();
       }
     }
@@ -19940,19 +19896,19 @@ var PaintAction = /*#__PURE__*/function () {
         return;
       }
       PaintAction.removeShape(evt);
-      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addTriangle((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('layer1'), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
+      currentShape = _SVGTools__WEBPACK_IMPORTED_MODULE_4__["default"].addTriangle((0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("layer1"), _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x, _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y);
       var w = 16 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom;
       var h = 16 / _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].currentZoom;
       var x = _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.x;
       var y = _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].initialPoint.y;
-      var cmds = [['M', x, y + h], ['L', x + w * 0.5, y], ['L', x + w, y + h], ['L', x, y + h]];
+      var cmds = [["M", x, y + h], ["L", x + w * 0.5, y], ["L", x + w, y + h], ["L", x, y + h]];
       var d = _utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_10__["default"].arrayToString(cmds);
-      d += 'z';
-      var c = currentShape.getAttribute('stroke');
+      d += "z";
+      var c = currentShape.getAttribute("stroke");
       var attr = {
-        'fill': c,
-        'stroke-width': 2,
-        'd': d
+        fill: c,
+        "stroke-width": 2,
+        d: d
       };
       for (var val in attr) {
         currentShape.setAttribute(val, attr[val]);
@@ -19969,13 +19925,13 @@ var PaintAction = /*#__PURE__*/function () {
       if (!currentShape) {
         return;
       }
-      if (currentShape && currentShape.parentNode && currentShape.parentNode.tagName == 'g' && currentShape.parentNode.id != 'layer1') {
+      if (currentShape && currentShape.parentNode && currentShape.parentNode.tagName == "g" && currentShape.parentNode.id != "layer1") {
         return;
       }
-      if (currentShape && currentShape.id == 'staticbkg') {
+      if (currentShape && currentShape.id == "staticbkg") {
         return;
       }
-      if (currentShape && currentShape.tagName == 'g') {
+      if (currentShape && currentShape.tagName == "g") {
         return;
       }
       var pt = PaintAction.getScreenPt(evt);
@@ -20014,10 +19970,10 @@ var PaintAction = /*#__PURE__*/function () {
       if (mt.correspondingUseElement) {
         mt = mt.correspondingUseElement;
       }
-      if (mt.id == 'maincanvas') {
+      if (mt.id == "maincanvas") {
         return mt.childNodes[0];
       }
-      if (mt.id == 'workspacebkg') {
+      if (mt.id == "workspacebkg") {
         return mt;
       }
       while (mt && _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].xmlns != mt.namespaceURI && mt != _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].root && mt != _Paint__WEBPACK_IMPORTED_MODULE_1__["default"].frame) {
@@ -20029,7 +19985,7 @@ var PaintAction = /*#__PURE__*/function () {
       if (!mt.parentNode) {
         return null;
       }
-      if (mt.parentNode.id.indexOf('group_') > -1) {
+      if (mt.parentNode.id.indexOf("group_") > -1) {
         return mt.parentNode;
       }
       return mt;
@@ -20043,7 +19999,7 @@ var PaintAction = /*#__PURE__*/function () {
   }, {
     key: "zoomPt",
     value: function zoomPt(pt) {
-      var mc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)('maincanvas');
+      var mc = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_15__.gn)("maincanvas");
       if (!mc) {
         return pt;
       }
@@ -24934,28 +24890,27 @@ var IO = /*#__PURE__*/function () {
     value: function requestSynchronous(url) {
       url = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_3__.absoluteURL)(url);
       var request = new XMLHttpRequest();
-      request.open('GET', url, false);
+      request.open("GET", url, false);
       request.send(null);
       if (request.status === 0 || request.status === 200) {
         return request.responseText;
       } else {
         // Failed synchronous loading
-        return '';
+        return "";
       }
     }
   }, {
     key: "requestFromServer",
     value: function requestFromServer(url, whenDone) {
-      console.log('### IO.requestFromServer', url);
       url = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_3__.absoluteURL)(url);
       var xmlrequest = new XMLHttpRequest();
-      xmlrequest.addEventListener('error', transferFailed, false);
+      xmlrequest.addEventListener("error", transferFailed, false);
       xmlrequest.onreadystatechange = function () {
         if (xmlrequest.readyState == 4) {
           whenDone(xmlrequest.responseText);
         }
       };
-      xmlrequest.open('GET', url, true);
+      xmlrequest.open("GET", url, true);
       xmlrequest.send(null);
       function transferFailed(e) {
         e.preventDefault();
@@ -24966,26 +24921,25 @@ var IO = /*#__PURE__*/function () {
   }, {
     key: "getThumbnail",
     value: function getThumbnail(str, w, h, destw, desth) {
-      str = str.replace(/>\s*</g, '><');
-      console.log(str);
-      var xmlDoc = new DOMParser().parseFromString(str, 'text/xml');
+      str = str.replace(/>\s*</g, "><");
+      var xmlDoc = new DOMParser().parseFromString(str, "text/xml");
       var extxml = document.importNode(xmlDoc.documentElement, true);
-      if (extxml.childNodes[0].nodeName == '#comment') {
+      if (extxml.childNodes[0].nodeName == "#comment") {
         extxml.removeChild(extxml.childNodes[0]);
       }
-      var srccnv = document.createElement('canvas');
+      var srccnv = document.createElement("canvas");
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_3__.setCanvasSize)(srccnv, w, h);
-      var ctx = srccnv.getContext('2d');
+      var ctx = srccnv.getContext("2d");
       for (var i = 0; i < extxml.childElementCount; i++) {
         _utils_SVG2Canvas__WEBPACK_IMPORTED_MODULE_4__["default"].drawLayer(extxml.childNodes[i], ctx);
       }
       if (!destw || !desth) {
-        return srccnv.toDataURL('image/png');
+        return srccnv.toDataURL("image/png");
       }
-      var cnv = document.createElement('canvas');
+      var cnv = document.createElement("canvas");
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_3__.setCanvasSize)(cnv, destw, desth);
       (0,_utils_lib__WEBPACK_IMPORTED_MODULE_3__.drawThumbnail)(srccnv, cnv);
-      return cnv.toDataURL('image/png');
+      return cnv.toDataURL("image/png");
     }
 
     // in iOS casting an svg url in a img.src works except when the SVG has images.
@@ -24999,14 +24953,14 @@ var IO = /*#__PURE__*/function () {
         fcn(_MediaLib__WEBPACK_IMPORTED_MODULE_1__["default"].path + md5);
         return;
       } // just url link assets do not have photos
-      if (md5.indexOf('/') > -1) {
+      if (md5.indexOf("/") > -1) {
         IO.requestFromServer(md5, gotit); // get url contents
         return;
       }
       _OS__WEBPACK_IMPORTED_MODULE_0__["default"].getmedia(md5, nextStep);
       function gotit(str) {
         var base64 = IO.getImageDataURL(md5, btoa(str));
-        if (str.indexOf('xlink:href') < 0) {
+        if (str.indexOf("xlink:href") < 0) {
           fcn(md5); // does not have embedded images
         } else {
           IO.getImagesInSVG(str, function () {
@@ -25025,23 +24979,23 @@ var IO = /*#__PURE__*/function () {
   }, {
     key: "getImagesInSVG",
     value: function getImagesInSVG(str, whenDone) {
-      str = str.replace(/>\s*</g, '><');
-      if (str.indexOf('xlink:href') < 0) {
+      str = str.replace(/>\s*</g, "><");
+      if (str.indexOf("xlink:href") < 0) {
         whenDone(); // needs this in case of reading a PNG in debug mode
       } else {
         loadInnerImages(str, whenDone);
       }
       function loadInnerImages(str, whenDone) {
-        var xmlDoc = new DOMParser().parseFromString(str, 'text/xml');
+        var xmlDoc = new DOMParser().parseFromString(str, "text/xml");
         var extxml = document.importNode(xmlDoc.documentElement, true);
-        if (extxml.childNodes[0].nodeName == '#comment') {
+        if (extxml.childNodes[0].nodeName == "#comment") {
           extxml.removeChild(extxml.childNodes[0]);
         }
         var images = IO.getImages(extxml, []);
         var imageCount = images.length;
         for (var i = 0; i < images.length; i++) {
-          var dataurl = images[i].getAttribute('xlink:href');
-          var svgimg = document.createElement('img');
+          var dataurl = images[i].getAttribute("xlink:href");
+          var svgimg = document.createElement("img");
           svgimg.src = dataurl;
           if (!svgimg.complete) {
             svgimg.onload = function () {
@@ -25066,22 +25020,22 @@ var IO = /*#__PURE__*/function () {
     value: function getImages(p, res) {
       for (var i = 0; i < p.childNodes.length; i++) {
         var elem = p.childNodes[i];
-        if (elem.nodeName == 'metadata') {
+        if (elem.nodeName == "metadata") {
           continue;
         }
-        if (elem.nodeName == 'defs') {
+        if (elem.nodeName == "defs") {
           continue;
         }
-        if (elem.nodeName == 'sodipodi:namedview') {
+        if (elem.nodeName == "sodipodi:namedview") {
           continue;
         }
-        if (elem.nodeName == '#comment') {
+        if (elem.nodeName == "#comment") {
           continue;
         }
-        if (elem.nodeName == 'image') {
+        if (elem.nodeName == "image") {
           res.push(elem);
         }
-        if (elem.nodeName == 'g') {
+        if (elem.nodeName == "g") {
           IO.getImages(elem, res);
         }
       }
@@ -25090,13 +25044,13 @@ var IO = /*#__PURE__*/function () {
   }, {
     key: "getImageDataURL",
     value: function getImageDataURL(md5, data) {
-      var header = '';
+      var header = "";
       switch (IO.getExtension(md5)) {
-        case 'svg':
-          header = 'data:image/svg+xml;base64,';
+        case "svg":
+          header = "data:image/svg+xml;base64,";
           break;
-        case 'png':
-          header = 'data:image/png;base64,';
+        case "png":
+          header = "data:image/png;base64,";
           break;
       }
       return header + data;
@@ -25104,7 +25058,7 @@ var IO = /*#__PURE__*/function () {
   }, {
     key: "getObject",
     value: function getObject(md5, fcn) {
-      if (md5.indexOf('/') > -1) {
+      if (md5.indexOf("/") > -1) {
         var gotit = function gotit(str) {
           fcn(str);
         };
@@ -25117,7 +25071,7 @@ var IO = /*#__PURE__*/function () {
     key: "getObjectinDB",
     value: function getObjectinDB(db, md5, fcn) {
       var json = {};
-      json.stmt = 'select * from ' + db + ' where id = ?';
+      json.stmt = "select * from " + db + " where id = ?";
       json.values = [md5];
       _OS__WEBPACK_IMPORTED_MODULE_0__["default"].query(json, fcn);
     }
@@ -25130,7 +25084,7 @@ var IO = /*#__PURE__*/function () {
     key: "query",
     value: function query(type, obj, fcn) {
       var json = {};
-      json.stmt = 'select ' + obj.items + ' from ' + type + ' where ' + obj.cond + (obj.order ? ' order by ' + obj.order : '');
+      json.stmt = "select " + obj.items + " from " + type + " where " + obj.cond + (obj.order ? " order by " + obj.order : "");
       json.values = obj.values;
       _OS__WEBPACK_IMPORTED_MODULE_0__["default"].query(json, fcn);
     }
@@ -25138,7 +25092,7 @@ var IO = /*#__PURE__*/function () {
     key: "deleteobject",
     value: function deleteobject(type, id, fcn) {
       var json = {};
-      json.stmt = 'delete from ' + type + ' where id = ?';
+      json.stmt = "delete from " + type + " where id = ?";
       json.values = [id];
       _OS__WEBPACK_IMPORTED_MODULE_0__["default"].stmt(json, fcn);
     }
@@ -25147,33 +25101,33 @@ var IO = /*#__PURE__*/function () {
     // projects
     ///////////////////////
     /*
-        +[id] =>  // SQL ID creates this
-        [deleted] =>
-        [name] =>
-        [json] => project data
-        [thumb] =>
-        [mtime] => modification time
-    */
+          +[id] =>  // SQL ID creates this
+          [deleted] =>
+          [name] =>
+          [json] => project data
+          [thumb] =>
+          [mtime] => modification time
+      */
   }, {
     key: "createProject",
     value: function createProject(obj, fcn) {
       var json = {};
-      var keylist = ['name', 'version', 'deleted', 'mtime', 'isgift'];
-      var values = '?,?,?,?,?';
+      var keylist = ["name", "version", "deleted", "mtime", "isgift"];
+      var values = "?,?,?,?,?";
       var mtime = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_3__.mTime)().toString();
-      var isGift = obj.isgift ? obj.isgift : '0';
-      json.values = [obj.name, obj.version, 'NO', mtime, isGift];
+      var isGift = obj.isgift ? obj.isgift : "0";
+      json.values = [obj.name, obj.version, "NO", mtime, isGift];
       if (obj.json) {
-        addValue('json', JSON.stringify(obj.json));
+        addValue("json", JSON.stringify(obj.json));
       }
       if (obj.thumbnail) {
-        addValue('thumbnail', JSON.stringify(obj.thumbnail));
+        addValue("thumbnail", JSON.stringify(obj.thumbnail));
       }
-      json.stmt = 'insert into ' + database + ' (' + keylist.toString() + ') values (' + values + ')';
+      json.stmt = "insert into " + database + " (" + keylist.toString() + ") values (" + values + ")";
       _OS__WEBPACK_IMPORTED_MODULE_0__["default"].stmt(json, fcn);
       function addValue(key, str) {
         keylist.push(key);
-        values += ',?';
+        values += ",?";
         json.values.push(str);
       }
     }
@@ -25185,22 +25139,21 @@ var IO = /*#__PURE__*/function () {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              console.log('### IO.saveProject', obj);
               json = {};
-              keylist = ['version = ?', 'deleted = ?', 'name = ?', 'json = ?', 'thumbnail = ?', 'mtime = ?'];
+              keylist = ["version = ?", "deleted = ?", "name = ?", "json = ?", "thumbnail = ?", "mtime = ?"];
               json.values = [obj.version, obj.deleted, obj.name, JSON.stringify(obj.json), JSON.stringify(obj.thumbnail), (0,_utils_lib__WEBPACK_IMPORTED_MODULE_3__.mTime)().toString()];
-              _context.next = 6;
+              _context.next = 5;
               return (0,_WebDB__WEBPACK_IMPORTED_MODULE_2__.hashString)(JSON.stringify(json.values));
-            case 6:
+            case 5:
               projectHash = _context.sent;
               if (lastSavedProjectHash === projectHash) {
                 if (fcn) fcn();
               } else {
-                json.stmt = 'update ' + database + ' set ' + keylist.toString() + ' where id = ' + obj.id;
+                json.stmt = "update " + database + " set " + keylist.toString() + " where id = " + obj.id;
                 _OS__WEBPACK_IMPORTED_MODULE_0__["default"].stmt(json, fcn);
               }
               lastSavedProjectHash = projectHash;
-            case 9:
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -25216,40 +25169,36 @@ var IO = /*#__PURE__*/function () {
     key: "setProjectIsGift",
     value: function setProjectIsGift(obj, fcn) {
       var json = {};
-      var keylist = ['isgift = ?'];
+      var keylist = ["isgift = ?"];
       json.values = [obj.isgift];
-      json.stmt = 'update ' + database + ' set ' + keylist.toString() + ' where id = ' + obj.id;
+      json.stmt = "update " + database + " set " + keylist.toString() + " where id = " + obj.id;
       _OS__WEBPACK_IMPORTED_MODULE_0__["default"].stmt(json, fcn);
     }
   }, {
     key: "getExtension",
     value: function getExtension(str) {
-      return str.substring(str.indexOf('.') + 1, str.length);
+      return str.substring(str.indexOf(".") + 1, str.length);
     }
   }, {
     key: "getFilename",
     value: function getFilename(str) {
-      return str.substring(0, str.indexOf('.'));
+      return str.substring(0, str.indexOf("."));
     }
   }, {
     key: "getFilenameWithExt",
     value: function getFilenameWithExt(str) {
-      return str.substring(str.lastIndexOf('/') + 1, str.length);
+      return str.substring(str.lastIndexOf("/") + 1, str.length);
     }
   }, {
     key: "parseProjectData",
     value: function parseProjectData(data) {
-      console.log('### IO.parseProjectData', data);
       var res = new Object();
       for (var key in data) {
         res[key.toLowerCase()] = data[key];
       }
-
-      // Not sure what's going on here, must be some meta data on CodeHS columns
-      // TODO: Figure out what to do with this
-      if (data['columns']) {
-        for (var i = 0; i < data['columns'].length; i++) {
-          res[data['columns'][i].toLowerCase()] = data['values'][0][i];
+      if (data["columns"]) {
+        for (var i = 0; i < data["columns"].length; i++) {
+          res[data["columns"][i].toLowerCase()] = data["values"][0][i];
         }
       }
       return res;
@@ -25263,28 +25212,28 @@ var IO = /*#__PURE__*/function () {
     value: function compressProject(projectReference, finished) {
       IO.getObject(projectReference, function (projectFromDB) {
         var projectMetadata = {
-          'thumbnails': [],
-          'characters': [],
-          'backgrounds': [],
-          'sounds': []
+          thumbnails: [],
+          characters: [],
+          backgrounds: [],
+          sounds: []
         };
         var jsonData = IO.parseProjectData(JSON.parse(projectFromDB)[0]);
         jsonData.assetLibraryVersion = _MediaLib__WEBPACK_IMPORTED_MODULE_1__["default"].version;
 
         // Collect project assets for inclusion in zip file
         // Parse JSON representations of project data / thumbnail into usable types
-        if (typeof jsonData.json == 'string') {
+        if (typeof jsonData.json == "string") {
           jsonData.json = JSON.parse(jsonData.json);
         }
-        if (typeof jsonData.thumbnail == 'string') {
+        if (typeof jsonData.thumbnail == "string") {
           jsonData.thumbnail = JSON.parse(jsonData.thumbnail);
         }
 
         // Method to determine if a particular asset needs to be collected
         // If it does, save the reference in projectMetadata for collection
         var collectAsset = function collectAsset(assetType, md5) {
-          if (md5 && typeof md5 !== 'undefined') {
-            if (md5.indexOf('samples/') < 0) {
+          if (md5 && typeof md5 !== "undefined") {
+            if (md5.indexOf("samples/") < 0) {
               // Exclude sample assets
               if (collectLibraryAssets) {
                 // Behavior if we want to collect and package library assets
@@ -25293,7 +25242,7 @@ var IO = /*#__PURE__*/function () {
                 }
               } else {
                 // Otherwise, first check if it's in the library
-                if (md5 && typeof md5 !== 'undefined' && !_MediaLib__WEBPACK_IMPORTED_MODULE_1__["default"].keys[md5] && _MediaLib__WEBPACK_IMPORTED_MODULE_1__["default"].sounds.indexOf(md5) < 0) {
+                if (md5 && typeof md5 !== "undefined" && !_MediaLib__WEBPACK_IMPORTED_MODULE_1__["default"].keys[md5] && _MediaLib__WEBPACK_IMPORTED_MODULE_1__["default"].sounds.indexOf(md5) < 0) {
                   if (projectMetadata[assetType].indexOf(md5) < 0) {
                     projectMetadata[assetType].push(md5);
                   }
@@ -25304,7 +25253,7 @@ var IO = /*#__PURE__*/function () {
         };
 
         // Project thumbnail
-        collectAsset('thumbnails', jsonData.thumbnail.md5);
+        collectAsset("thumbnails", jsonData.thumbnail.md5);
         var projectData = jsonData.json;
 
         // Data for each page
@@ -25313,22 +25262,22 @@ var IO = /*#__PURE__*/function () {
           var page = projectData[pageReference];
 
           // Page background
-          collectAsset('backgrounds', page.md5);
+          collectAsset("backgrounds", page.md5);
 
           // Sprites
           for (var s = 0; s < page.sprites.length; s++) {
             var spriteReference = page.sprites[s];
             var sprite = page[spriteReference];
-            if (sprite.type != 'sprite') {
+            if (sprite.type != "sprite") {
               continue;
             }
 
             // Sprite image
-            collectAsset('characters', sprite.md5);
+            collectAsset("characters", sprite.md5);
 
             // Sprite's recorded sounds
             for (var snd = 0; snd < sprite.sounds.length; snd++) {
-              collectAsset('sounds', sprite.sounds[snd]);
+              collectAsset("sounds", sprite.sounds[snd]);
             }
           }
         }
@@ -25344,8 +25293,8 @@ var IO = /*#__PURE__*/function () {
         var reservedRe = /^\.+$/;
         var windowsReservedRe = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/i;
         var windowsTrailingRe = /[\. ]+$/;
-        zipFileName = jsonData.name.replace(/\s*/g, '');
-        zipFileName = zipFileName.replace(illegalRe, '_').replace(controlRe, '_').replace(reservedRe, '_').replace(windowsReservedRe, '_').replace(windowsTrailingRe, '_');
+        zipFileName = jsonData.name.replace(/\s*/g, "");
+        zipFileName = zipFileName.replace(illegalRe, "_").replace(controlRe, "_").replace(reservedRe, "_").replace(windowsReservedRe, "_").replace(windowsTrailingRe, "_");
         shareName = jsonData.name;
 
         // create zip natively
@@ -25364,17 +25313,17 @@ var IO = /*#__PURE__*/function () {
       // E.g., "Project 2" -> ["Project", 2]
       // "My project" -> ["My project", null];
       var nameAndNumber = function nameAndNumber(name) {
-        var splitName = name.split(' ');
+        var splitName = name.split(" ");
         var lastPart = splitName.pop();
         if (!isNaN(lastPart)) {
           return {
-            'name': splitName.join(' '),
-            'number': parseInt(lastPart)
+            name: splitName.join(" "),
+            number: parseInt(lastPart)
           };
         } else {
           return {
-            'name': name,
-            'number': null
+            name: name,
+            number: null
           };
         }
       };
@@ -25382,9 +25331,9 @@ var IO = /*#__PURE__*/function () {
 
       // Get project names already existing in the DB
       var json = {};
-      json.cond = 'deleted = ? AND gallery IS NULL';
-      json.items = ['name'];
-      json.values = ['NO'];
+      json.cond = "deleted = ? AND gallery IS NULL";
+      json.items = ["name"];
+      json.values = ["NO"];
       IO.query(_OS__WEBPACK_IMPORTED_MODULE_0__["default"].database, json, function (existingProjects) {
         var newNumber = null;
         existingProjects = JSON.parse(existingProjects);
@@ -25403,9 +25352,9 @@ var IO = /*#__PURE__*/function () {
         }
         if (newNumber != null && (!giftProjectNameParts.number || newNumber > giftProjectNameParts.number)) {
           // A duplicate project name exists - update it
-          jsonData.name = giftProjectNameParts.name + ' ' + newNumber;
+          jsonData.name = giftProjectNameParts.name + " " + newNumber;
         } else if (useOne) {
-          jsonData.name = giftProjectNameParts.name + ' 1';
+          jsonData.name = giftProjectNameParts.name + " 1";
         }
         callback(jsonData);
       });
@@ -25672,7 +25621,6 @@ var OS = /*#__PURE__*/function () {
   }, {
     key: "query",
     value: function query(json, fcn) {
-      console.log('### OS.query', json, fcn);
       tabletInterface.query(json, fcn);
     }
 
@@ -25681,9 +25629,9 @@ var OS = /*#__PURE__*/function () {
     key: "setfield",
     value: function setfield(db, id, fieldname, val, fcn) {
       var json = {};
-      var keylist = [fieldname + ' = ?', 'mtime = ?'];
+      var keylist = [fieldname + " = ?", "mtime = ?"];
       json.values = [val, (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.mTime)().toString()];
-      json.stmt = 'update ' + db + ' set ' + keylist.toString() + ' where id = ' + id;
+      json.stmt = "update " + db + " set " + keylist.toString() + " where id = " + id;
       OS.stmt(json, fcn);
     }
 
@@ -25870,8 +25818,8 @@ var OS = /*#__PURE__*/function () {
       try {
         _IO__WEBPACK_IMPORTED_MODULE_1__["default"].loadProjectFromSjr(b64data);
       } catch (err) {
-        var errorMessage = 'Couldn\'t load share -- project data corrupted. ' + err.message;
-        _editor_ui_Alert__WEBPACK_IMPORTED_MODULE_6__["default"].open((0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.gn)('frame'), (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.gn)('frame'), errorMessage, '#ff0000');
+        var errorMessage = "Couldn't load share -- project data corrupted. " + err.message;
+        _editor_ui_Alert__WEBPACK_IMPORTED_MODULE_6__["default"].open((0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.gn)("frame"), (0,_utils_lib__WEBPACK_IMPORTED_MODULE_0__.gn)("frame"), errorMessage, "#ff0000");
         console.log(err); // eslint-disable-line no-console
         return 0;
       }
@@ -25915,8 +25863,8 @@ var OS = /*#__PURE__*/function () {
   }, {
     key: "pageError",
     value: function pageError(desc) {
-      console.log('XCODE ERROR:', desc); // eslint-disable-line no-console
-      if (window.location.href.indexOf('home.html') > -1) {
+      console.log("XCODE ERROR:", desc); // eslint-disable-line no-console
+      if (window.location.href.indexOf("home.html") > -1) {
         if (_lobby_Lobby__WEBPACK_IMPORTED_MODULE_5__["default"].errorTimer) {
           _lobby_Lobby__WEBPACK_IMPORTED_MODULE_5__["default"].errorLoading(desc);
         }
@@ -26148,9 +26096,10 @@ var Web = /*#__PURE__*/function () {
               return _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.executeStatementFromJSON(json);
             case 2:
               result = _context.sent;
-              console.log("### Web.stmt", json, result);
+              _context.next = 5;
+              return _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.saveDB();
+            case 5:
               if (fcn) fcn(result);
-              _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.saveDB();
             case 6:
             case "end":
               return _context.stop();
@@ -26175,9 +26124,8 @@ var Web = /*#__PURE__*/function () {
               return _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.executeQueryFromJSON(json);
             case 2:
               result = _context2.sent;
-              console.log("### Web.query", json, result);
               if (fcn) fcn(result);
-            case 5:
+            case 4:
             case "end":
               return _context2.stop();
           }
@@ -26187,7 +26135,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "setfield",
     value: function setfield(db, id, fieldname, val, fcn) {
-      console.log("setfield");
       if (fcn) fcn();
     }
 
@@ -26195,13 +26142,11 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "cleanassets",
     value: function cleanassets(ft, fcn) {
-      console.log("cleanassets");
       if (fcn) fcn();
     }
   }, {
     key: "getmedia",
     value: function getmedia(file, fcn) {
-      console.log("getmedia");
       _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var content;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -26222,13 +26167,11 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "getmediadata",
     value: function getmediadata(key, offset, len, fcn) {
-      console.log("getmediadata");
       if (fcn) fcn();
     }
   }, {
     key: "processdata",
     value: function processdata(key, off, len, oldstr, fcn) {
-      console.log("processdata");
       if (fcn) fcn();
     }
   }, {
@@ -26239,13 +26182,11 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "getmediadone",
     value: function getmediadone(file, fcn) {
-      console.log("getmediadone");
       if (fcn) fcn();
     }
   }, {
     key: "setmedia",
     value: function setmedia(content, ext, fcn) {
-      console.log("setmedia");
       _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
         var name, filename;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
@@ -26272,7 +26213,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "setmedianame",
     value: function setmedianame(str, name, ext, fcn) {
-      console.log("setmedianame");
       var filename = "".concat(name, ".").concat(ext);
       _WebDB_js__WEBPACK_IMPORTED_MODULE_0__.saveToProjectFiles(filename, str, {
         encoding: "base64"
@@ -26282,7 +26222,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "getmd5",
     value: function getmd5(str, fcn) {
-      console.log("getmd5");
       _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         var name;
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
@@ -26303,19 +26242,16 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "remove",
     value: function remove(str, fcn) {
-      console.log("remove");
       if (fcn) fcn();
     }
   }, {
     key: "getfile",
     value: function getfile(str, fcn) {
-      console.log("getfile");
       if (fcn) fcn("");
     }
   }, {
     key: "setfile",
     value: function setfile(name, str, fcn) {
-      console.log("setfile");
       if (fcn) fcn();
     }
 
@@ -26374,7 +26310,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "stopSound",
     value: function stopSound(name, fcn) {
-      console.log("stopSound");
       if (audioSources[name]) {
         audioSources[name].stop();
       }
@@ -26385,7 +26320,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "sndrecord",
     value: function sndrecord(fcn) {
-      console.log("sndrecord");
       if (audioRecorder === null) {
         console.log("Audio recorder not available");
         if (fcn) fcn(false);
@@ -26399,7 +26333,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "recordstop",
     value: function recordstop(fcn) {
-      console.log("recordstop");
       if (audioRecorder === null) {
         console.log("Audio recorder not available");
         if (fcn) fcn(false);
@@ -26411,7 +26344,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "volume",
     value: function volume(fcn) {
-      console.log("volume");
       if (audioVolumeBuffer === null) {
         console.log("Audio volume not available");
         if (fcn) fcn(0);
@@ -26424,21 +26356,18 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "startplay",
     value: function startplay(fcn) {
-      console.log("startplay");
       Web.playSound("__recording__");
       if (fcn) fcn(audioBuffers["__recording__"].duration);
     }
   }, {
     key: "stopplay",
     value: function stopplay(fcn) {
-      console.log("stopplay");
       Web.stopSound("__recording__");
       if (fcn) fcn();
     }
   }, {
     key: "recorddisappear",
     value: function recorddisappear(b, fcn) {
-      console.log("recorddisappear");
       if (fcn) fcn();
     }
 
@@ -26453,13 +26382,11 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "hascamera",
     value: function hascamera() {
-      console.log("hascamera");
       return videoRecorderAvailable();
     }
   }, {
     key: "startfeed",
     value: function startfeed(data, fcn) {
-      console.log("startfeed");
       if (webVideo === null) {
         webVideo = new _WebVideo_js__WEBPACK_IMPORTED_MODULE_1__.WebVideo(data);
         webVideo.show();
@@ -26469,7 +26396,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "stopfeed",
     value: function stopfeed(fcn) {
-      console.log("stopfeed");
       if (webVideo !== null) {
         webVideo.hide();
         webVideo = null;
@@ -26480,13 +26406,11 @@ var Web = /*#__PURE__*/function () {
     key: "choosecamera",
     value: function choosecamera(mode, fcn) {
       // This is not needed for the web version
-      console.log("choosecamera");
       if (fcn) fcn();
     }
   }, {
     key: "captureimage",
     value: function captureimage(fcn) {
-      console.log("captureimage");
       if (webVideo !== null) {
         // The image is returned as a data URL
         var imgDataURL = webVideo.snapshot();
@@ -26501,7 +26425,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "hidesplash",
     value: function hidesplash(fcn) {
-      console.log("hidesplash");
       if (fcn) fcn();
     }
   }, {
@@ -26522,7 +26445,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "createZipForProject",
     value: function createZipForProject(projectData, metadata, name, fcn) {
-      console.log("createZipForProject");
       if (fcn) fcn();
     }
 
@@ -26540,7 +26462,6 @@ var Web = /*#__PURE__*/function () {
   }, {
     key: "registerLibraryAssets",
     value: function registerLibraryAssets(version, assets, fcn) {
-      console.log("registerLibraryAssets");
       if (fcn) fcn();
     }
   }, {
@@ -26626,16 +26547,16 @@ function getStringDBAndThumbnail() {
   return _getStringDBAndThumbnail.apply(this, arguments);
 }
 function _getStringDBAndThumbnail() {
-  _getStringDBAndThumbnail = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+  _getStringDBAndThumbnail = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
         case 0:
-          return _context2.abrupt("return", [getDBString(), latestThumbnail]);
+          return _context.abrupt("return", [getDBString(), latestThumbnail]);
         case 1:
         case "end":
-          return _context2.stop();
+          return _context.stop();
       }
-    }, _callee2);
+    }, _callee);
   }));
   return _getStringDBAndThumbnail.apply(this, arguments);
 }
@@ -26650,10 +26571,10 @@ function downloadDB() {
  * the file data or rejects with an error if the file operation fails.
  */
 function _downloadDB() {
-  _downloadDB = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+  _downloadDB = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
     var filename, binaryData, blob, response, url;
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
         case 0:
           filename = 'scratchDB.sqlite';
           binaryData = db["export"]();
@@ -26665,19 +26586,19 @@ function _downloadDB() {
               'Content-Disposition': "attachment; filename=\"".concat(filename, "\"")
             }
           });
-          _context3.t0 = URL;
-          _context3.next = 7;
+          _context2.t0 = URL;
+          _context2.next = 7;
           return response.blob();
         case 7:
-          _context3.t1 = _context3.sent;
-          url = _context3.t0.createObjectURL.call(_context3.t0, _context3.t1);
+          _context2.t1 = _context2.sent;
+          url = _context2.t0.createObjectURL.call(_context2.t0, _context2.t1);
           window.open(url, '_blank');
           URL.revokeObjectURL(url);
         case 11:
         case "end":
-          return _context3.stop();
+          return _context2.stop();
       }
-    }, _callee3);
+    }, _callee2);
   }));
   return _downloadDB.apply(this, arguments);
 }
@@ -26686,11 +26607,11 @@ function uploadFileToUint8Array() {
 } // converts binary data (a Uint8Array, the data format sql.js exports to) to a UTF-16 string
 // see https://github.com/sql-js/sql.js/wiki/Persisting-a-Modified-Database
 function _uploadFileToUint8Array() {
-  _uploadFileToUint8Array = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
+  _uploadFileToUint8Array = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
-          return _context4.abrupt("return", new Promise(function (resolve, reject) {
+          return _context3.abrupt("return", new Promise(function (resolve, reject) {
             // Create a file input element
             var fileInput = document.createElement('input');
             fileInput.type = 'file';
@@ -26730,9 +26651,9 @@ function _uploadFileToUint8Array() {
           }));
         case 1:
         case "end":
-          return _context4.stop();
+          return _context3.stop();
       }
-    }, _callee4);
+    }, _callee3);
   }));
   return _uploadFileToUint8Array.apply(this, arguments);
 }
@@ -26831,25 +26752,25 @@ function hashString(_x) {
 // this event will fire whenever the user closes the tab or navigates away from the page
 // see https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event#usage_notes
 function _hashString() {
-  _hashString = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(inputString) {
+  _hashString = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(inputString) {
     var encoder, data, hashBuffer, hashArray, base64String;
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-      while (1) switch (_context5.prev = _context5.next) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
         case 0:
           encoder = new TextEncoder();
           data = encoder.encode(inputString);
-          _context5.next = 4;
+          _context4.next = 4;
           return crypto.subtle.digest('SHA-256', data);
         case 4:
-          hashBuffer = _context5.sent;
+          hashBuffer = _context4.sent;
           hashArray = Array.from(new Uint8Array(hashBuffer));
           base64String = btoa(String.fromCharCode.apply(null, hashArray));
-          return _context5.abrupt("return", base64String);
+          return _context4.abrupt("return", base64String);
         case 8:
         case "end":
-          return _context5.stop();
+          return _context4.stop();
       }
-    }, _callee5);
+    }, _callee4);
   }));
   return _hashString.apply(this, arguments);
 }
@@ -26858,59 +26779,58 @@ window.addEventListener('beforeunload', function () {
 });
 var saveTimeout = null;
 function saveDB() {
-  console.log("### WebDB.saveDB");
-
-  // If DB connection is null, do nothing
-  if (db === null) return null;
-
-  // If a save is already scheduled, cancel it
-  if (saveTimeout !== null) {
-    clearTimeout(saveTimeout);
-  }
-
-  // Schedule a new save timeout
-  saveTimeout = setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var binaryData, stringData, dbHash;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
-        case 0:
-          console.log("WebDb.saveDB saving...");
-
-          // Export the db binary
-          binaryData = db["export"](); // Convert the binary data to a UTF-16 string
-          stringData = binaryDataToUTF16String(binaryData); // Hash the DB string
-          // const dbHash = await hashString(stringData);
-          dbHash = stringData; // Use the hash to determine if the DB has changed, if it has not changed, do not save
-          // and return DB string data
-          if (!(dbHash === localStorage.getItem(baseKey))) {
-            _context.next = 7;
-            break;
-          }
-          console.log("no changes to save, skipping");
-          return _context.abrupt("return", stringData);
-        case 7:
-          console.log("WebDB.saveDB changes detected, saving");
-
-          // If DB hash is different, save the DB
-          if (window.saveScratchJrProject) {
-            window.saveScratchJrProject(UTF16StringToUTF8String(stringData), latestThumbnail);
-          }
-          console.log("WebDB.saveDB baseKey:", baseKey);
-          console.log("WebDB.saveDB dbHash:", dbHash);
-
-          // Set new DB hash
-          localStorage.setItem(baseKey, dbHash);
-          console.log("WebDb.saveDB saved");
-        case 13:
-        case "end":
-          return _context.stop();
-      }
-    }, _callee);
-  })), 1000);
+  return _saveDB.apply(this, arguments);
 }
 
 // Returns the current database as a UTF-8 string.
 // Make sure the database is saved BEFORE calling this function.
+function _saveDB() {
+  _saveDB = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+    var binaryData, stringData, dbHash;
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+      while (1) switch (_context5.prev = _context5.next) {
+        case 0:
+          if (!(db === null)) {
+            _context5.next = 2;
+            break;
+          }
+          return _context5.abrupt("return", null);
+        case 2:
+          _context5.next = 4;
+          return db["export"]();
+        case 4:
+          binaryData = _context5.sent;
+          _context5.next = 7;
+          return binaryDataToUTF16String(binaryData);
+        case 7:
+          stringData = _context5.sent;
+          // Hash the DB string
+          // const dbHash = await hashString(stringData);
+          dbHash = stringData; // Use the hash to determine if the DB has changed, if it has not changed, do not save
+          // and return DB string data
+          if (!(dbHash === localStorage.getItem(baseKey))) {
+            _context5.next = 11;
+            break;
+          }
+          return _context5.abrupt("return", stringData);
+        case 11:
+          if (!window.saveScratchJrProject) {
+            _context5.next = 14;
+            break;
+          }
+          _context5.next = 14;
+          return window.saveScratchJrProject(UTF16StringToUTF8String(stringData), latestThumbnail);
+        case 14:
+          _context5.next = 16;
+          return localStorage.setItem(baseKey, dbHash);
+        case 16:
+        case "end":
+          return _context5.stop();
+      }
+    }, _callee5);
+  }));
+  return _saveDB.apply(this, arguments);
+}
 function getDBString() {
   if (db === null) return null;
   var binaryData = db["export"]();
@@ -26925,7 +26845,6 @@ function _getInitialDBString() {
     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) switch (_context6.prev = _context6.next) {
         case 0:
-          console.log("### WebDB.getInitialDBString");
           dbData = null;
           dbData = localStorage.getItem(baseKey);
 
@@ -26963,7 +26882,7 @@ function _getInitialDBString() {
           //   console.log("Error loading from CodeHS DB:", e);
           // }
           return _context6.abrupt("return", dbData);
-        case 4:
+        case 3:
         case "end":
           return _context6.stop();
       }
@@ -26989,8 +26908,8 @@ function _initDB() {
           // create a new promise that resolves with whether we should
           // create a new project once it's initialized
           initPromise = new Promise( /*#__PURE__*/function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(resolve) {
-              var shouldCreateNewProject, SQL, id, _id, _id2, dbDataString, binaryData;
+            var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(resolve) {
+              var shouldCreateNewProject, SQL, dbDataString, binaryData;
               return _regeneratorRuntime().wrap(function _callee7$(_context7) {
                 while (1) switch (_context7.prev = _context7.next) {
                   case 0:
@@ -27008,22 +26927,24 @@ function _initDB() {
                   case 3:
                     SQL = _context7.sent;
                     window.SQL = SQL;
-                    if (window.sharedProgramID) {
-                      console.log("sharedProgramID: ", window.sharedProgramID);
-                      id = window.sharedProgramID;
-                      baseKey = "sp-" + id;
-                    } else if (window.studentAssignmentID) {
-                      console.log("studentAssignmentID: ", window.studentAssignmentID);
-                      _id = window.studentAssignmentID;
-                      baseKey = "sa-" + _id;
-                    } else if (window.itemID) {
-                      console.log("itemID: ", window.itemID);
-                      _id2 = window.itemID;
-                      baseKey = "item-" + _id2;
-                    } else if (window.scratchJrPage === "editor") {
-                      // alert("No IDs found. DB will not be loaded or saved.");
-                      baseKey = "scratchjr-web";
-                    }
+                    baseKey = "scratchjr-web";
+
+                    // if (window.sharedProgramID) {
+                    //   console.log("sharedProgramID: ", window.sharedProgramID);
+                    //   const id = window.sharedProgramID;
+                    //   baseKey = "sp-" + id;
+                    // } else if (window.studentAssignmentID) {
+                    //   console.log("studentAssignmentID: ", window.studentAssignmentID);
+                    //   const id = window.studentAssignmentID;
+                    //   baseKey = "sa-" + id;
+                    // } else if (window.itemID) {
+                    //   console.log("itemID: ", window.itemID);
+                    //   const id = window.itemID;
+                    //   baseKey = "item-" + id;
+                    // } else if (window.scratchJrPage === "editor") {
+                    //   // alert("No IDs found. DB will not be loaded or saved.");
+                    //   baseKey = "scratchjr-web";
+                    // }
 
                     // get saved data from codehs, then initialize the database with it if it
                     // exists. otherwise, create a new database and initialize the tables and run migrations.
@@ -27031,35 +26952,32 @@ function _initDB() {
                     return getInitialDBString();
                   case 8:
                     dbDataString = _context7.sent;
-                    console.log("### WebDB.initDB dbDataString", dbDataString);
                     if (dbDataString) {
-                      console.log("### WebDB.initDB loading existing database");
                       binaryData = UTF16StringToBinaryData(dbDataString);
                       db = new SQL.Database(binaryData);
                     } else {
                       db = new SQL.Database();
                       initTables();
                       runMigrations();
-                      shouldCreateNewProject = true;
+                      // shouldCreateNewProject = true;
                     }
                     window.db = db;
                     if (!(new URLSearchParams(window.location.search).get("show-project-files") === "true")) {
-                      _context7.next = 16;
+                      _context7.next = 14;
                       break;
                     }
-                    console.log("displaying project files");
-                    _context7.next = 16;
+                    _context7.next = 14;
                     return displayProjectFiles();
-                  case 16:
+                  case 14:
                     resolve(shouldCreateNewProject);
-                  case 17:
+                  case 15:
                   case "end":
                     return _context7.stop();
                 }
               }, _callee7);
             }));
             return function (_x8) {
-              return _ref2.apply(this, arguments);
+              return _ref.apply(this, arguments);
             };
           }());
           _context8.next = 10;
@@ -27088,7 +27006,7 @@ function _displayProjectFiles() {
       while (1) switch (_context10.prev = _context10.next) {
         case 0:
           return _context10.abrupt("return", new Promise( /*#__PURE__*/function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(resolve) {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(resolve) {
               var rows, container, _iterator, _step, row, md5, contents, imageType, img;
               return _regeneratorRuntime().wrap(function _callee9$(_context9) {
                 while (1) switch (_context9.prev = _context9.next) {
@@ -27131,7 +27049,7 @@ function _displayProjectFiles() {
               }, _callee9);
             }));
             return function (_x9) {
-              return _ref3.apply(this, arguments);
+              return _ref2.apply(this, arguments);
             };
           }()));
         case 1:
@@ -27181,14 +27099,13 @@ function _executeStatementFromJSON() {
     return _regeneratorRuntime().wrap(function _callee12$(_context12) {
       while (1) switch (_context12.prev = _context12.next) {
         case 0:
-          console.log("### WebDB.executeStatementFromJSON", json);
           if (!(db === null)) {
-            _context12.next = 4;
+            _context12.next = 3;
             break;
           }
-          _context12.next = 4;
+          _context12.next = 3;
           return initDB();
-        case 4:
+        case 3:
           // see Web interface, stmt()
           stmt = json.stmt, values = json.values;
           statement = db.prepare(stmt, values);
@@ -27196,7 +27113,7 @@ function _executeStatementFromJSON() {
           result = db.exec("select last_insert_rowid();");
           lastRowId = result[0].values[0][0];
           return _context12.abrupt("return", lastRowId);
-        case 10:
+        case 9:
         case "end":
           return _context12.stop();
       }
@@ -27299,17 +27216,15 @@ function _saveToProjectFiles() {
     return _regeneratorRuntime().wrap(function _callee14$(_context14) {
       while (1) switch (_context14.prev = _context14.next) {
         case 0:
-          console.log("### WebDB.saveToProjectFiles", fileMD5, content);
-
           // query for the current file contents to see if they actually changed
           currentContents = "";
           _context14.t0 = JSON;
-          _context14.next = 5;
+          _context14.next = 4;
           return executeQueryFromJSON({
             stmt: "select contents from projectfiles where md5 = ?",
             values: [fileMD5]
           });
-        case 5:
+        case 4:
           _context14.t1 = _context14.sent;
           queryResult = _context14.t0.parse.call(_context14.t0, _context14.t1);
           if (queryResult.length > 0 && queryResult[0].values.length > 0 && queryResult[0].values[0].length > 0) {
@@ -27318,31 +27233,26 @@ function _saveToProjectFiles() {
 
           // if the contents changed, update the db and save
           if (!(content !== currentContents)) {
-            _context14.next = 18;
+            _context14.next = 14;
             break;
           }
-          if (!isThumbnail(fileMD5)) {
-            _context14.next = 13;
-            break;
+          if (isThumbnail(fileMD5)) {
+            // await clearThumbnails();
+            latestThumbnail = "data:image/png;base64," + content;
           }
-          _context14.next = 12;
-          return clearThumbnails();
-        case 12:
-          latestThumbnail = "data:image/png;base64," + content;
-        case 13:
-          _context14.next = 15;
+          _context14.next = 11;
           return executeStatementFromJSON({
             stmt: "insert or replace into projectfiles (md5, contents) values (?, ?);",
             values: [fileMD5, content]
           });
-        case 15:
-          _context14.next = 17;
+        case 11:
+          _context14.next = 13;
           return executeStatementFromJSON({
             stmt: "vacuum;"
           });
-        case 17:
+        case 13:
           saveDB();
-        case 18:
+        case 14:
         case "end":
           return _context14.stop();
       }
@@ -27387,26 +27297,25 @@ function _readProjectFile() {
     return _regeneratorRuntime().wrap(function _callee16$(_context16) {
       while (1) switch (_context16.prev = _context16.next) {
         case 0:
-          console.log("### WebDB.readProjectFile", fileMD5);
           json = {};
           json.cond = "MD5 = ?";
           json.items = ["CONTENTS"];
           json.values = [fileMD5];
           table = "PROJECTFILES";
           json.stmt = "select ".concat(json.items, " from ").concat(table, " where ").concat(json.cond).concat(json.order ? " order by ".concat(json.order) : "");
-          _context16.next = 9;
+          _context16.next = 8;
           return executeQueryFromJSON(json);
-        case 9:
+        case 8:
           rows = _context16.sent;
           rows = JSON.parse(rows);
           if (!(rows.length > 0)) {
-            _context16.next = 13;
+            _context16.next = 12;
             break;
           }
           return _context16.abrupt("return", rows[0]["values"][0][0]);
-        case 13:
+        case 12:
           return _context16.abrupt("return", null);
-        case 14:
+        case 13:
         case "end":
           return _context16.stop();
       }
@@ -31397,8 +31306,8 @@ function mTime() {
   // it's used for anything, so we're always setting it to 0 to avoid
   // autosaving the db all the time.
   // old logic:
-  // return new Date().getTime();
-  return 0;
+  return new Date().getTime();
+  // return 0;
 }
 
 /***/ }),
@@ -96442,7 +96351,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("dc084b8aaa84926b8360")
+/******/ 		__webpack_require__.h = () => ("e32bdc050b4cc38ec91b")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
