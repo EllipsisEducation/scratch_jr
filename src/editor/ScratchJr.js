@@ -211,7 +211,7 @@ export default class ScratchJr {
             'sec',
             BlockSpecs.loadCount
         );
-        currentProject = '1';
+        currentProject = urlvars.pmd5;
         editmode = urlvars.mode;
         libInit();
         Project.init();
