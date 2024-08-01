@@ -69,7 +69,8 @@ div.frame {
     display: block;
     width: ${css_vh(28.65)};
     height: ${css_vh(10.03)};
-    background: url('../assets/lobby/scratchJrlogo.svg');
+    /* background: url('../assets/lobby/scratchJrlogo.svg'); */
+    background: url('../assets/lobby/ellipsis-logo.png');
     background-size: 101%;
     padding: 0;
     margin: auto auto;
