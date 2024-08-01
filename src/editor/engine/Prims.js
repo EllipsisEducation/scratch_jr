@@ -96,16 +96,14 @@ export default class Prims {
     static playSound (strip) {
         var b = strip.thisblock;
         var name = b.getSoundName(strip.spr.sounds);
-        //	console.log ('playSound', name);
         if (!strip.audio) {
-            var snd = ScratchAudio.projectSounds[name];
-            if (!snd) {
-                strip.thisblock = strip.thisblock.next;
-                return;
-            }
-            strip.audio = snd;
-            snd.play();
-        //	console.log ("playSound", snd, strip.audio, snd.source.playbackState);
+          var snd = ScratchAudio.projectSounds[name];
+          if (!snd) {
+            strip.thisblock = strip.thisblock.next;
+            return;
+          }
+          strip.audio = snd;
+          snd.play();
         }
         if (strip.audio && strip.audio.done()) {
             strip.audio.clear();

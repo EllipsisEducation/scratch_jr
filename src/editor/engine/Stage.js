@@ -450,21 +450,17 @@ export default class Stage {
 
     setEvents() {
         var me = this;
-        window.setEventHandler('touchmove', function (evt) {
-            console.log('touchmove stage');
-            me.mouseMove(evt);
+        window.setEventHandler("touchmove", function (evt) {
+          me.mouseMove(evt);
         });
-        window.setEventHandler('touchend', function (evt) {
-            console.log('touchend stage');
-            me.mouseUp(evt);
+        window.setEventHandler("touchend", function (evt) {
+          me.mouseUp(evt);
         });
         window.onmousemove = function (evt) {
-            console.log('mousemove stage');
-            me.mouseMove(evt);
+          me.mouseMove(evt);
         };
         window.onmouseup = function (evt) {
-            console.log('mouseup stage');
-            me.mouseUp(evt);
+          me.mouseUp(evt);
         };
     }
 

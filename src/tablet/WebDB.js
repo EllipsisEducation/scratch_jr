@@ -221,55 +221,80 @@ window.addEventListener('beforeunload', function () {
 });
 
 let saveTimeout = null;
-export function saveDB() {
-  console.log("### WebDB.saveDB");
-
+export async function saveDB() {
   // If DB connection is null, do nothing
   if (db === null) return null;
 
-  // If a save is already scheduled, cancel it
-  if (saveTimeout !== null) {
-    clearTimeout(saveTimeout);
+  // Export the db binary
+  const binaryData = await db.export();
+
+  // Convert the binary data to a UTF-16 string
+  const stringData = await binaryDataToUTF16String(binaryData);
+
+  // Hash the DB string
+  // const dbHash = await hashString(stringData);
+  const dbHash = stringData;
+
+  // Use the hash to determine if the DB has changed, if it has not changed, do not save
+  // and return DB string data
+  if (dbHash === localStorage.getItem(baseKey)) {
+    return stringData;
   }
 
-  // Schedule a new save timeout
-  saveTimeout = setTimeout(async () => {
-    console.log("WebDb.saveDB saving...");
+  // If DB hash is different, save the DB
+  if (window.saveScratchJrProject) {
+    await window.saveScratchJrProject(
+      UTF16StringToUTF8String(stringData),
+      latestThumbnail
+    );
+  }
 
-    // Export the db binary
-    const binaryData = db.export();
+  // Set new DB hash
+  await localStorage.setItem(baseKey, dbHash);
 
-    // Convert the binary data to a UTF-16 string
-    const stringData = binaryDataToUTF16String(binaryData);
+  //  // If a save is already scheduled, cancel it
+  //  if (saveTimeout !== null) {
+  //    clearTimeout(saveTimeout);
+  //  }
 
-    // Hash the DB string
-    // const dbHash = await hashString(stringData);
-    const dbHash = stringData;
+  //   // Schedule a new save timeout
+  //   saveTimeout = setTimeout(async () => {
+  //     console.log("WebDb.saveDB saving...");
 
-    // Use the hash to determine if the DB has changed, if it has not changed, do not save
-    // and return DB string data
-    if (dbHash === localStorage.getItem(baseKey)) {
-      console.log("no changes to save, skipping");
-      return stringData;
-    }
+  //     // Export the db binary
+  //     const binaryData = db.export();
 
-    console.log("WebDB.saveDB changes detected, saving");
+  //     // Convert the binary data to a UTF-16 string
+  //     const stringData = binaryDataToUTF16String(binaryData);
 
-    // If DB hash is different, save the DB
-    if (window.saveScratchJrProject) {
-      window.saveScratchJrProject(
-        UTF16StringToUTF8String(stringData),
-        latestThumbnail
-      );
-    }
+  //     // Hash the DB string
+  //     // const dbHash = await hashString(stringData);
+  //     const dbHash = stringData;
 
-    console.log("WebDB.saveDB baseKey:", baseKey);
-    console.log("WebDB.saveDB dbHash:", dbHash);
+  //     // Use the hash to determine if the DB has changed, if it has not changed, do not save
+  //     // and return DB string data
+  //     if (dbHash === localStorage.getItem(baseKey)) {
+  //       console.log("no changes to save, skipping");
+  //       return stringData;
+  //     }
 
-    // Set new DB hash
-    localStorage.setItem(baseKey, dbHash);
-    console.log("WebDb.saveDB saved");
-  }, 1000);
+  //     console.log("WebDB.saveDB changes detected, saving");
+
+  //     // If DB hash is different, save the DB
+  //     if (window.saveScratchJrProject) {
+  //       window.saveScratchJrProject(
+  //         UTF16StringToUTF8String(stringData),
+  //         latestThumbnail
+  //       );
+  //     }
+
+  //     console.log("WebDB.saveDB baseKey:", baseKey);
+  //     console.log("WebDB.saveDB dbHash:", dbHash);
+
+  //     // Set new DB hash
+  //     localStorage.setItem(baseKey, dbHash);
+  //     console.log("WebDb.saveDB saved");
+  //   }, 1000);
 }
 
 // Returns the current database as a UTF-8 string.
@@ -282,7 +307,6 @@ export function getDBString() {
 }
 
 async function getInitialDBString() {
-  console.log("### WebDB.getInitialDBString");
   let dbData = null;
 
   dbData = localStorage.getItem(baseKey);
@@ -346,38 +370,37 @@ export async function initDB() {
 
       window.SQL = SQL;
 
-      if (window.sharedProgramID) {
-        console.log("sharedProgramID: ", window.sharedProgramID);
-        const id = window.sharedProgramID;
-        baseKey = "sp-" + id;
-      } else if (window.studentAssignmentID) {
-        console.log("studentAssignmentID: ", window.studentAssignmentID);
-        const id = window.studentAssignmentID;
-        baseKey = "sa-" + id;
-      } else if (window.itemID) {
-        console.log("itemID: ", window.itemID);
-        const id = window.itemID;
-        baseKey = "item-" + id;
-      } else if (window.scratchJrPage === "editor") {
-        // alert("No IDs found. DB will not be loaded or saved.");
-        baseKey = "scratchjr-web";
-      }
+      baseKey = "scratchjr-web";
+
+      // if (window.sharedProgramID) {
+      //   console.log("sharedProgramID: ", window.sharedProgramID);
+      //   const id = window.sharedProgramID;
+      //   baseKey = "sp-" + id;
+      // } else if (window.studentAssignmentID) {
+      //   console.log("studentAssignmentID: ", window.studentAssignmentID);
+      //   const id = window.studentAssignmentID;
+      //   baseKey = "sa-" + id;
+      // } else if (window.itemID) {
+      //   console.log("itemID: ", window.itemID);
+      //   const id = window.itemID;
+      //   baseKey = "item-" + id;
+      // } else if (window.scratchJrPage === "editor") {
+      //   // alert("No IDs found. DB will not be loaded or saved.");
+      //   baseKey = "scratchjr-web";
+      // }
 
       // get saved data from codehs, then initialize the database with it if it
       // exists. otherwise, create a new database and initialize the tables and run migrations.
       const dbDataString = await getInitialDBString();
 
-      console.log("### WebDB.initDB dbDataString", dbDataString);
-
       if (dbDataString) {
-        console.log("### WebDB.initDB loading existing database");
         const binaryData = UTF16StringToBinaryData(dbDataString);
         db = new SQL.Database(binaryData);
       } else {
         db = new SQL.Database();
         initTables();
         runMigrations();
-        shouldCreateNewProject = true;
+        // shouldCreateNewProject = true;
       }
       window.db = db;
 
@@ -386,7 +409,6 @@ export async function initDB() {
           "show-project-files"
         ) === "true"
       ) {
-        console.log("displaying project files");
         await displayProjectFiles();
       }
       resolve(shouldCreateNewProject);
@@ -442,8 +464,6 @@ export async function executeQueryFromJSON(json) {
 
 // see https://github.com/jfo8000/ScratchJr-Desktop/blob/master/src/main.js#L898
 export async function executeStatementFromJSON(json) {
-  console.log("### WebDB.executeStatementFromJSON", json);
-
   if (db === null) await initDB();
   // see Web interface, stmt()
   const { stmt, values } = json;
@@ -510,8 +530,6 @@ async function clearThumbnails() {
  * @param {string} content
  */
 export async function saveToProjectFiles(fileMD5, content) {
-  console.log("### WebDB.saveToProjectFiles", fileMD5, content);
-
   // query for the current file contents to see if they actually changed
   let currentContents = "";
   const queryResult = JSON.parse(
@@ -531,7 +549,7 @@ export async function saveToProjectFiles(fileMD5, content) {
   // if the contents changed, update the db and save
   if (content !== currentContents) {
     if (isThumbnail(fileMD5)) {
-      await clearThumbnails();
+      // await clearThumbnails();
       latestThumbnail = "data:image/png;base64," + content;
     }
     await executeStatementFromJSON({
@@ -562,8 +580,6 @@ export async function getMD5(data) {
 
 // see https://github.com/jfo8000/ScratchJr-Desktop/blob/master/src/main.js#L822
 export async function readProjectFile(fileMD5) {
-  console.log("### WebDB.readProjectFile", fileMD5);
-
   const json = {};
   json.cond = "MD5 = ?";
   json.items = ["CONTENTS"];

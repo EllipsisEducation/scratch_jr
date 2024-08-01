@@ -16,146 +16,134 @@ let frame;
 // window.Settings.useStoryStarters
 
 export default class Samples {
-    static init() {
-        frame = gn('htmlcontents');
-        window.setEventHandler('touchstart', Samples.playHowTo, gn('tabicon'));
-        gn('tabicon').onclick = Samples.playHowTo;
-        var div = newHTML('div', 'samples off', frame);
-        div.setAttribute('id', 'samples');
-        Samples.display('samples');
+  static init() {
+    frame = gn("htmlcontents");
+    window.setEventHandler("touchstart", Samples.playHowTo, gn("tabicon"));
+    gn("tabicon").onclick = Samples.playHowTo;
+    var div = newHTML("div", "samples off", frame);
+    div.setAttribute("id", "samples");
+    Samples.display("samples");
+  }
+
+  ////////////////////////////
+  // Show Me How
+  ////////////////////////////
+
+  static playHowTo(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    ScratchAudio.sndFX("tap.wav");
+    const params = new URLSearchParams();
+    if (window.studentAssignmentID) {
+      params.append("student_assignment_id", window.studentAssignmentID);
+    }
+    if (window.itemID) {
+      params.append("item_id", window.itemID);
     }
 
-    ////////////////////////////
-    // Show Me How
-    ////////////////////////////
+    const url = "gettingstarted.html?place=help&" + params.toString();
+    window.location.href = url;
+  }
 
-    static playHowTo(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        ScratchAudio.sndFX('tap.wav');
-        const params = new URLSearchParams();
-        if (window.studentAssignmentID) {
-            params.append(
-                'student_assignment_id',
-                window.studentAssignmentID
-            );
-        }
-        if (window.itemID) {
-            params.append('item_id', window.itemID);
-        }
+  ////////////////////////////
+  // Learn Samples
+  ////////////////////////////
 
-        const url = 'gettingstarted.html?place=help&' + params.toString();
-        window.location.href = url;
+  static display(key) {
+    var files = MediaLib[key];
+
+    var div = gn(key);
+    for (var i = 0; i < files.length; i++) {
+      Samples.addLink(div, i, files[i]);
+      Samples.requestFromServer(i, files[i], displayThumb);
     }
 
-    ////////////////////////////
-    // Learn Samples
-    ////////////////////////////
+    function displayThumb(pos, str) {
+      var mt = gn("sample-" + pos);
+      var data = IO.parseProjectData(JSON.parse(str)[0]);
+      var name = mt.childNodes[1];
 
-    static display(key) {
-        console.log('### Samples.display', key);
-
-        var files = MediaLib[key];
-        console.log('### Sample.display files', files);
-
-        var div = gn(key);
-        for (var i = 0; i < files.length; i++) {
-            Samples.addLink(div, i, files[i]);
-            Samples.requestFromServer(i, files[i], displayThumb);
-        }
-
-        function displayThumb(pos, str) {
-            console.log('### Samples.displayThumb', pos, str);
-
-            var mt = gn('sample-' + pos);
-            var data = IO.parseProjectData(JSON.parse(str)[0]);
-            var name = mt.childNodes[1];
-
-            // Localize sample project names
-            name.textContent = Localization.localizeSampleName(data.name);
-            var cnv = mt.childNodes[0].childNodes[1];
-            Samples.insertThumbnail(cnv, data.thumbnail);
-            mt.onclick = function (evt) {
-                Samples.loadMe(evt, mt);
-            };
-        }
-        setTimeout(Samples.show, 10);
+      // Localize sample project names
+      name.textContent = Localization.localizeSampleName(data.name);
+      var cnv = mt.childNodes[0].childNodes[1];
+      Samples.insertThumbnail(cnv, data.thumbnail);
+      mt.onclick = function (evt) {
+        Samples.loadMe(evt, mt);
+      };
     }
+    setTimeout(Samples.show, 10);
+  }
 
-    static show() {
-        Lobby.busy = false;
-        frame.parentNode.scrollTop = 0;
-        gn('samples').className = 'samples on';
+  static show() {
+    Lobby.busy = false;
+    frame.parentNode.scrollTop = 0;
+    gn("samples").className = "samples on";
+  }
+
+  static loadMe(e, mt) {
+    e.preventDefault();
+    e.stopPropagation();
+    ScratchAudio.sndFX("tap.wav");
+    OS.analyticsEvent("samples", "sample_opened", mt.textContent);
+    var md5 = mt.md5;
+    // const params = new URLSearchParams();
+    // if (window.studentAssignmentID) {
+    //     params.append('student_assignment_id', window.studentAssignmentID);
+    // }
+    // if (window.itemID) {
+    //     params.append('item_id', window.itemID);
+    // }
+
+    const url =
+      "editor.html?pmd5=" +
+      md5 +
+      "&mode=" +
+      (window.Settings.useStoryStarters ? "storyStarter" : "look");
+    // '&' +
+    // params.toString();
+
+    window.location.href = url;
+  }
+
+  static insertThumbnail(img, data) {
+    var md5 = data.md5;
+    if (md5) {
+      img.style.backgroundImage = "url('" + md5 + "')";
     }
+  }
 
-    static loadMe(e, mt) {
-        console.log('### Samples.loadMe', e, mt);
+  static addLink(parent, pos, md5) {
+    var tb = newHTML("div", "samplethumb", parent);
+    tb.setAttribute("id", "sample-" + pos);
+    tb.md5 = md5;
+    tb.type = "samplethumb";
+    var mt = newHTML("div", "thumb pos" + pos, tb);
+    newHTML("div", "woodframe", mt);
+    newHTML("div", "sampleicon", mt);
+    var name = newHTML("p", undefined, tb);
+    name.textContent = "Sample " + pos;
+  }
 
-        e.preventDefault();
-        e.stopPropagation();
-        ScratchAudio.sndFX('tap.wav');
-        OS.analyticsEvent('samples', 'sample_opened', mt.textContent);
-        var md5 = mt.md5;
-        // const params = new URLSearchParams();
-        // if (window.studentAssignmentID) {
-        //     params.append('student_assignment_id', window.studentAssignmentID);
-        // }
-        // if (window.itemID) {
-        //     params.append('item_id', window.itemID);
-        // }
-
-        const url =
-            'editor.html?pmd5=' +
-            md5 +
-            '&mode=' +
-            (window.Settings.useStoryStarters ? 'storyStarter' : 'look');
-        // '&' +
-        // params.toString();
-
-        console.log('### Samples.loadMe url', url);
-        window.location.href = url;
+  static requestFromServer(pos, url, whenDone) {
+    url = absoluteURL(url);
+    var xmlrequest = new XMLHttpRequest();
+    xmlrequest.addEventListener("error", transferFailed, false);
+    xmlrequest.onreadystatechange = function () {
+      if (xmlrequest.readyState == 4) {
+        console.log(
+          "### Samples.requestFromServer",
+          pos,
+          xmlrequest.responseText
+        );
+        whenDone(pos, xmlrequest.responseText);
+      }
+    };
+    xmlrequest.open("GET", url, true);
+    xmlrequest.send(null);
+    function transferFailed(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Failed loading
     }
-
-    static insertThumbnail(img, data) {
-        var md5 = data.md5;
-        if (md5) {
-            img.style.backgroundImage = 'url(\'' + md5 + '\')';
-        }
-    }
-
-    static addLink(parent, pos, md5) {
-        var tb = newHTML('div', 'samplethumb', parent);
-        tb.setAttribute('id', 'sample-' + pos);
-        tb.md5 = md5;
-        tb.type = 'samplethumb';
-        var mt = newHTML('div', 'thumb pos' + pos, tb);
-        newHTML('div', 'woodframe', mt);
-        newHTML('div', 'sampleicon', mt);
-        var name = newHTML('p', undefined, tb);
-        name.textContent = 'Sample ' + pos;
-    }
-
-    static requestFromServer(pos, url, whenDone) {
-        console.log('### Samples.requestFromServer', pos, url);
-        url = absoluteURL(url);
-        var xmlrequest = new XMLHttpRequest();
-        xmlrequest.addEventListener('error', transferFailed, false);
-        xmlrequest.onreadystatechange = function () {
-            if (xmlrequest.readyState == 4) {
-                console.log(
-                    '### Samples.requestFromServer',
-                    pos,
-                    xmlrequest.responseText
-                );
-                whenDone(pos, xmlrequest.responseText);
-            }
-        };
-        xmlrequest.open('GET', url, true);
-        xmlrequest.send(null);
-        function transferFailed(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            // Failed loading
-        }
-    }
+  }
 }
