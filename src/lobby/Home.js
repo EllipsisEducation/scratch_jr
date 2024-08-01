@@ -204,13 +204,14 @@ export default class Home {
             if (md5 && md5 == 'newproject') {
                 Home.createNewProject();
             } else if (md5) {
-                OS.setfile(
-                        'homescroll.sjr',
-                        gn('wrapc').scrollTop,
-                        function () {
-                            doNext(md5);
-                        }
-                    );
+              // OS.setfile(
+              //         'homescroll.sjr',
+              //         gn('wrapc').scrollTop,
+              //         function () {
+              //             doNext(md5);
+              //         }
+              //     );
+              Home.gotoEditor(md5);
             }
             break;
         case 'delete':
@@ -355,69 +356,75 @@ export default class Home {
     static displayYourProjects() {
         OS.getfile('homescroll.sjr', gotScrollsState);
         function gotScrollsState(str) {
-            var num = Number(atob(str));
-            scrollvalue = num.toString() == 'NaN' ? 0 : num;
-            var json = {};
-            json.cond = 'deleted = ? AND version = ? AND gallery IS NULL';
-            json.items = ['name', 'thumbnail', 'id', 'isgift'];
-            json.values = ['NO', version];
-            json.order = 'ctime desc';
-            IO.query(OS.database, json, Home.displayProjects);
+          var num = Number(atob(str));
+          scrollvalue = num.toString() == "NaN" ? 0 : num;
+          var json = {};
+          json.cond = "deleted = ? AND version = ? AND gallery IS NULL";
+          json.items = ["id", "name", "thumbnail", "isgift"];
+          json.values = ["NO", version];
+          json.order = "ctime desc";
+          IO.query(OS.database, json, Home.displayProjects);
         }
     }
 
     static displayProjects(str) {
-        console.log('### Home.displayProjects str', str);
+      var div = gn("scrollarea");
+      while (div.childElementCount > 0) {
+        div.removeChild(div.childNodes[0]);
+      }
+      Home.emptyProjectThumbnail(div);
 
-        var data = JSON.parse(str);
+      var data = JSON.parse(str);
+      if (data.length == 0) {
+        return;
+      }
+      var projectData = data[0].values;
 
-        var div = gn('scrollarea');
-        while (div.childElementCount > 0) {
-            div.removeChild(div.childNodes[0]);
-        }
-        Home.emptyProjectThumbnail(div);
-        for (var i = 0; i < data.length; i++) {
-            Home.addProjectLink(div, data[i]);
-        }
-        setTimeout(function () {
-            Lobby.busy = false;
-        }, 1000);
-        if (gn('wrapc')) {
-            gn('wrapc').scrollTop = scrollvalue;
-        }
+      for (var i = 0; i < projectData.length; i++) {
+        Home.addProjectLink(div, {
+          columns: data[0].columns,
+          values: [projectData[i]],
+        });
+      }
+      setTimeout(function () {
+        Lobby.busy = false;
+      }, 1000);
+      if (gn("wrapc")) {
+        gn("wrapc").scrollTop = scrollvalue;
+      }
     }
 
     static addProjectLink(parent, aa) {
-        var data = IO.parseProjectData(aa);
-        var id = data.id;
-        var th = data.thumbnail;
-        if (!th) {
-            return;
-        }
-        var thumb = typeof th === 'string' ? JSON.parse(th) : th;
-        var pc = thumb.pagecount ? thumb.pagecount : 1;
-        var tb = newHTML('div', 'projectthumb', parent);
-        tb.setAttribute('id', id);
-        tb.type = 'projectthumb';
-        tb.thumb = thumb.md5;
-        var mt = newHTML('div', 'aproject p' + pc, tb);
-        Home.insertThumbnail(mt, 192, 144, thumb);
-        var label = newHTML('div', 'projecttitle', tb);
-        var txt = newHTML('h4', undefined, label);
-        txt.textContent = data.name;
+      var data = IO.parseProjectData(aa);
+      var id = data.id;
+      var th = data.thumbnail;
+      if (!th) {
+        return;
+      }
+      var thumb = typeof th === "string" ? JSON.parse(th) : th;
+      var pc = thumb.pagecount ? thumb.pagecount : 1;
+      var tb = newHTML("div", "projectthumb", parent);
+      tb.setAttribute("id", id);
+      tb.type = "projectthumb";
+      tb.thumb = thumb.md5;
+      var mt = newHTML("div", "aproject p" + pc, tb);
+      Home.insertThumbnail(mt, 192, 144, thumb);
+      var label = newHTML("div", "projecttitle", tb);
+      var txt = newHTML("h4", undefined, label);
+      txt.textContent = data.name;
 
-        var bow = newHTML('div', 'share', tb);
-        var ribbonHorizontal = newHTML('div', 'ribbonHorizontal', tb);
-        var ribbonVertical = newHTML('div', 'ribbonVertical', tb);
+      var bow = newHTML("div", "share", tb);
+      var ribbonHorizontal = newHTML("div", "ribbonHorizontal", tb);
+      var ribbonVertical = newHTML("div", "ribbonVertical", tb);
 
-        if (data.isgift != '0') {
-            // If it's a gift, show the bow and ribbon
-            bow.style.visibility = 'visible';
-            ribbonHorizontal.style.visibility = 'visible';
-            ribbonVertical.style.visibility = 'visible';
-        }
+      if (data.isgift != "0") {
+        // If it's a gift, show the bow and ribbon
+        bow.style.visibility = "visible";
+        ribbonHorizontal.style.visibility = "visible";
+        ribbonVertical.style.visibility = "visible";
+      }
 
-        newHTML('div', 'closex', tb);
+      newHTML("div", "closex", tb);
     }
 
     static insertThumbnail(p, w, h, data) {

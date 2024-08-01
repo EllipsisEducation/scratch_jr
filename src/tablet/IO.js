@@ -202,10 +202,10 @@ export default class IO {
     }
 
     static getObjectinDB (db, md5, fcn) {
-        var json = {};
-        json.stmt = 'select * from ' + db + ' where id = ?';
-        json.values = [md5];
-        OS.query(json, fcn);
+      var json = {};
+      json.stmt = "select * from " + db + " where id = ?";
+      json.values = [md5];
+      OS.query(json, fcn);
     }
 
     static setMedia (data, type, fcn) {
@@ -301,22 +301,20 @@ export default class IO {
     }
 
     static parseProjectData (data) {
-        console.log('### IO.parseProjectData', data);
+      console.log("### IO.parseProjectData", data);
 
-        var res = new Object();
-        for (var key in data) {
-            res[key.toLowerCase()] = data[key];
+      var res = new Object();
+      for (var key in data) {
+        res[key.toLowerCase()] = data[key];
+      }
+
+      if (data["columns"]) {
+        for (var i = 0; i < data["columns"].length; i++) {
+          res[data["columns"][i].toLowerCase()] = data["values"][0][i];
         }
+      }
 
-        // Not sure what's going on here, must be some meta data on CodeHS columns
-        // TODO: Figure out what to do with this
-        if (data['columns']) {
-            for (var i = 0; i < data['columns'].length; i++) {
-                res[data['columns'][i].toLowerCase()] = data['values'][0][i];
-            }
-        }
-
-        return res;
+      return res;
     }
 
     //////////////////

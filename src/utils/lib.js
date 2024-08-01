@@ -725,11 +725,11 @@ Number.prototype.mod = function (n) {
 };
 
 export function mTime() {
-    // mtime is a field used in a few tables in the db to keep track of
-    // when something was last modified. ultimately it doesn't seem like
-    // it's used for anything, so we're always setting it to 0 to avoid
-    // autosaving the db all the time.
-    // old logic:
-    // return new Date().getTime();
-    return 0;
+  // mtime is a field used in a few tables in the db to keep track of
+  // when something was last modified. ultimately it doesn't seem like
+  // it's used for anything, so we're always setting it to 0 to avoid
+  // autosaving the db all the time.
+  // old logic:
+  return new Date().getTime();
+  // return 0;
 }

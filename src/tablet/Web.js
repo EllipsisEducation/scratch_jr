@@ -129,8 +129,8 @@ export default class Web {
     (async () => {
       const result = await db.executeStatementFromJSON(json);
       console.log("### Web.stmt", json, result);
+      await db.saveDB();
       if (fcn) fcn(result);
-      db.saveDB();
     })();
   }
 
