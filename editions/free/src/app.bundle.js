@@ -14903,6 +14903,22 @@ var Home = /*#__PURE__*/function () {
       return !t.parentNode || t.parentNode == frame ? null : t;
     }
   }, {
+    key: "handleProjectRename",
+    value: function handleProjectRename(e) {
+      if (e.srcElement.className == "nameInput") {
+        e.preventDefault();
+        e.stopPropagation();
+        e.target.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            _tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].setfield(_tablet_OS__WEBPACK_IMPORTED_MODULE_1__["default"].database, Home.actionTarget.id, "name", e.target.value);
+            Home.displayYourProjects();
+            e.target.blur();
+            e.target.removeEventListener("keydown", this);
+          }
+        });
+      }
+    }
+  }, {
     key: "handleTouchEnd",
     value: function handleTouchEnd(e) {
       e.preventDefault();
@@ -14938,6 +14954,9 @@ var Home = /*#__PURE__*/function () {
           _utils_ScratchAudio__WEBPACK_IMPORTED_MODULE_5__["default"].sndFX("keydown.wav");
           if (md5 && md5 == "newproject") {
             Home.createNewProject();
+          } else if (e.srcElement.className == "nameInput") {
+            Home.handleProjectRename(e);
+            return;
           } else if (md5) {
             // OS.setfile(
             //         'homescroll.sjr',
@@ -15119,6 +15138,8 @@ var Home = /*#__PURE__*/function () {
       var label = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "projecttitle", tb);
       var txt = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("h4", undefined, label);
       txt.textContent = data.name;
+      var nameInput = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("input", "nameInput", tb);
+      nameInput.style.visibility == "visible";
       var bow = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "share", tb);
       var ribbonHorizontal = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "ribbonHorizontal", tb);
       var ribbonVertical = (0,_utils_lib__WEBPACK_IMPORTED_MODULE_7__.newHTML)("div", "ribbonVertical", tb);
@@ -96351,7 +96372,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("e32bdc050b4cc38ec91b")
+/******/ 		__webpack_require__.h = () => ("a93c86b29e05418b4419")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

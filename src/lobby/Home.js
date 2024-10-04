@@ -2,14 +2,14 @@
 // Home Screen
 //////////////////////////////////////////////////
 
-import Lobby from './Lobby';
-import OS from '../tablet/OS';
-import IO from '../tablet/IO';
-import Project from '../editor/ui/Project';
-import Localization from '../utils/Localization';
-import ScratchAudio from '../utils/ScratchAudio';
-import Vector from '../geom/Vector';
-import { gn, newHTML, isTablet, mTime } from '../utils/lib';
+import Lobby from "./Lobby";
+import OS from "../tablet/OS";
+import IO from "../tablet/IO";
+import Project from "../editor/ui/Project";
+import Localization from "../utils/Localization";
+import ScratchAudio from "../utils/ScratchAudio";
+import Vector from "../geom/Vector";
+import { gn, newHTML, isTablet, mTime } from "../utils/lib";
 
 let frame;
 let scrollvalue;
@@ -167,6 +167,26 @@ export default class Home {
     return !t.parentNode || t.parentNode == frame ? null : t;
   }
 
+  static handleProjectRename(e) {
+    if (e.srcElement.className == "projectTitleInput") {
+      e.preventDefault();
+      e.stopPropagation();
+      e.target.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          OS.setfield(
+            OS.database,
+            Home.actionTarget.id,
+            "name",
+            e.target.value
+          );
+          Home.displayYourProjects();
+          e.target.blur();
+          e.target.removeEventListener("keydown", this);
+        }
+      });
+    }
+  }
+
   static handleTouchEnd(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -200,6 +220,9 @@ export default class Home {
         ScratchAudio.sndFX("keydown.wav");
         if (md5 && md5 == "newproject") {
           Home.createNewProject();
+        } else if (e.srcElement.className == "projectTitleInput") {
+          Home.handleProjectRename(e);
+          return;
         } else if (md5) {
           // OS.setfile(
           //         'homescroll.sjr',
@@ -391,8 +414,12 @@ export default class Home {
     var mt = newHTML("div", "aproject p" + pc, tb);
     Home.insertThumbnail(mt, 192, 144, thumb);
     var label = newHTML("div", "projecttitle", tb);
-    var txt = newHTML("h4", undefined, label);
-    txt.textContent = data.name;
+    // var txt = newHTML("h4", undefined, label);
+    // txt.textContent = data.name;
+    var txt = newHTML("input", "projectTitleInput", label);
+    txt.value = data.name;
+
+    //var nameInput = newHTML("input", "nameInput", tb);
 
     var bow = newHTML("div", "share", tb);
     var ribbonHorizontal = newHTML("div", "ribbonHorizontal", tb);
@@ -424,21 +451,21 @@ export default class Home {
 }
 
 class Events {
-    static getTargetPoint(e) {
-        if (e.touches && e.touches.length > 0) {
-            return {
-                x: e.touches[0].pageX,
-                y: e.touches[0].pageY
-            };
-        } else if (e.changedTouches) {
-            return {
-                x: e.changedTouches[0].pageX,
-                y: e.changedTouches[0].pageY
-            };
-        }
-        return {
-            x: e.clientX,
-            y: e.clientY
-        };
+  static getTargetPoint(e) {
+    if (e.touches && e.touches.length > 0) {
+      return {
+        x: e.touches[0].pageX,
+        y: e.touches[0].pageY,
+      };
+    } else if (e.changedTouches) {
+      return {
+        x: e.changedTouches[0].pageX,
+        y: e.changedTouches[0].pageY,
+      };
     }
+    return {
+      x: e.clientX,
+      y: e.clientY,
+    };
+  }
 }
