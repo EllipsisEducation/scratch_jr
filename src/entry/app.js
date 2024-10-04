@@ -1,22 +1,22 @@
-import { preprocessAndLoadCss } from '../utils/lib';
-import Localization from '../utils/Localization';
-import InitialOptions from '../utils/InitialOptions';
-import OS from '../tablet/OS';
-import IO from '../tablet/IO';
-import MediaLib from '../tablet/MediaLib';
-import * as db from '../tablet/WebDB.js';
+import { preprocessAndLoadCss } from "../utils/lib";
+import Localization from "../utils/Localization";
+import InitialOptions from "../utils/InitialOptions";
+import OS from "../tablet/OS";
+import IO from "../tablet/IO";
+import MediaLib from "../tablet/MediaLib";
+import * as db from "../tablet/WebDB.js";
 
-import { indexMain } from './index';
-import { homeMain } from './home';
-import { editorMain } from './editor';
-import { gettingStartedMain } from './gettingstarted';
+import { indexMain } from "./index";
+import { homeMain } from "./home";
+import { editorMain } from "./editor";
+import { gettingStartedMain } from "./gettingstarted";
 import {
-    inappInterfaceGuide,
-    inappAbout,
-    inappBlocksGuide,
-    inappPaintEditorGuide,
-    inappPrivacyPolicy
-} from './inapp';
+  inappInterfaceGuide,
+  inappAbout,
+  inappBlocksGuide,
+  inappPaintEditorGuide,
+  inappPrivacyPolicy,
+} from "./inapp";
 
 /* This function replicates the behavior of the `.on<event>` properties but is
  * implemented using `addEventListener` and `removeEventListener`. This allows
@@ -42,27 +42,27 @@ import {
  *
  */
 window.setEventHandler = function (event, handler, target) {
-    if (target === undefined) {
-        target = window;
-    }
-    if (!Object.hasOwn(target, '_scratchJrEventHandlers')) {
-        target._scratchJrEventHandlers = {};
-    }
-    const existingHandler = target._scratchJrEventHandlers[event];
-    if (existingHandler !== undefined) {
-        target.removeEventListener(event, existingHandler);
-    }
-    if (handler !== undefined) {
-        target.addEventListener(event, handler);
-        target._scratchJrEventHandlers[event] = handler;
-    }
+  if (target === undefined) {
+    target = window;
+  }
+  if (!Object.hasOwn(target, "_scratchJrEventHandlers")) {
+    target._scratchJrEventHandlers = {};
+  }
+  const existingHandler = target._scratchJrEventHandlers[event];
+  if (existingHandler !== undefined) {
+    target.removeEventListener(event, existingHandler);
+  }
+  if (handler !== undefined) {
+    target.addEventListener(event, handler);
+    target._scratchJrEventHandlers[event] = handler;
+  }
 };
 
 function loadSettings(settingsRoot, whenDone) {
-    IO.requestFromServer(settingsRoot + 'settings.json', (result) => {
-        window.Settings = JSON.parse(result);
-        whenDone();
-    });
+  IO.requestFromServer(settingsRoot + "settings.json", (result) => {
+    window.Settings = JSON.parse(result);
+    whenDone();
+  });
 }
 
 // App-wide entry-point
@@ -150,35 +150,35 @@ window.onload = async () => {
       break;
     case "inappAbout":
       // About ScratchJr in-app help frame
-      preprocessAndLoadCss("style", "style/about.css");
+      preprocessAndLoadCss("style", "inapp/style/about.css");
       entryFunction = () => inappAbout();
       root = "../";
       break;
     case "inappInterfaceGuide":
       // Interface guide in-app help frame
-      preprocessAndLoadCss("style", "style/style.css");
-      preprocessAndLoadCss("style", "style/interface.css");
+      preprocessAndLoadCss("style", "inapp/style/style.css");
+      preprocessAndLoadCss("style", "inapp/style/interface.css");
       entryFunction = () => inappInterfaceGuide();
       root = "../";
       break;
     case "inappPaintEditorGuide":
       // Paint editor guide in-app help frame
-      preprocessAndLoadCss("style", "style/style.css");
-      preprocessAndLoadCss("style", "style/paint.css");
+      preprocessAndLoadCss("style", "inapp/style/style.css");
+      preprocessAndLoadCss("style", "inapp/style/paint.css");
       entryFunction = () => inappPaintEditorGuide();
       root = "../";
       break;
     case "inappBlocksGuide":
       // Blocks guide in-app help frame
-      preprocessAndLoadCss("style", "style/style.css");
-      preprocessAndLoadCss("style", "style/blocks.css");
+      preprocessAndLoadCss("style", "inapp/style/style.css");
+      preprocessAndLoadCss("style", "inapp/style/blocks.css");
       entryFunction = () => inappBlocksGuide();
       root = "../";
       break;
     case "inappPrivacyPolicy":
       // Blocks guide in-app help frame
-      preprocessAndLoadCss("style", "style/style.css");
-      preprocessAndLoadCss("style", "style/privacy.css");
+      preprocessAndLoadCss("style", "inapp/style/style.css");
+      preprocessAndLoadCss("style", "inapp/style/privacy.css");
       entryFunction = () => inappPrivacyPolicy();
       root = "../";
       break;
