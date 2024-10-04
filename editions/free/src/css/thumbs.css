@@ -66,6 +66,19 @@
     vertical-align:middle;
 }
 
+.projecttitle input {
+    font-weight: bold;
+    text-align: center;
+    color: #355E7C;
+    font-size: ${13 * scaleMultiplier}px;
+    width: ${css_vh(25)};
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align:middle;
+    background: transparent;
+}
+
 .samplethumb {
     display: inline-block;
     position: absolute;
