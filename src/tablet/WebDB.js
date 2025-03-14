@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 // Required to let webpack 4 know it needs to copy the wasm file to our assets
-import sqlWasm from '!!file-loader?name=sql-wasm-[contenthash].wasm!../../node_modules/sql.js/dist/sql-wasm.wasm';
-import initSqlJs from 'sql.js';
+import sqlWasm from "!!file-loader?name=sql-wasm-[contenthash].wasm!../../node_modules/sql.js/dist/sql-wasm.wasm";
+import initSqlJs from "sql.js";
 
 // see https://github.com/sql-js/sql.js/#usage
 
@@ -16,23 +16,23 @@ window.getStringDBAndThumbnail = getStringDBAndThumbnail;
 
 // function to get the database as a string and the thumbnail
 async function getStringDBAndThumbnail() {
-    return [getDBString(), latestThumbnail];
+  return [getDBString(), latestThumbnail];
 }
 
 window.downloadDB = downloadDB;
 
 async function downloadDB() {
-    const filename = 'scratchDB.sqlite';
-    const binaryData = db.export();
-    const blob = new Blob([binaryData], { type: 'application/octet-stream' });
-    const response = new Response(blob, {
-        headers: {
-            'Content-Disposition': `attachment; filename="${filename}"`
-        }
-    });
-    const url = URL.createObjectURL(await response.blob());
-    window.open(url, '_blank');
-    URL.revokeObjectURL(url);
+  const filename = "scratchDB.sqlite";
+  const binaryData = db.export();
+  const blob = new Blob([binaryData], { type: "application/octet-stream" });
+  const response = new Response(blob, {
+    headers: {
+      "Content-Disposition": `attachment; filename="${filename}"`,
+    },
+  });
+  const url = URL.createObjectURL(await response.blob());
+  window.open(url, "_blank");
+  URL.revokeObjectURL(url);
 }
 
 /**
@@ -42,182 +42,182 @@ async function downloadDB() {
  * the file data or rejects with an error if the file operation fails.
  */
 async function uploadFileToUint8Array() {
-    return new Promise((resolve, reject) => {
-        // Create a file input element
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
+  return new Promise((resolve, reject) => {
+    // Create a file input element
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
 
-        // Add event listener to handle file selection
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
+    // Add event listener to handle file selection
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
 
-            if (file) {
-                const reader = new FileReader();
+      if (file) {
+        const reader = new FileReader();
 
-                reader.addEventListener('load', (e) => {
-                    // Read the file and convert it to a Uint8Array
-                    const arrayBuffer = e.target.result;
-                    const uint8Array = new Uint8Array(arrayBuffer);
+        reader.addEventListener("load", (e) => {
+          // Read the file and convert it to a Uint8Array
+          const arrayBuffer = e.target.result;
+          const uint8Array = new Uint8Array(arrayBuffer);
 
-                    // Remove the file input element from the DOM
-                    fileInput.parentNode.removeChild(fileInput);
+          // Remove the file input element from the DOM
+          fileInput.parentNode.removeChild(fileInput);
 
-                    resolve(uint8Array);
-                });
-
-                reader.addEventListener('error', (e) => {
-                    // Remove the file input element from the DOM and reject
-                    fileInput.parentNode.removeChild(fileInput);
-                    reject(new Error('Error reading file.'));
-                });
-
-                // Loads the file as an ArrayBuffer and triggers the `load` event listener above
-                reader.readAsArrayBuffer(file);
-            } else {
-                // If no file selected, remove the file input element from the DOM and reject
-                fileInput.parentNode.removeChild(fileInput);
-                reject(new Error('No file selected.'));
-            }
+          resolve(uint8Array);
         });
 
-        // Trigger a click event to open the file dialog
-        document.body.appendChild(fileInput);
-        fileInput.click();
+        reader.addEventListener("error", (e) => {
+          // Remove the file input element from the DOM and reject
+          fileInput.parentNode.removeChild(fileInput);
+          reject(new Error("Error reading file."));
+        });
+
+        // Loads the file as an ArrayBuffer and triggers the `load` event listener above
+        reader.readAsArrayBuffer(file);
+      } else {
+        // If no file selected, remove the file input element from the DOM and reject
+        fileInput.parentNode.removeChild(fileInput);
+        reject(new Error("No file selected."));
+      }
     });
+
+    // Trigger a click event to open the file dialog
+    document.body.appendChild(fileInput);
+    fileInput.click();
+  });
 }
 
 // converts binary data (a Uint8Array, the data format sql.js exports to) to a UTF-16 string
 // see https://github.com/sql-js/sql.js/wiki/Persisting-a-Modified-Database
 function binaryDataToUTF16String(binaryData) {
-    // We iterate over the binary data in chunks, since there is a maximum stack size.
-    // For each chunk, we convert all the data to a string, and then join all the
-    // strings together at the end.
-    const chunkSize = 0xffff;
-    const stringChunks = [];
-    for (let i = 0; i < binaryData.length; i += chunkSize) {
-        stringChunks.push(
-            String.fromCharCode.apply(
-                null,
-                binaryData.subarray(i, i + chunkSize)
-            )
-        );
-    }
-    return stringChunks.join('');
+  // We iterate over the binary data in chunks, since there is a maximum stack size.
+  // For each chunk, we convert all the data to a string, and then join all the
+  // strings together at the end.
+  const chunkSize = 0xffff;
+  const stringChunks = [];
+  for (let i = 0; i < binaryData.length; i += chunkSize) {
+    stringChunks.push(
+      String.fromCharCode.apply(null, binaryData.subarray(i, i + chunkSize))
+    );
+  }
+  return stringChunks.join("");
 }
 
 // converts a UTF-16 string to binary data (a Uint8Array, the data format sql.js expects)
 // see https://github.com/sql-js/sql.js/wiki/Persisting-a-Modified-Database
 function UTF16StringToBinaryData(string) {
-    const binaryData = new Uint8Array(string.length);
-    for (let i = 0; i < string.length; i++) {
-        binaryData[i] = string.charCodeAt(i);
-    }
-    return binaryData;
+  const binaryData = new Uint8Array(string.length);
+  for (let i = 0; i < string.length; i++) {
+    binaryData[i] = string.charCodeAt(i);
+  }
+  return binaryData;
 }
 
 function UTF16StringToUTF8String(utf16String) {
-    const utf8Bytes = [];
-    for (let i = 0; i < utf16String.length; i++) {
-        let charCode = utf16String.charCodeAt(i);
+  const utf8Bytes = [];
+  for (let i = 0; i < utf16String.length; i++) {
+    let charCode = utf16String.charCodeAt(i);
 
-        if (charCode < 0x80) {
-            utf8Bytes.push(charCode);
-        } else if (charCode < 0x800) {
-            utf8Bytes.push((charCode >> 6) | 0xc0);
-            utf8Bytes.push((charCode & 0x3f) | 0x80);
-        } else {
-            utf8Bytes.push((charCode >> 12) | 0xe0);
-            utf8Bytes.push(((charCode >> 6) & 0x3f) | 0x80);
-            utf8Bytes.push((charCode & 0x3f) | 0x80);
-        }
+    if (charCode < 0x80) {
+      utf8Bytes.push(charCode);
+    } else if (charCode < 0x800) {
+      utf8Bytes.push((charCode >> 6) | 0xc0);
+      utf8Bytes.push((charCode & 0x3f) | 0x80);
+    } else {
+      utf8Bytes.push((charCode >> 12) | 0xe0);
+      utf8Bytes.push(((charCode >> 6) & 0x3f) | 0x80);
+      utf8Bytes.push((charCode & 0x3f) | 0x80);
     }
+  }
 
-    const chunkSize = 0xffff;
-    const stringChunks = [];
-    for (let i = 0; i < utf8Bytes.length; i += chunkSize) {
-        stringChunks.push(
-            String.fromCharCode.apply(null, utf8Bytes.slice(i, i + chunkSize))
-        );
-    }
-    return stringChunks.join('');
+  const chunkSize = 0xffff;
+  const stringChunks = [];
+  for (let i = 0; i < utf8Bytes.length; i += chunkSize) {
+    stringChunks.push(
+      String.fromCharCode.apply(null, utf8Bytes.slice(i, i + chunkSize))
+    );
+  }
+  return stringChunks.join("");
 }
 
 function UTF8StringToUTF16String(utf8String) {
-    let utf16String = '';
-    let index = 0;
+  let utf16String = "";
+  let index = 0;
 
-    while (index < utf8String.length) {
-        let codePoint;
+  while (index < utf8String.length) {
+    let codePoint;
 
-        const byte1 = utf8String.charCodeAt(index++);
-        if ((byte1 & 0x80) === 0) {
-            codePoint = byte1;
-        } else if ((byte1 & 0xe0) === 0xc0) {
-            const byte2 = utf8String.charCodeAt(index++);
-            codePoint = ((byte1 & 0x1f) << 6) | (byte2 & 0x3f);
-        } else if ((byte1 & 0xf0) === 0xe0) {
-            const byte2 = utf8String.charCodeAt(index++);
-            const byte3 = utf8String.charCodeAt(index++);
-            codePoint =
-                ((byte1 & 0x0f) << 12) | ((byte2 & 0x3f) << 6) | (byte3 & 0x3f);
-        } else {
-            const byte2 = utf8String.charCodeAt(index++);
-            const byte3 = utf8String.charCodeAt(index++);
-            const byte4 = utf8String.charCodeAt(index++);
-            codePoint =
-                ((byte1 & 0x07) << 18) |
-                ((byte2 & 0x3f) << 12) |
-                ((byte3 & 0x3f) << 6) |
-                (byte4 & 0x3f);
-        }
-
-        utf16String += String.fromCharCode(codePoint);
+    const byte1 = utf8String.charCodeAt(index++);
+    if ((byte1 & 0x80) === 0) {
+      codePoint = byte1;
+    } else if ((byte1 & 0xe0) === 0xc0) {
+      const byte2 = utf8String.charCodeAt(index++);
+      codePoint = ((byte1 & 0x1f) << 6) | (byte2 & 0x3f);
+    } else if ((byte1 & 0xf0) === 0xe0) {
+      const byte2 = utf8String.charCodeAt(index++);
+      const byte3 = utf8String.charCodeAt(index++);
+      codePoint =
+        ((byte1 & 0x0f) << 12) | ((byte2 & 0x3f) << 6) | (byte3 & 0x3f);
+    } else {
+      const byte2 = utf8String.charCodeAt(index++);
+      const byte3 = utf8String.charCodeAt(index++);
+      const byte4 = utf8String.charCodeAt(index++);
+      codePoint =
+        ((byte1 & 0x07) << 18) |
+        ((byte2 & 0x3f) << 12) |
+        ((byte3 & 0x3f) << 6) |
+        (byte4 & 0x3f);
     }
 
-    return utf16String;
+    utf16String += String.fromCharCode(codePoint);
+  }
+
+  return utf16String;
 }
 
 // see https://github.com/jfo8000/ScratchJr-Desktop/blob/master/src/main.js#L674
 function initTables() {
-    // TODO: maybe handle errors manually?
-    // this.db.handleError = this.handleError;
+  // TODO: maybe handle errors manually?
+  // this.db.handleError = this.handleError;
 
-    db.run(
-        'CREATE TABLE IF NOT EXISTS PROJECTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, CTIME DATETIME DEFAULT CURRENT_TIMESTAMP, MTIME DATETIME, ALTMD5 TEXT, POS INTEGER, NAME TEXT, JSON TEXT, THUMBNAIL TEXT, OWNER TEXT, GALLERY TEXT, DELETED TEXT, VERSION TEXT)\n'
-    );
-    db.run(
-        'CREATE TABLE IF NOT EXISTS USERSHAPES (ID INTEGER PRIMARY KEY AUTOINCREMENT, CTIME DATETIME DEFAULT CURRENT_TIMESTAMP, MD5 TEXT, ALTMD5 TEXT, WIDTH TEXT, HEIGHT TEXT, EXT TEXT, NAME TEXT, OWNER TEXT, SCALE TEXT, VERSION TEXT)\n'
-    );
-    db.run(
-        'CREATE TABLE IF NOT EXISTS USERBKGS (ID INTEGER PRIMARY KEY AUTOINCREMENT, CTIME DATETIME DEFAULT CURRENT_TIMESTAMP, MD5 TEXT, ALTMD5 TEXT, WIDTH TEXT, HEIGHT TEXT, EXT TEXT, OWNER TEXT,  VERSION TEXT)\n'
-    );
-    db.run(
-        'CREATE TABLE IF NOT EXISTS PROJECTFILES (MD5 TEXT PRIMARY KEY, CONTENTS TEXT)\n'
-    );
+  db.run(
+    "CREATE TABLE IF NOT EXISTS PROJECTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, CTIME DATETIME DEFAULT CURRENT_TIMESTAMP, MTIME DATETIME, ALTMD5 TEXT, POS INTEGER, NAME TEXT, JSON TEXT, THUMBNAIL TEXT, OWNER TEXT, GALLERY TEXT, DELETED TEXT, VERSION TEXT)\n"
+  );
+  db.run(
+    "CREATE TABLE IF NOT EXISTS USERSHAPES (ID INTEGER PRIMARY KEY AUTOINCREMENT, CTIME DATETIME DEFAULT CURRENT_TIMESTAMP, MD5 TEXT, ALTMD5 TEXT, WIDTH TEXT, HEIGHT TEXT, EXT TEXT, NAME TEXT, OWNER TEXT, SCALE TEXT, VERSION TEXT)\n"
+  );
+  db.run(
+    "CREATE TABLE IF NOT EXISTS USERBKGS (ID INTEGER PRIMARY KEY AUTOINCREMENT, CTIME DATETIME DEFAULT CURRENT_TIMESTAMP, MD5 TEXT, ALTMD5 TEXT, WIDTH TEXT, HEIGHT TEXT, EXT TEXT, OWNER TEXT,  VERSION TEXT)\n"
+  );
+  db.run(
+    "CREATE TABLE IF NOT EXISTS PROJECTFILES (MD5 TEXT PRIMARY KEY, CONTENTS TEXT)\n"
+  );
+  db.run(
+    "CREATE TABLE IF NOT EXISTS RECORDED_SOUNDS (ID INTEGER PRIMARY KEY AUTOINCREMENT, CTIME DATETIME DEFAULT CURRENT_TIMESTAMP, MD5 TEXT UNIQUE, NAME TEXT, AUDIO_DATA TEXT, DURATION REAL)\n"
+  );
 }
 
 function runMigrations() {
-    try {
-        db.run('ALTER TABLE PROJECTS ADD COLUMN ISGIFT INTEGER DEFAULT 0');
-    } catch (e) {
-        console.log('failed to migrate tables', e);
-    }
+  try {
+    db.run("ALTER TABLE PROJECTS ADD COLUMN ISGIFT INTEGER DEFAULT 0");
+  } catch (e) {
+    console.log("failed to migrate tables", e);
+  }
 }
 
 // Hashes a string using SHA-256 and returns it as a base64-encoded string
 export async function hashString(inputString) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(inputString);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const base64String = btoa(String.fromCharCode.apply(null, hashArray));
-    return base64String;
+  const encoder = new TextEncoder();
+  const data = encoder.encode(inputString);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const base64String = btoa(String.fromCharCode.apply(null, hashArray));
+  return base64String;
 }
 
 // this event will fire whenever the user closes the tab or navigates away from the page
 // see https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event#usage_notes
-window.addEventListener('beforeunload', function () {
-    if (document.visibilityState === 'hidden') saveDB();
+window.addEventListener("beforeunload", function () {
+  if (document.visibilityState === "hidden") saveDB();
 });
 
 let saveTimeout = null;

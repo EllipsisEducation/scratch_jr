@@ -2,10 +2,10 @@
 //  Web interface functions
 //////////////////////////////////////////////////
 
-import * as db from './WebDB.js';
-import { WebVideo } from './WebVideo.js';
-import Record from '../editor/ui/Record';
-import { absoluteURL } from '../utils/lib.js';
+import * as db from "./WebDB.js";
+import { WebVideo } from "./WebVideo.js";
+import Record from "../editor/ui/Record";
+import { absoluteURL } from "../utils/lib.js";
 
 // MediaRecorder node which records audio
 let audioRecorder = null;
@@ -27,95 +27,110 @@ const audioSources = {};
 // calculates the volume level of a given audio data array buffer
 // used to display volume level preview in the audio recorder
 function calculateVolumeLevel(audioData) {
-    let sum = 0;
-    for (let i = 0; i < audioData.length; i++) {
-        sum += audioData[i];
-    }
-    const average = sum / audioData.length;
+  let sum = 0;
+  for (let i = 0; i < audioData.length; i++) {
+    sum += audioData[i];
+  }
+  const average = sum / audioData.length;
 
-    // Map to range 0.0 to 1.0
-    const volume = average / 255;
-    return volume;
+  // Map to range 0.0 to 1.0
+  const volume = average / 255;
+  return volume;
 }
 
 export async function setupMediaRecording() {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        console.log('Media recording unsupported!');
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    console.log("Media recording unsupported!");
+    return;
+  }
+
+  try {
+    const audioStream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+    });
+    const recorderAudioContext = new AudioContext();
+    const audioStreamSource =
+      recorderAudioContext.createMediaStreamSource(audioStream);
+    audioAnalyser = recorderAudioContext.createAnalyser();
+    audioStreamSource.connect(audioAnalyser);
+    audioRecorder = new MediaRecorder(audioStream);
+    audioRecorder.addEventListener("dataavailable", (e) =>
+      latestAudioChunks.push(e.data)
+    );
+    audioRecorder.addEventListener("stop", async () => {
+      const audioBlob = new Blob(latestAudioChunks, {
+        type: "audio/webm",
+      });
+
+      Record.setButtonsEnabled(false);
+
+      try {
+        // Convert blob to base64
+        const reader = new FileReader();
+        const base64Promise = new Promise((resolve) => {
+          reader.onloadend = () => {
+            const base64Data = reader.result.split(",")[1];
+            resolve(base64Data);
+          };
+        });
+        reader.readAsDataURL(audioBlob);
+        const base64Audio = await base64Promise;
+
+        // Generate MD5 hash for the audio data
+        const md5Hash = await db.getMD5(base64Audio);
+        const soundName = `RECORDING_${md5Hash}`;
+
+        // Create a FileReader to read the Blob as an ArrayBuffer
+        const arrayBufferReader = new FileReader();
+        const arrayBufferPromise = new Promise((resolve) => {
+          arrayBufferReader.onloadend = async () => {
+            const audioBuffer = await audioContext.decodeAudioData(
+              arrayBufferReader.result
+            );
+            audioBuffers["__recording__"] = audioBuffer;
+
+            // Save to database
+            await db.executeStatementFromJSON({
+              stmt: `INSERT OR REPLACE INTO RECORDED_SOUNDS (MD5, NAME, AUDIO_DATA, DURATION) VALUES (?, ?, ?, ?)`,
+              values: [md5Hash, soundName, base64Audio, audioBuffer.duration],
+            });
+
+            Record.soundname = soundName;
+            resolve();
+          };
+        });
+        arrayBufferReader.readAsArrayBuffer(audioBlob);
+        await arrayBufferPromise;
+      } catch (err) {
+        console.log("Audio recording error!", err);
         return;
-    }
+      } finally {
+        Record.setButtonsEnabled(true);
+      }
+    });
 
-    try {
-        const audioStream = await navigator.mediaDevices.getUserMedia({
-            audio: true,
-        });
-        const recorderAudioContext = new AudioContext();
-        const audioStreamSource =
-            recorderAudioContext.createMediaStreamSource(audioStream);
-        audioAnalyser = recorderAudioContext.createAnalyser();
-        audioStreamSource.connect(audioAnalyser);
-        audioRecorder = new MediaRecorder(audioStream);
-        audioRecorder.addEventListener('dataavailable', (e) =>
-            latestAudioChunks.push(e.data)
-        );
-        audioRecorder.addEventListener('stop', async () => {
-            const audioBlob = new Blob(latestAudioChunks, {
-                type: 'audio/webm',
-            });
-
-            Record.setButtonsEnabled(false);
-
-            try {
-                if (window.canSave) {
-                    latestAudioURL = await window.uploadAudio(audioBlob);
-                } else {
-                    latestAudioURL = URL.createObjectURL(audioBlob);
-                }
-            } catch (err) {
-                console.log('Audio upload error!', err);
-                return;
-            } finally {
-                Record.setButtonsEnabled(true);
-            }
-
-            Record.soundname = latestAudioURL;
-
-            // Create a FileReader to read the Blob as an ArrayBuffer
-            // We need to do this to decode the audio data and save it
-            // as a buffer in our sound management system.
-            const reader = new FileReader();
-
-            reader.addEventListener('loadend', async () => {
-                const audioBuffer = await audioContext.decodeAudioData(
-                    reader.result
-                );
-                audioBuffers['__recording__'] = audioBuffer;
-            });
-
-            reader.readAsArrayBuffer(audioBlob);
-        });
-
-        const bufferLength = audioAnalyser.frequencyBinCount;
-        audioVolumeBuffer = new Uint8Array(bufferLength);
-    } catch (err) {
-        console.log('Audio recording error!', err);
-    }
+    const bufferLength = audioAnalyser.frequencyBinCount;
+    audioVolumeBuffer = new Uint8Array(bufferLength);
+  } catch (err) {
+    console.log("Audio recording error!", err);
+  }
 }
 
 export function audioRecorderAvailable() {
-    return audioRecorder !== null;
+  return audioRecorder !== null;
 }
 
 export function videoRecorderAvailable() {
-    return true;
+  return true;
 }
 
 function stopRecording() {
-    if (audioRecorder.state !== 'inactive') {
-        audioRecorder.stop();
-    }
-    if (latestAudioURL !== null) {
-        latestAudioURL = null;
-    }
+  if (audioRecorder.state !== "inactive") {
+    audioRecorder.stop();
+  }
+  if (latestAudioURL !== null) {
+    latestAudioURL = null;
+  }
 }
 
 export default class Web {
@@ -203,7 +218,22 @@ export default class Web {
   }
 
   static remove(str, fcn) {
-    if (fcn) fcn();
+    (async () => {
+      try {
+        if (str.startsWith("RECORDING_")) {
+          // Remove recorded sound from database
+          const md5 = str.replace("RECORDING_", "");
+          await db.executeStatementFromJSON({
+            stmt: `DELETE FROM RECORDED_SOUNDS WHERE MD5 = ?`,
+            values: [md5],
+          });
+        }
+        if (fcn) fcn();
+      } catch (error) {
+        console.error("Error removing sound:", error);
+        if (fcn) fcn();
+      }
+    })();
   }
 
   static getfile(str, fcn) {
@@ -218,18 +248,46 @@ export default class Web {
 
   static registerSound(dir, name, fcn) {
     (async () => {
-      // In this case, the user can not save the project, so we don't upload
-      // the audio to the server and instead just use a blob URL
-      if (name.startsWith("blob:")) {
-        dir = "";
-      }
+      try {
+        let audioBuffer;
+        if (name.startsWith("RECORDING_")) {
+          // Load recorded sound from database
+          const md5 = name.replace("RECORDING_", "");
+          const result = JSON.parse(
+            await db.executeQueryFromJSON({
+              stmt: `SELECT AUDIO_DATA, DURATION FROM RECORDED_SOUNDS WHERE MD5 = ?`,
+              values: [md5],
+            })
+          );
 
-      const url = absoluteURL(dir + name);
-      const response = await fetch(url);
-      const arrayBuffer = await response.arrayBuffer();
-      const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-      audioBuffers[name] = audioBuffer;
-      if (fcn) fcn(name, audioBuffer.duration);
+          if (result.length > 0 && result[0].values.length > 0) {
+            const [audioData, duration] = result[0].values[0];
+
+            // Convert base64 to array buffer
+            const binaryString = atob(audioData);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+
+            audioBuffer = await audioContext.decodeAudioData(bytes.buffer);
+            audioBuffers[name] = audioBuffer;
+            if (fcn) fcn(name, duration);
+            return;
+          }
+        }
+
+        // Handle regular sounds
+        const url = absoluteURL(dir + name);
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        audioBuffers[name] = audioBuffer;
+        if (fcn) fcn(name, audioBuffer.duration);
+      } catch (error) {
+        console.error("Error registering sound:", error);
+        if (fcn) fcn("error");
+      }
     })();
   }
 
